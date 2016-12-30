@@ -1,0 +1,24 @@
+{
+  "name": "armored-cars",
+  "version": "1.0",
+  "authors": [
+    "Julián Colaiacovo <julian.colaiacovo@gmail.com>"
+  ],
+  "description": "getting started kit",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.0",
+    "modernizr": "~2.8.3"
+  }
+}
