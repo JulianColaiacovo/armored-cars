@@ -63,7 +63,7 @@ public class ArmoredCarsApplication {
             server.join();
             LOGGER.info("[main] Armored Cars is shutdown!");
         } catch (Exception e) {
-            LOGGER.error("[main] Error starting Armored Cars:" + e.getMessage(), getRootCause(e));
+            LOGGER.error("[main] Error starting Armored Cars:" + e.getMessage(), e);
         }
     }
 
