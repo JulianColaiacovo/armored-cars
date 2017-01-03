@@ -1,8 +1,7 @@
-package src.main.java.com.jcolaiacovo.armored.cars.service.application;
+package com.jcolaiacovo.armored.cars.service.application;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -19,8 +18,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCause;
-
 public class ArmoredCarsApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ArmoredCarsApplication.class);
@@ -32,8 +29,6 @@ public class ArmoredCarsApplication {
     public static void main(String[] args) {
 
         try {
-            PropertyConfigurator.configure("log4j.properties");
-
             LOGGER.info("[main] Starting Armored Cars Application ...");
 
             Config root = ConfigFactory.parseFile(getFile());
