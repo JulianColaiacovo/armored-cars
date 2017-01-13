@@ -1,0 +1,23 @@
+
+<div class="container login">
+	<div class="text-center row">
+		<h1>CFA Kitt</h1>
+	</div>
+</div>
+<hr/>
+<div class="container login">
+	<div class="login-box" ng-keypress="$event.keyCode == 13 && login()">
+		<h3 class="page-title">Sign In</h3>
+		<div class="text-center">
+			<div class="form-group">
+			  <input type="text" class="form-control" ng-model="user.email" placeholder="Email">
+			</div>
+			<div class="form-group">
+			  <input type="password" class="form-control" ng-model="user.password" placeholder="Password">
+			</div>
+		</div>
+		<a class="btn-success btn" name="commit" type="submit" ng-click="login()"  ><i class="fa fa-sign-in"></i> Sign in</a>
+		<hr>
+
+	</div>
+</div>

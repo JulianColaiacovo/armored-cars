@@ -2,6 +2,7 @@ package com.jcolaiacovo.armored.cars.service.application;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -37,7 +38,7 @@ public class ArmoredCarsApplication {
             DispatcherServlet dispatcherServlet = new DispatcherServlet();
             dispatcherServlet.setContextClass(AnnotationConfigWebApplicationContext.class);
             String webDir = dispatcherServlet.getClass().getClassLoader().getResource("src/main/webapp").toExternalForm();
-            dispatcherServlet.setContextConfigLocation("com.jcolaiacovo.armored.cars.service.application.config.WebBeansConfig");
+            dispatcherServlet.setContextConfigLocation("com.jcolaiacovo.armored.cars.service.configuration.WebMvcConfig");
 
             WebAppContext handler = new WebAppContext();
             handler.setContextPath("/armored-cars");

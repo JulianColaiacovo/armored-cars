@@ -1,8 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +14,16 @@ public class JacksonMapperConfiguration {
 
     @Bean
     public ObjectMapper jacksonMapper() {
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JodaModule());
-        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        return om;
+        objectMapper.registerModule(new JodaModule());
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false);
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        return objectMapper;
     }
 
 }

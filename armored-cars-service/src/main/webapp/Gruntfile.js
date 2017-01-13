@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                     dot : true,
                     src : ['.tmp', '<%= paths.dist %>/*', '!<%= paths.dist %>/.git*']
                 }]
-            },
+            }
         },
         copy : {
             dist : {
@@ -44,8 +44,7 @@ module.exports = function (grunt) {
                 dest   : '.tmp/styles/',
                 src    : '{,*/}*.css'
             }
-        },
-
+        }
     });
 
     grunt.registerTask('build', [
