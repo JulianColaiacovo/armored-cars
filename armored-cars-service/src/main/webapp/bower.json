@@ -5,11 +5,7 @@
     "Julián Colaiacovo <julian.colaiacovo@gmail.com>"
   ],
   "description": "getting started kit",
-  "moduleType": [
-    "amd"
-  ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,7 +14,18 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "1.11.0",
-    "modernizr": "~2.8.3"
+    "angular-bootstrap": "~0.10.0",
+    "angular-cookies": "~1.2.*",
+    "angular-loading-bar": "~0.3.0",
+    "angular-resource": "~1.2.*",
+    "angular-route": "~1.2.*",
+    "angular-sanitize": "~1.2.*",
+    "angularjs": "1.2.*",
+    "animate-css": "~3.2.0",
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.0.3",
+    "lodash": "~3.10.1",
+    "angular-http-auth": "1.2.2",
+    "textAngular": "1.2.0"
   }
 }

@@ -7,9 +7,9 @@ App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$ti
             if ($cookies.logged_user) $rootScope.logged_user = $cookies.logged_user;
         };
 
-        $rootScope.login = function (token, email) {
+        $rootScope.login = function (token, userName) {
             $rootScope.token = token;
-            $rootScope.logged_user = email;
+            $rootScope.logged_user = userName;
 
             $cookies.token = $rootScope.token;
             $cookies.logged_user = $rootScope.logged_user;

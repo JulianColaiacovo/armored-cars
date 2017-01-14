@@ -27,4 +27,5 @@ public class SecurityToken {
     public void setToken(String token) {
         this.token = token;
     }
+
 }

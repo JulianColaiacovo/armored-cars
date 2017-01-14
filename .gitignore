@@ -12,6 +12,7 @@ target/
 .idea/
 *.iml
 armored-cars-service/src/main/webapp/components/
+armored-cars-service/src/main/webapp/dist/
 armored-cars-service/src/main/webapp/node_modules/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml

@@ -98,19 +98,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jcolaiacovo.armored.cars</groupId>
-            <artifactId>armored-cars</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.jcolaiacovo.armored.cars</groupId>
-            <artifactId>armored-cars-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

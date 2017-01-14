@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-/**
- * Created by ffeller on 11/2/16.
- */
 @Controller
 @RequestMapping("/security")
 public class SecurityController {
