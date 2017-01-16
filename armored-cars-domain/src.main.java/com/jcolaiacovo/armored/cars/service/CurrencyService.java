@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Julian on 09/01/2017.
  */
-@Transactional(value = "transactionManager")
+@Transactional
 @Service
 public class CurrencyService {
 
@@ -22,7 +22,7 @@ public class CurrencyService {
         this.currencyDao = currencyDao;
     }
 
-    public List<Currency> getAllCurrencies() {
+    public List<Currency>  getAllCurrencies() {
         return this.currencyDao.getAllCurrencies();
     }
 

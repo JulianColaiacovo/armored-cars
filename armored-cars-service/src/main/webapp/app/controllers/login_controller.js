@@ -10,7 +10,7 @@ App.controller('LoginController', ['$rootScope', '$scope', '$cookies', '$locatio
 
             Security.query($rootScope.appContext).login($scope.user,
                 function (data) {
-                    $rootScope.login(data.token, $scope.user.email)
+                    $rootScope.login(data.token, $scope.user.user_name)
                 },
                 function (data) {
                     $rootScope.globalError = "Error al loguearse. Por favor verifica tu usuario y contraseña"

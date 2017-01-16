@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 import static org.joda.time.DateTime.now;
 
@@ -28,20 +29,23 @@ public class SecurityService {
         this.securityDao = securityDao;
     }
 
-    public SecurityToken login(String user, String password) {
+    public SecurityToken login(String userName, String password) {
 
-        if (!securityDao.getAllUserStrings().contains(user)) {
+        Optional<User> optionalUser = securityDao.getUserByUser(userName);
+
+        if (!optionalUser.isPresent()) {
             throw new RuntimeException("invalid user");
         }
-        User currentUser = securityDao.getUserByUser(user);
+
         String str = getMD5(password);
 
-        if (!str.equals(currentUser.getPassword())) {
+        User user = optionalUser.get();
+        if (!str.equals(user.getPassword())) {
             throw new RuntimeException("invalid pass");
         }
 
         int tokenHash = new HashCodeBuilder().append(user).append(password).append(now().getMillis()).toHashCode();
-        return new SecurityToken(Integer.toString(tokenHash), user);
+        return new SecurityToken(tokenHash, userName);
     }
 
     private String getMD5(String password) {

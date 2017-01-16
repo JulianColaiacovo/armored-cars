@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <name>Armored Cars</name>
@@ -28,7 +29,7 @@
         <jetty>9.4.0.v20161208</jetty>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <spring.version>4.3.5.RELEASE</spring.version>
-        <jackson.version>2.8.5</jackson.version>
+        <jackson.version>2.8.6</jackson.version>
         <slf4j.version>1.7.22</slf4j.version>
     </properties>
 
@@ -122,7 +123,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-tx</artifactId>
-                <version>${springframework.all.version}</version>
+                <version>${spring.version}</version>
             </dependency>
 
             <dependency>
@@ -191,7 +192,7 @@
             <!-- https://mvnrepository.com/artifact/com.typesafe/app.config -->
             <dependency>
                 <groupId>com.typesafe</groupId>
-                <artifactId>app.config</artifactId>
+                <artifactId>config</artifactId>
                 <version>1.3.1</version>
             </dependency>
             <dependency>
@@ -295,12 +296,17 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
                     <configuration>
-                        <tagNameFormat>@{project.version}</tagNameFormat>
+                        <excludes>
+                            <exclude>**/log4j.properties</exclude>
+                            <exclude>**/conf/env/**</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -310,113 +316,19 @@
                         <source>1.8</source>
                         <target>1.8</target>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.plexus</groupId>
-                            <artifactId>plexus-compiler-javac</artifactId>
-                            <version>2.2</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-                    only. It has no influence on the Maven build itself. -->
+
                 <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
                     <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>
-                                            build-helper-maven-plugin
-                                        </artifactId>
-                                        <versionRange>[1.8,)</versionRange>
-                                        <goals>
-                                            <goal>add-test-source</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
                     </configuration>
                 </plugin>
             </plugins>
-
-
         </pluginManagement>
-        <plugins>
-            <!-- Deploy plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.1</version>
-            </plugin>
-            <!-- Release plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                </configuration>
-            </plugin>
-            <!-- Jar plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <excludes>
-                        <!-- this line excludes env folder entirely from the jar -->
-                        <exclude>**/conf/env/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <inherited>false</inherited>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.3.1</version>
-                <executions>
-                    <!-- Se descargan las dependencias de Grunt / Bower -->
-                    <execution>
-                        <id>grunt-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <workingDirectory>${basedir}/armored-cars-service/src/main/webapp/</workingDirectory>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Se ejecutan las tareas de Grunt (Concat + Uglify) -->
-                    <execution>
-                        <id>grunt-build</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>grunt</executable>
-                            <workingDirectory>${basedir}/armored-cars-service/src/main/webapp/</workingDirectory>
-                            <arguments>
-                                <argument>default</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
-        </plugins>
         <resources>
             <resource>
                 <targetPath>src/main/webapp</targetPath>
@@ -426,45 +338,21 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <excludes>
+                        <!-- exclude any logback configuration from the jar -->
+                        <exclude>**/log4j.properties</exclude>
+                        <!-- this line excludes env folder entirely from the jar -->
+                        <exclude>**/conf/env/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>integration-test</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>integration-test</name>
-                </property>
-            </activation>
-            <properties>
-                <application.enviroment />
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>add-test-source</id>
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>src/integration-test/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

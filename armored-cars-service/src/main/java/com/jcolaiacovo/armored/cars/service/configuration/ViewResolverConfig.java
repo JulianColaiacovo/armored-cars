@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class ViewResolverConfig {
 
     @Bean
-    public ViewResolver viewResolver(ResourceLoader resourceLoader) {
+    public ViewResolver viewResolver() {
         InternalResourceViewResolver vr = new InternalResourceViewResolver();
         vr.setPrefix("/web/assets/layouts/");
         vr.setSuffix(".html");

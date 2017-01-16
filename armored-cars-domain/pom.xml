@@ -16,11 +16,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.jcolaiacovo.armored.cars</groupId>
-            <artifactId>armored-cars-api</artifactId>
-        </dependency>
-
         <!-- Logs -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -50,6 +45,10 @@
             <version>1.7.0</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
@@ -71,6 +70,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
@@ -84,9 +87,8 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.jcolaiacovo.armored.cars</groupId>
-            <artifactId>armored-cars-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
         </dependency>
     </dependencies>
 

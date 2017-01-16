@@ -40,7 +40,7 @@ public class DataSourceConfiguration {
         return driverManagerDataSource;
     }
 
-    @Bean("transactionManager")
+    @Bean
     public HibernateTransactionManager hibernateTransactionManager(@Qualifier("sessionFactory") SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }

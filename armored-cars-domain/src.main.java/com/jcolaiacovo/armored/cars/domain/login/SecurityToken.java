@@ -1,31 +1,21 @@
 package com.jcolaiacovo.armored.cars.domain.login;
 
 public class SecurityToken {
-    private String userEmail;
-    private String token;
 
-    public SecurityToken() {
-    }
+    private String userName;
+    private int token;
 
-    public SecurityToken(String token, String userEmail) {
+    public SecurityToken(int token, String userName) {
         this.token = token;
-        this.userEmail = userEmail;
+        this.userName = userName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getToken() {
+    public int getToken() {
         return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
 }

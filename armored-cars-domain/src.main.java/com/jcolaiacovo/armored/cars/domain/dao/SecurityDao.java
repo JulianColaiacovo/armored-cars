@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,9 +24,9 @@ public class SecurityDao {
         this.sessionFactory.getCurrentSession().save(user);
     }
 
-    public User getUserByUser(String user) {
+    public Optional<User> getUserByUser(String user) {
         Query query = this.sessionFactory.getCurrentSession().createQuery("select DISTINCT userSearch from User as userSearch where userSearch.user = :userId").setParameter("userId", user);
-        return (User) query.uniqueResult();
+        return Optional.ofNullable((User) query.uniqueResult());
     }
 
     public List<User> findAll() {
