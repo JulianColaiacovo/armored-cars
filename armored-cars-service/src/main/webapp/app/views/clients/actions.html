@@ -8,52 +8,59 @@
     <hr/>
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-hover">
-                <tbody>
-                <tr ng-if="!isNewClient()">
-                    <td>Id de cliente</td>
-                    <td>{{client.id}}</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>
-                        <input ng-if="canEditData()" type="text" ng-model="client.name" class="input-tag">
-                        <p ng-if="!canEditData()">{{client.name}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tipo de documento</td>
-                    <td>
-                        <select ng-if="canEditData()" name="repeatSelect" id="repeatSelect" ng-model="client.document_type">
-                            <option ng-repeat="document_type in document_types" value="{{document_type}}">{{document_type}}</option>
-                        </select>
-                        <p ng-if="!canEditData()">{{client.document_type}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Número de documento</td>
-                    <td>
-                        <input ng-if="canEditData()" type="text" ng-model="client.document" class="input-tag">
-                        <p ng-if="!canEditData()">{{client.document}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>E-mail</td>
-                    <td>
-                        <input ng-if="canEditData()" type="text" ng-model="client.email" class="input-tag">
-                        <p ng-if="!canEditData()">{{client.email}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Teléfono</td>
-                    <td>
-                        <input ng-if="canEditData()" type="text" ng-model="client.phone" class="input-tag">
-                        <p ng-if="!canEditData()">{{client.phone}}</p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div ng-include src="'assets/partials/save.html'"></div>
+            <form name="clientForm" ng-submit="save()">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-if="!isNewClient()">
+                        <td>Id de cliente</td>
+                        <td>{{client.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>
+                            <input name="name" ng-if="canEditData()" type="text" ng-model="client.name"
+                                   class="input-tag" ng-pattern="/^asd$/" required>
+                            <p ng-if="!canEditData()">{{client.name}}</p>
+                            <p ng-show="clientForm.name.$dirty && clientForm.name.$error.required">El nombre es requerido.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tipo de documento</td>
+                        <td>
+                            <select ng-if="canEditData()" name="repeatSelect" id="repeatSelect"
+                                    ng-model="client.document_type">
+                                <option ng-repeat="document_type in document_types" value="{{document_type}}">
+                                    {{document_type}}
+                                </option>
+                            </select>
+                            <p ng-if="!canEditData()">{{client.document_type}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Número de documento</td>
+                        <td>
+                            <input ng-if="canEditData()" type="text" ng-model="client.document" class="input-tag">
+                            <p ng-if="!canEditData()">{{client.document}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>
+                            <input ng-if="canEditData()" type="text" ng-model="client.email" class="input-tag">
+                            <p ng-if="!canEditData()">{{client.email}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono</td>
+                        <td>
+                            <input ng-if="canEditData()" type="text" ng-model="client.phone" class="input-tag">
+                            <p ng-if="!canEditData()">{{client.phone}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-include src="'assets/partials/save.html'"></div>
+            </form>
         </div>
     </div>
 </div>

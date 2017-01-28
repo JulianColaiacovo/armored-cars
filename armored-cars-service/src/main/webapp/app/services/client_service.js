@@ -17,6 +17,14 @@ App.factory('Client', ['$resource', '$rootScope', function ($resource, $rootScop
         $resource(urlBase, {}, {}).query(callback);
     };
 
+    clientOp.save = function (body, callback, onError) {
+        $resource(urlBase + '/save/', {}, {}).save({}, body, callback, onError);
+    };
+
+    clientOp.delete = function (clientId, body, callback, onError) {
+        $resource(urlBase + '/delete/' + clientId, {}, {}).delete({}, body, callback, onError);
+    };
+
     return clientOp;
 }
 ]);

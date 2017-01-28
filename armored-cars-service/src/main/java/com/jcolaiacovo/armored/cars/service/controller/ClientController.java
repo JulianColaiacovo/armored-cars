@@ -3,10 +3,7 @@ package com.jcolaiacovo.armored.cars.service.controller;
 import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,16 @@ public class ClientController {
     @GetMapping("/{id}")
     public Client getClientById(@PathVariable int id) {
         return this.clientService.getClientById(id);
+    }
+
+    @PostMapping("/save")
+    public Client saveClient(@RequestBody Client client) {
+        return this.clientService.save(client);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void saveClient(@PathVariable int id) {
+        this.clientService.delete(id);
     }
 
 }

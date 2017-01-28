@@ -14,6 +14,7 @@
                     <th class="col-xs-1">Número de documento</th>
                     <th class="col-xs-1">E-mail</th>
                     <th class="col-xs-1">Teléfono</th>
+                    <th class="col-xs-1"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,10 @@
                     <td ng-click="view(client.id)">{{client.document}}</td>
                     <td ng-click="view(client.id)">{{client.email}}</td>
                     <td ng-click="view(client.id)">{{client.phone}}</td>
+                    <td ng-show="client.id != 1">
+                        <a ng-click="edit(client.id)">Editar</a>
+                        &nbsp;|&nbsp;
+                        <a ng-click="delete(client.id)">Eliminar</a></td>
                 </tr>
                 </tbody>
             </table>

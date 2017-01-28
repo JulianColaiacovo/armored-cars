@@ -22,6 +22,16 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             $location.path("client/view/" + id);
         };
 
+        $scope.edit = function (id) {
+            $location.path("client/edit/" + id);
+        };
+
+        $scope.delete = function (id) {
+            if (confirm("Esta seguro que desea eliminar el cliente numero " + id + "?")) {
+                Client.delete(id, onDeleteOk, onDeleteError);
+            }
+        };
+
         $scope.uploadFile = function () {
             if ($scope.validateBillDate()) {
                 var fd = new FormData();
@@ -46,6 +56,16 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             }
 
 
+        };
+
+        var onDeleteOk = function () {
+            $location.path('/client/');
+        };
+
+        var onDeleteError = function (response) {
+            if (response.status != 200) {
+                $rootScope.globalError = 'Error deleting client';
+            }
         };
 
     }]);

@@ -27,4 +27,14 @@ public class ClientDao extends AbstractDao {
         return (Client) this.getSessionFactory().getCurrentSession().get(Client.class, id);
     }
 
+    public Client save(Client client) {
+        this.getSessionFactory().getCurrentSession().saveOrUpdate(client);
+        return client;
+    }
+
+    public void delete(int id) {
+        Object client = this.getSessionFactory().getCurrentSession().load(Client.class, id);
+        this.getSessionFactory().getCurrentSession().delete(client);
+    }
+
 }

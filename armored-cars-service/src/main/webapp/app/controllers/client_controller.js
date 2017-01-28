@@ -3,6 +3,7 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
     function ($rootScope, $scope, $location, $routeParams, $http, Client, DocumentType) {
 
         $scope.initialize = function () {
+            $scope.isSaving = false;
             setSection();
             loadDocumentTypes();
             loadClientData();
@@ -16,14 +17,22 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
             return $rootScope.section === "CLIENT-ADD" || $rootScope.section === "CLIENT-EDIT";
         };
 
+        $scope.save = function () {
+            if ($scope.clientForm.$valid) {
+                $scope.isSaving = true;
+                Client.save($scope.client, onSaveOk, onSaveError);
+                $scope.isSaving = false;
+            }
+        };
+
         var setSection = function () {
-          if ($location.url().toLowerCase().indexOf("view") != -1) {
-              $rootScope.section = "CLIENT-VIEW"
-          } else if ($location.url().toLowerCase().indexOf("add") != -1) {
-              $rootScope.section = "CLIENT-ADD"
-          } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
-              $rootScope.section = "CLIENT-EDIT"
-          }
+            if ($location.url().toLowerCase().indexOf("view") != -1) {
+                $rootScope.section = "CLIENT-VIEW"
+            } else if ($location.url().toLowerCase().indexOf("add") != -1) {
+                $rootScope.section = "CLIENT-ADD"
+            } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
+                $rootScope.section = "CLIENT-EDIT"
+            }
         };
 
         var loadClientData = function () {
@@ -33,6 +42,16 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
                 Client.get($routeParams.client_id, function (response) {
                     $scope.client = response;
                 });
+            }
+        };
+
+        var onSaveOk = function (response) {
+            $location.path('/client/view/' + response.id);
+        };
+
+        var onSaveError = function (response) {
+            if (response.status != 200) {
+                $rootScope.globalError = 'Error saving client';
             }
         };
 
