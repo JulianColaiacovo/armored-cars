@@ -3,6 +3,7 @@
 window.App = angular
     .module('ArmoredCars',
         [
+            'ngMessages',
             'ngResource',
             'ngRoute',
             'ngCookies',

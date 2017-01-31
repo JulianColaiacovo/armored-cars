@@ -7,6 +7,7 @@ gulp.task('components', function () {
         'components/angular/angular.min.js',
         'components/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'components/angular-cookies/angular-cookies.min.js',
+        'components/angular-messages/angular-messages.min.js',
         'components/angular-resource/angular-resource.min.js',
         'components/angular-route/angular-route.min.js',
         'components/angular-translate/angular-translate.min.js',

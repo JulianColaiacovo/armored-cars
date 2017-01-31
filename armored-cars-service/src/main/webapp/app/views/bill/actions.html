@@ -5,9 +5,10 @@
     <h2 ng-if="isNewClient()">Registrar cliente</h2>
     <h2 ng-if="section == 'CLIENT-EDIT'">Editar cliente</h2>
     <h2 ng-if="section == 'CLIENT-VIEW'">Datos del cliente</h2>
+    <hr/>
     <div class="row">
         <div class="col-xs-12">
-            <form name="form" novalidate>
+            <form name="clientForm" ng-submit="save()">
                 <table class="table table-hover">
                     <tbody>
                     <tr ng-if="!isNewClient()">
@@ -20,7 +21,7 @@
                             <input name="name" ng-if="canEditData()" type="text" ng-model="client.name"
                                    class="input-tag" ng-pattern="/^asd$/" required/>
                             <p ng-if="!canEditData()">{{client.name}}</p>
-                            <div ng-show="form.name.$dirty" ng-messages="form.name.$error"
+                            <div ng-show="clientForm.name.$dirty" ng-messages="clientForm.name.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
                                 <div ng-message="pattern">El nombre no tiene un formato v&aacute;lido</div>
@@ -42,7 +43,7 @@
                             <input name="document" ng-if="canEditData()" type="text" ng-model="client.document"
                                    ng-pattern="getDocumentNumberPattern()" required class="input-tag">
                             <p ng-if="!canEditData()">{{client.document}}</p>
-                            <div ng-show="form.document.$dirty" ng-messages="form.document.$error"
+                            <div ng-show="clientForm.document.$dirty" ng-messages="clientForm.document.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
                                 <div ng-message="pattern">

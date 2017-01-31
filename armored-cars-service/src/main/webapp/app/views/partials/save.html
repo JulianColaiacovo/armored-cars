@@ -1,3 +1,4 @@
-<button id="save" type="submit" ng-if="canEditData()" ng-disabled="isSaving" ng-class="{'-loading':isSaving}" class="-lg">
-    <em ng-show="!isSaving">Save</em><span ng-show="isSaving">Saving ...</span>
+<button id="save" type="submit" ng-click="save()" ng-if="canEditData()" ng-disabled="isSaving"
+        ng-class="{'-loading':isSaving}" class="-lg">
+    <em ng-show="!isSaving">Guardar</em><span ng-show="isSaving">Guardando ...</span>
 </button>

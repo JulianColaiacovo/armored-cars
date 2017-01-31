@@ -34,14 +34,14 @@ public class SecurityService {
         Optional<User> optionalUser = securityDao.getUserByUser(userName);
 
         if (!optionalUser.isPresent()) {
-            throw new RuntimeException("invalid user");
+            throw new RuntimeException("Invalid username or password");
         }
 
         String str = getMD5(password);
 
         User user = optionalUser.get();
         if (!str.equals(user.getPassword())) {
-            throw new RuntimeException("invalid pass");
+            throw new RuntimeException("Invalid username or password");
         }
 
         int tokenHash = new HashCodeBuilder().append(user).append(password).append(now().getMillis()).toHashCode();
@@ -59,7 +59,7 @@ public class SecurityService {
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Invalid algorithm", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

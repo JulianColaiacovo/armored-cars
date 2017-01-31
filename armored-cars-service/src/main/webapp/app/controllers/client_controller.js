@@ -2,6 +2,9 @@
 App.controller('ClientController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Client', 'DocumentType',
     function ($rootScope, $scope, $location, $routeParams, $http, Client, DocumentType) {
 
+        var dniPattern = new RegExp("^\\d{2}\\.?\\d{3}\\.?\\d{3}$");
+        var cuilCuitPattern = new RegExp("^\\d{2}\\-?\\d{2}\\.?\\d{3}\\.?\\d{3}\\-?\\d$");
+
         $scope.initialize = function () {
             $scope.isSaving = false;
             setSection();
@@ -17,12 +20,30 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
             return $rootScope.section === "CLIENT-ADD" || $rootScope.section === "CLIENT-EDIT";
         };
 
+        $scope.documentTypeChanged = function () {
+            $scope.form.document.$setDirty();
+        };
+
         $scope.save = function () {
-            if ($scope.clientForm.$valid) {
+            if ($scope.form.$valid) {
                 $scope.isSaving = true;
+                $scope.client.document = $scope.client.document.replace(/\./g, '').replace(/-/g, '');
                 Client.save($scope.client, onSaveOk, onSaveError);
                 $scope.isSaving = false;
+            } else {
+                angular.forEach($scope.form.$error, function (controls, errorName) {
+                    angular.forEach(controls, function (control) {
+                        control.$setDirty();
+                    });
+                });
             }
+        };
+
+        $scope.getDocumentNumberPattern = function () {
+            if ($scope.client != null && $scope.client.document_type == "DNI") {
+                return dniPattern;
+            }
+            return cuilCuitPattern;
         };
 
         var setSection = function () {
@@ -37,7 +58,7 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
 
         var loadClientData = function () {
             if ($scope.isNewClient()) {
-                $scope.client = {};
+                $scope.client = {"document_type": "DNI"};
             } else {
                 Client.get($routeParams.client_id, function (response) {
                     $scope.client = response;
