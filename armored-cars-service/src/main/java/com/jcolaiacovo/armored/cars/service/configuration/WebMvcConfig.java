@@ -31,10 +31,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        Client client = new Client();
-        client.setId(123);
-        client.setName("julian");
-
         MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
         jacksonConverter.setObjectMapper(this.objectMapper);
         converters.add(jacksonConverter);

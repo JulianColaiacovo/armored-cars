@@ -2,7 +2,9 @@ package com.jcolaiacovo.armored.cars.service.application;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.poi.util.IOUtils;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -17,6 +19,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 public class ArmoredCarsApplication {
@@ -72,7 +75,14 @@ public class ArmoredCarsApplication {
     private static File getFile() throws Exception {
         ClassPathResource classPathResource = new ClassPathResource("conf/env/startup.conf");
 
-        File file = classPathResource.getFile();
+        InputStream inputStream = classPathResource.getInputStream();
+        File file = File.createTempFile("startup", ".conf");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+
         if (!file.exists()) {
             classPathResource = new ClassPathResource("startup.conf");
             file = classPathResource.getFile();

@@ -1,10 +1,8 @@
 {
   "name": "armored-cars",
-  "version": "1.0",
   "authors": [
     "Julián Colaiacovo <julian.colaiacovo@gmail.com>"
   ],
-  "description": "getting started kit",
   "license": "MIT",
   "ignore": [
     "**/.*",

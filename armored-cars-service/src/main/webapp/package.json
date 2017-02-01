@@ -1,10 +1,7 @@
 {
   "name": "armored-cars",
-  "version": "0.0.1",
   "description": " ",
-  "private": true,
   "author": "Julián Colaiacovo",
-  "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.1",
@@ -14,7 +11,7 @@
     "gulp-watch": "^4.1.0"
   },
   "scripts": {
-    "preinstall": "npm list bower -g || npm i -g bower || npm install -g gulp-cli",
+    "preinstall": "npm list bower -g || npm i -g bower",
     "postinstall": "bower cache clean && bower install"
   },
   "dependencies": {

@@ -73,21 +73,16 @@ public class Bill {
     @JoinColumn(name = "APPLY_BILL_ID")
     private Bill applyBill;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BILL_TO_ID", nullable = false)
     private Client billTo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BILL_TO_ID", nullable = false)
+    @Column(name = "FINANCIAL_ADVANCE", nullable = false)
     private Boolean financialAdvance;
 
-
-    public Bill() {
-    }
 
     public int getId() {
         return id;

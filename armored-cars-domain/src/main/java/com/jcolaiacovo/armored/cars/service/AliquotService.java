@@ -16,10 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class AliquotService {
 
-    public AliquotService() {
-
-    }
-
     public List<BigDecimal> getAllAliquots() {
         return Arrays.stream(Aliquot.values()).map(Aliquot::getValue).collect(Collectors.toList());
     }
