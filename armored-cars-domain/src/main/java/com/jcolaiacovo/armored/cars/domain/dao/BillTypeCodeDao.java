@@ -36,13 +36,13 @@ public class BillTypeCodeDao extends AbstractDao {
     }
 
     private List<BillTypeCode> getEnabledBillTypeCodes() {
-        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where enabled")
+        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where ENABLED")
                 .addEntity(BillTypeCode.class)
                 .list();
     }
 
     private List<BillTypeCode> getDisabledBillTypeCodes() {
-        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where not enabled")
+        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where not ENABLED")
                 .addEntity(BillTypeCode.class)
                 .list();
     }

@@ -20,7 +20,9 @@ public class CurrencyDao extends AbstractDao {
     }
 
     public List<Currency> getAllCurrencies() {
-        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from currency;").list();
+        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY;")
+                .addEntity(Currency.class)
+                .list();
     }
 
 }

@@ -20,7 +20,9 @@ public class ClientDao extends AbstractDao {
     }
 
     public List<Client> getAllClients() {
-        return (List<Client>) this.getSessionFactory().getCurrentSession().createQuery("select cli from Client as cli").list();
+        return (List<Client>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CLIENT;")
+                .addEntity(Client.class)
+                .list();
     }
 
     public Client getClientById(int id) {

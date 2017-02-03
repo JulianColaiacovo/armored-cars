@@ -25,13 +25,15 @@ public class SecurityDao {
     }
 
     public Optional<User> getUserByUser(String user) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("select DISTINCT userSearch from User as userSearch where userSearch.user = :userId").setParameter("userId", user);
+        Query query = this.sessionFactory.getCurrentSession().createQuery("select distinct usr from User as usr where usr.user = :userName")
+                .setString("userName", user);
         return Optional.ofNullable((User) query.uniqueResult());
     }
 
     public List<User> findAll() {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("select DISTINCT user from User as user");
-        return query.list();
+        return this.sessionFactory.getCurrentSession().createSQLQuery("select * from USER;")
+                .addEntity(User.class)
+                .list();
     }
 
     public List<String> getAllUserStrings() {
