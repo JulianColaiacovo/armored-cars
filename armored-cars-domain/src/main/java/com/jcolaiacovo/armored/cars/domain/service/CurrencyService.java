@@ -1,5 +1,6 @@
 package com.jcolaiacovo.armored.cars.service;
 
+import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.CurrencyDao;
 import com.jcolaiacovo.armored.cars.domain.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Service
-public class CurrencyService {
+public class CurrencyService extends AbstractDaoService<Currency> {
 
     private CurrencyDao currencyDao;
 
@@ -24,6 +25,11 @@ public class CurrencyService {
 
     public List<Currency>  getAllCurrencies() {
         return this.currencyDao.getAllCurrencies();
+    }
+
+    @Override
+    protected AbstractDao<Currency> getDao() {
+        return this.currencyDao;
     }
 
 }

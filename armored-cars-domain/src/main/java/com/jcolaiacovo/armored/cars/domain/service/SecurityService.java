@@ -1,6 +1,6 @@
 package com.jcolaiacovo.armored.cars.service;
 
-import com.jcolaiacovo.armored.cars.domain.dao.SecurityDao;
+import com.jcolaiacovo.armored.cars.domain.dao.UserDao;
 import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;
 import com.jcolaiacovo.armored.cars.domain.model.User;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -22,16 +22,16 @@ public class SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityService.class);
 
-    private SecurityDao securityDao;
+    private UserDao userDao;
 
     @Autowired
-    public SecurityService(SecurityDao securityDao) {
-        this.securityDao = securityDao;
+    public SecurityService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     public SecurityToken login(String userName, String password) {
 
-        Optional<User> optionalUser = securityDao.getUserByUser(userName);
+        Optional<User> optionalUser = userDao.getUserByUsername(userName);
 
         if (!optionalUser.isPresent()) {
             throw new RuntimeException("Invalid username or password");

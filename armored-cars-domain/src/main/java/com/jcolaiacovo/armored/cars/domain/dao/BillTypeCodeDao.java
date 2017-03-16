@@ -1,50 +1,38 @@
 package com.jcolaiacovo.armored.cars.domain.dao;
 
+import com.google.common.collect.Lists;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Julian on 29/01/2017.
  */
 @Repository
-public class BillTypeCodeDao extends AbstractDao {
+public class BillTypeCodeDao {
 
-    @Autowired
-    public BillTypeCodeDao(@Qualifier(value = "sessionFactory") SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
-
-    public List<BillTypeCode> getBillTypeCodes(Boolean enabled) {
-        if (enabled == null) {
+    public List<BillTypeCode> getBillTypeCodes(Boolean active) {
+        if (active == null) {
             return this.getAllBillTypeCodes();
-        } else if (enabled) {
-            return this.getEnabledBillTypeCodes();
+        } else if (active) {
+            return this.getActiveBillTypeCodes();
         } else {
             return this.getDisabledBillTypeCodes();
         }
     }
 
     private List<BillTypeCode> getAllBillTypeCodes() {
-        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE")
-                .addEntity(BillTypeCode.class)
-                .list();
+        return Lists.newArrayList(BillTypeCode.values());
     }
 
-    private List<BillTypeCode> getEnabledBillTypeCodes() {
-        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where ENABLED")
-                .addEntity(BillTypeCode.class)
-                .list();
+    private List<BillTypeCode> getActiveBillTypeCodes() {
+        return this.getAllBillTypeCodes().stream().filter(BillTypeCode::isActive).collect(Collectors.toList());
     }
 
     private List<BillTypeCode> getDisabledBillTypeCodes() {
-        return (List<BillTypeCode>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL_TYPE_CODE where not ENABLED")
-                .addEntity(BillTypeCode.class)
-                .list();
+        return this.getAllBillTypeCodes().stream().filter(billTypeCode -> !billTypeCode.isActive()).collect(Collectors.toList());
     }
 
 }

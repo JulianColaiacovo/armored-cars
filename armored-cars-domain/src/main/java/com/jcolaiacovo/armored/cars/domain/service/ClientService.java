@@ -1,5 +1,6 @@
 package com.jcolaiacovo.armored.cars.service;
 
+import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.ClientDao;
 import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.service.exceptions.DeleteGenericClientException;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Transactional
 @Service
-public class ClientService {
+public class ClientService extends AbstractDaoService<Client> {
 
     private static final int GENERIC_CLIENT_ID = 1;
 
@@ -30,15 +31,11 @@ public class ClientService {
         return this.clientDao.getAllClients();
     }
 
-    public Client getClientById(int id) {
-        return this.clientDao.getClientById(id);
-    }
-
-    public Client save(Client client) {
+    public void save(Client client) {
         if (this.isGenericClient(client.getId())) {
             throw new ModifyGenericClientException();
         } else {
-            return this.clientDao.save(client);
+            super.save(client);
         }
     }
 
@@ -46,8 +43,13 @@ public class ClientService {
         if (this.isGenericClient(id)) {
             throw new DeleteGenericClientException();
         } else {
-            this.clientDao.delete(id);
+            super.delete(id);
         }
+    }
+
+    @Override
+    protected AbstractDao<Client> getDao() {
+        return this.clientDao;
     }
 
     private boolean isGenericClient(int idClient) {

@@ -1,6 +1,5 @@
 package com.jcolaiacovo.armored.cars.domain.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
@@ -59,8 +58,8 @@ public class Bill {
     @Column(name = "UNTAXED_AMOUNT", nullable = false)
     private BigDecimal untaxedAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BILL_TYPE_CODE_ID", nullable = false)
+    @Column(name = "BILL_TYPE_CODE", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private BillTypeCode billTypeCode;
 
     @Column(name = "VAT_AMOUNT", nullable = false)

@@ -12,11 +12,11 @@ import java.util.List;
  * Created by Julian on 09/01/2017.
  */
 @Repository
-public class CurrencyDao extends AbstractDao {
+public class CurrencyDao extends AbstractDao<Currency> {
 
     @Autowired
     public CurrencyDao(@Qualifier(value = "sessionFactory") SessionFactory sessionFactory) {
-        super(sessionFactory);
+        super(Currency.class, sessionFactory);
     }
 
     public List<Currency> getAllCurrencies() {

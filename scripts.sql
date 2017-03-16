@@ -333,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`additional` (
   `AMOUNT`      DECIMAL(18, 3)       NOT NULL,
   `CONVERSION`  DECIMAL(18, 9)       NOT NULL,
   `CURRENCY_ID` INT(11)              NOT NULL,
-  `DESCRIPTION` VARCHAR(250)
+  `DESCRIPTION` VARCHAR(255)
                 CHARACTER SET 'utf8' NULL     DEFAULT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_ADDITIONAL_SPENDING_ARMORED`
@@ -365,12 +365,12 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`additional_collection` (
   `AMOUNT`        DECIMAL(18, 3)       NOT NULL,
   `DATE`          DATETIME             NOT NULL,
   `ADDITIONAL_ID` INT(11)              NOT NULL,
-  `DESCRIPTION`   VARCHAR(250)
+  `DESCRIPTION`   VARCHAR(255)
                   CHARACTER SET 'utf8' NULL     DEFAULT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_ADDITIONAL_SPENDING_COLLECTION_ADDITIONAL_SPENDING`
   FOREIGN KEY (`ADDITIONAL_ID`)
-  REFERENCES `armoredcars`.`additional` (`ID`)
+  REFERENCES `armoredcars`.`armored` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -401,43 +401,6 @@ VALUES
   (NOW());
 
 -- -----------------------------------------------------
--- Table `armoredcars`.`bill_type_code`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `armoredcars`.`bill_type_code`;
-
-CREATE TABLE IF NOT EXISTS `armoredcars`.`bill_type_code` (
-  `ID`        INT(11)              NOT NULL AUTO_INCREMENT,
-  `BILL_TYPE` VARCHAR(100)         NOT NULL,
-  `CODE`      CHAR(1)
-              CHARACTER SET 'utf8' NOT NULL,
-  `ENABLED`   BIT                  NOT NULL DEFAULT 1,
-  PRIMARY KEY (`ID`)
-)
-  ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARACTER SET = utf8
-  COLLATE = utf8_bin;
-
-INSERT INTO `armoredcars`.`bill_type_code`
-(`BILL_TYPE`, `CODE`, `ENABLED`)
-VALUES
-  ('BILL', 'A', 1),
-  ('BILL', 'B', 1),
-  ('BILL', 'C', 0),
-  ('BILL', 'E', 0),
-  ('BILL', 'M', 0),
-  ('CREDIT_NOTE', 'A', 1),
-  ('CREDIT_NOTE', 'B', 1),
-  ('CREDIT_NOTE', 'C', 0),
-  ('CREDIT_NOTE', 'E', 0),
-  ('CREDIT_NOTE', 'M', 0),
-  ('DEBIT_NOTE', 'A', 1),
-  ('DEBIT_NOTE', 'B', 1),
-  ('DEBIT_NOTE', 'C', 0),
-  ('DEBIT_NOTE', 'E', 0),
-  ('DEBIT_NOTE', 'M', 0);
-
--- -----------------------------------------------------
 -- Table `armoredcars`.`bill`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `armoredcars`.`bill`;
@@ -458,11 +421,12 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`bill` (
   `ALIQUOT`               DECIMAL(18, 2)       NOT NULL     DEFAULT '0.00',
   `TAXED_AMOUNT`          DECIMAL(18, 3)       NOT NULL     DEFAULT '0.000',
   `UNTAXED_AMOUNT`        DECIMAL(18, 3)       NOT NULL     DEFAULT '0.000',
-  `BILL_TYPE_CODE_ID`     INT(11)              NOT NULL     DEFAULT '0',
+  `BILL_TYPE_CODE`        VARCHAR(100)
+                          CHARACTER SET 'utf8' NOT NULL,
   `VAT_AMOUNT`            DECIMAL(18, 3)       NOT NULL     DEFAULT '0.000',
   `TOTAL_AMOUNT`          DECIMAL(18, 3)       NOT NULL     DEFAULT '0.000',
   `APPLY_BILL_ID`         INT(11)              NULL         DEFAULT NULL,
-  `DESCRIPTION`           VARCHAR(250)
+  `DESCRIPTION`           VARCHAR(255)
                           CHARACTER SET 'utf8' NULL         DEFAULT NULL,
   `BILL_TO_ID`            INT(11)              NULL         DEFAULT NULL,
   `FINANCIAL_ADVANCE`     BIT                  NOT NULL     DEFAULT 0,
@@ -475,11 +439,6 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`bill` (
   CONSTRAINT `FK_BILL_ARMORED`
   FOREIGN KEY (`ARMORED_ID`)
   REFERENCES `armoredcars`.`armored` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_BILL_BILL_TYPE_CODE`
-  FOREIGN KEY (`BILL_TYPE_CODE_ID`)
-  REFERENCES `armoredcars`.`bill_type_code` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_BILL_CLIENT`
@@ -497,9 +456,7 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`bill` (
   DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_bin;
 
-CREATE UNIQUE INDEX `BILL_UQ_BILL` ON bill (`NUMBER` ASC, `BILL_TYPE_CODE_ID` ASC);
-
-CREATE INDEX `FK_BILL_BILL_TYPE_CODE` ON bill (`BILL_TYPE_CODE_ID` ASC);
+CREATE UNIQUE INDEX `BILL_UQ_BILL` ON bill (`NUMBER` ASC, `BILL_TYPE_CODE` ASC);
 
 CREATE INDEX `FK_BILL_APPLY_BILL` ON bill (`APPLY_BILL_ID` ASC);
 
@@ -525,8 +482,8 @@ CREATE TABLE IF NOT EXISTS `armoredcars`.`collection` (
   `GAIN_AMOUNT`  DECIMAL(18, 3)       NOT NULL,
   `VAT_AMOUNT`   DECIMAL(18, 3)       NOT NULL,
   `DATE`         DATETIME             NOT NULL,
-  `TOTAL_AMOUNT` DECIMAL(18, 3)       NOT NULL DEFAULT '0.000',
-  `DESCRIPTION`  VARCHAR(250)
+  `TOTAL_AMOUNT` DECIMAL(18, 3)       NOT NULL,
+  `DESCRIPTION`  VARCHAR(25)
                  CHARACTER SET 'utf8' NULL     DEFAULT NULL,
   `CLIENT_ID`    INT(11)              NOT NULL,
   PRIMARY KEY (`ID`),
@@ -549,14 +506,14 @@ DROP TABLE IF EXISTS `armoredcars`.`commission`;
 
 CREATE TABLE IF NOT EXISTS `armoredcars`.`commission` (
   `ID`          INT(11)              NOT NULL AUTO_INCREMENT,
-  `PRICE`       DECIMAL(18, 3)       NOT NULL DEFAULT '0.000',
+  `AMOUNT`      DECIMAL(18, 3)       NOT NULL,
   `PERSON`      VARCHAR(100)
                 CHARACTER SET 'utf8' NOT NULL,
   `CONVERSION`  DECIMAL(18, 9)       NOT NULL,
   `CURRENCY_ID` INT(11)              NOT NULL,
   `DATE`        DATETIME             NOT NULL,
   `ARMORED_ID`  INT(11)              NOT NULL,
-  `DESCRIPTION` VARCHAR(250)
+  `DESCRIPTION` VARCHAR(255)
                 CHARACTER SET 'utf8' NULL     DEFAULT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_COMMISSION_ARMORED`
@@ -585,10 +542,10 @@ DROP TABLE IF EXISTS `armoredcars`.`commission_payment`;
 
 CREATE TABLE IF NOT EXISTS `armoredcars`.`commission_payment` (
   `ID`            INT(11)              NOT NULL AUTO_INCREMENT,
-  `PRICE`         DECIMAL(18, 3)       NOT NULL,
+  `AMOUNT`        DECIMAL(18, 3)       NOT NULL,
   `DATE`          DATETIME             NOT NULL,
   `COMMISSION_ID` INT(11)              NOT NULL,
-  `DESCRIPTION`   VARCHAR(250)
+  `DESCRIPTION`   VARCHAR(255)
                   CHARACTER SET 'utf8' NULL     DEFAULT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_COMMISSION_PAYMENT_COMMISSION`

@@ -2,28 +2,30 @@
 
 <div class="container-fluid">
 
-    <h2 ng-if="isNewClient()">Registrar cliente</h2>
-    <h2 ng-if="section == 'CLIENT-EDIT'">Editar cliente</h2>
-    <h2 ng-if="section == 'CLIENT-VIEW'">Datos del cliente</h2>
+    <h2 ng-if="isNewClient()">Registrar perdido</h2>
+    <h2 ng-if="section == 'CLIENT-EDIT'">Editar pedido</h2>
+    <h2 ng-if="section == 'CLIENT-VIEW'">Datos del pedido</h2>
+    <hr/>
+    <h3>Detalle de entrega</h3>
     <div class="row">
         <div class="col-xs-12">
-            <form name="form" novalidate>
+            <form name="form" ng-submit="save()">
                 <table class="table table-hover">
                     <tbody>
-                    <tr ng-if="!isNewClient()">
-                        <td>Id de cliente</td>
-                        <td>{{client.id}}</td>
+                    <tr ng-if="!isNew()">
+                        <td>Id del pedido</td>
+                        <td>{{armored.id}}</td>
                     </tr>
                     <tr>
-                        <td>Nombre</td>
+                        <td>C&oacute;digo</td>
                         <td>
-                            <input name="name" ng-if="canEditData()" type="text" ng-model="client.name"
-                                   class="input-tag" ng-pattern="/^.+$/" required/>
-                            <p ng-if="!canEditData()">{{client.name}}</p>
-                            <div ng-show="form.name.$dirty" ng-messages="form.name.$error"
+                            <input name="code" ng-if="canEditData()" type="text" ng-model="armored.code"
+                                   class="input-tag" ng-pattern="/^[0-9]+$/" required/>
+                            <p ng-if="!canEditData()">{{armored.code}}</p>
+                            <div ng-show="form.code.$dirty" ng-messages="form.code.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
-                                <div ng-message="pattern">El nombre no tiene un formato v&aacute;lido</div>
+                                <div ng-message="pattern">El c&oacute;digo no tiene un formato v&aacute;lido</div>
                             </div>
                         </td>
                     </tr>
@@ -42,7 +44,7 @@
                             <input name="document" ng-if="canEditData()" type="text" ng-model="client.document"
                                    ng-pattern="getDocumentNumberPattern()" required class="input-tag">
                             <p ng-if="!canEditData()">{{client.document}}</p>
-                            <div ng-show="form.document.$dirty" ng-messages="form.document.$error"
+                            <div ng-show="clientForm.document.$dirty" ng-messages="clientForm.document.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
                                 <div ng-message="pattern">

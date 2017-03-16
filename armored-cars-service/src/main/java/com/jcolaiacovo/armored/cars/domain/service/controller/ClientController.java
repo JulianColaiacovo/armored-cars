@@ -28,16 +28,17 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public Client getClientById(@PathVariable int id) {
-        return this.clientService.getClientById(id);
+        return this.clientService.getById(id);
     }
 
     @PostMapping("/save")
     public Client saveClient(@RequestBody Client client) {
-        return this.clientService.save(client);
+        this.clientService.save(client);
+        return client;
     }
 
     @DeleteMapping("/delete/{id}")
-    public void saveClient(@PathVariable int id) {
+    public void deleteClient(@PathVariable int id) {
         this.clientService.delete(id);
     }
 

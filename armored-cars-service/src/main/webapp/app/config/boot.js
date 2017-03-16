@@ -3,16 +3,16 @@ App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$ti
     function ($rootScope, $templateCache, $cookies, $location, $modal, $timeout, $route, Security) {
 
         $rootScope.initialize = function () {
-            if ($cookies.token) $rootScope.token = $cookies.token;
-            if ($cookies.logged_user) $rootScope.logged_user = $cookies.logged_user;
+            if ($cookies.get("token")) $rootScope.token = $cookies.get("token");
+            if ($cookies.get("logged_user")) $rootScope.logged_user = $cookies.get("logged_user");
         };
 
         $rootScope.login = function (token, userName) {
             $rootScope.token = token;
             $rootScope.logged_user = userName;
 
-            $cookies.token = $rootScope.token;
-            $cookies.logged_user = $rootScope.logged_user;
+            $cookies.put("token", $rootScope.token);
+            $cookies.put("logged_user", $rootScope.logged_user);
 
             $location.path(BASE_PATH);
         };
@@ -22,8 +22,8 @@ App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$ti
                 $rootScope.token = null;
                 $rootScope.logged_user = null;
 
-                delete $cookies.token;
-                delete $cookies.logged_user;
+                $cookies.remove("token");
+                $cookies.remove("logged_user");
 
                 $location.path(BASE_PATH);
             });

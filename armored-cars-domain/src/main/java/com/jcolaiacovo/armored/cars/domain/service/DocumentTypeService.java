@@ -10,13 +10,8 @@ import java.util.List;
 /**
  * Created by Julian on 15/01/2017.
  */
-@Transactional
 @Service
 public class DocumentTypeService {
-
-    public DocumentTypeService() {
-
-    }
 
     public List<DocumentType> getAllDocumentTypes() {
         return Lists.newArrayList(DocumentType.values());
