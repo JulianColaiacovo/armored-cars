@@ -26,7 +26,7 @@ public class AdditionalCollection {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ADDITIONAL_ID", nullable = false)
     private Additional additional;
 

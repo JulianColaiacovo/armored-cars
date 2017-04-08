@@ -25,8 +25,8 @@ public class BillingAndReference {
     @Column(name = "CONTACT_PERSON", length = 100)
     private String contactPerson;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BILL_TO_CLIENT_ID")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "BILL_TO_CLIENT_ID", nullable = false)
     private Client billToClient;
 
     public BillingAndReference() {

@@ -3,7 +3,6 @@ package com.jcolaiacovo.armored.cars.domain.dao;
 import com.jcolaiacovo.armored.cars.domain.model.Collection;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,11 +14,11 @@ import java.util.List;
 public class CollectionDao extends AbstractDao<Collection> {
 
     @Autowired
-    public CollectionDao(@Qualifier(value = "sessionFactory") SessionFactory sessionFactory) {
+    public CollectionDao(SessionFactory sessionFactory) {
         super(Collection.class, sessionFactory);
     }
 
-    public List<Collection> getAllCollections() {
+    public List<Collection> getAll() {
         return (List<Collection>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from COLLECTION;")
                 .addEntity(Collection.class)
                 .list();

@@ -1,10 +1,10 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.ClientDao;
 import com.jcolaiacovo.armored.cars.domain.model.Client;
-import com.jcolaiacovo.armored.cars.service.exceptions.DeleteGenericClientException;
-import com.jcolaiacovo.armored.cars.service.exceptions.ModifyGenericClientException;
+import com.jcolaiacovo.armored.cars.domain.service.exceptions.DeleteGenericClientException;
+import com.jcolaiacovo.armored.cars.domain.service.exceptions.ModifyGenericClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +27,8 @@ public class ClientService extends AbstractDaoService<Client> {
         this.clientDao = clientDao;
     }
 
-    public List<Client> getAllClients() {
-        return this.clientDao.getAllClients();
+    public List<Client> getAll() {
+        return this.clientDao.getAll();
     }
 
     public void save(Client client) {

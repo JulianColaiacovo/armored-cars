@@ -25,6 +25,7 @@
     "font-awesome": "~4.0.3",
     "lodash": "~3.10.1",
     "angular-http-auth": "1.2.2",
-    "textAngular": "1.2.0"
+    "textAngular": "1.2.0",
+    "angular-bootstrap-datetimepicker-directive": "0.1.3"
   }
 }

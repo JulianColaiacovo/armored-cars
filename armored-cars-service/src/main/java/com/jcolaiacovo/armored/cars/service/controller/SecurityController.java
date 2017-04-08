@@ -2,13 +2,9 @@ package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;
 import com.jcolaiacovo.armored.cars.domain.login.User;
-import com.jcolaiacovo.armored.cars.service.SecurityService;
+import com.jcolaiacovo.armored.cars.domain.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping("/security")

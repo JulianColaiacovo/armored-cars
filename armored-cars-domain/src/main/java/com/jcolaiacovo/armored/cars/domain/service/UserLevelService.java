@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.google.common.collect.Lists;
 import com.jcolaiacovo.armored.cars.domain.model.UserLevel;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class UserLevelService {
 
-    public List<UserLevel> getAllUserLevels() {
+    public List<UserLevel> getAll() {
         return Lists.newArrayList(UserLevel.values());
     }
 

@@ -1,7 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.model.DocumentType;
-import com.jcolaiacovo.armored.cars.service.DocumentTypeService;
+import com.jcolaiacovo.armored.cars.domain.service.DocumentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Julian on 15/01/2017.
  */
 @RestController
-@RequestMapping("/document-type")
+@RequestMapping("/document-types")
 public class DocumentTypeController {
 
     private DocumentTypeService documentTypeService;
@@ -24,8 +24,8 @@ public class DocumentTypeController {
     }
 
     @GetMapping
-    public List<DocumentType> getAllDocumentTypes() {
-        return this.documentTypeService.getAllDocumentTypes();
+    public List<DocumentType> getAll() {
+        return this.documentTypeService.getAll();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service.exceptions;
+package com.jcolaiacovo.armored.cars.domain.service.exceptions;
 
 /**
  * Created by Julian on 27/01/2017.

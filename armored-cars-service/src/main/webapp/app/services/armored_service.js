@@ -1,7 +1,7 @@
 //begin armored_service.js
 App.factory('Armored', ['$resource', '$rootScope', function ($resource, $rootScope) {
 
-    var urlBase = "/" + $rootScope.appContext + "/armored";
+    var urlBase = "/" + $rootScope.appContext + "/armoreds";
 
     var armoredOp = {};
 
@@ -18,11 +18,11 @@ App.factory('Armored', ['$resource', '$rootScope', function ($resource, $rootSco
     };
 
     armoredOp.save = function (body, callback, onError) {
-        $resource(urlBase + '/save/', {}, {}).save({}, body, callback, onError);
+        $resource(urlBase, {}, {}).save({}, body, callback, onError);
     };
 
     armoredOp.delete = function (clientId, body, callback, onError) {
-        $resource(urlBase + '/delete/' + clientId, {}, {}).delete({}, body, callback, onError);
+        $resource(urlBase + '/' + clientId, {}, {}).delete({}, body, callback, onError);
     };
 
     return armoredOp;

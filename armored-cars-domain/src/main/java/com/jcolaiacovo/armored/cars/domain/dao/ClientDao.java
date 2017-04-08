@@ -15,11 +15,11 @@ import java.util.List;
 public class ClientDao extends AbstractDao<Client> {
 
     @Autowired
-    public ClientDao(@Qualifier(value = "sessionFactory") SessionFactory sessionFactory) {
+    public ClientDao(SessionFactory sessionFactory) {
         super(Client.class, sessionFactory);
     }
 
-    public List<Client> getAllClients() {
+    public List<Client> getAll() {
         return (List<Client>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CLIENT;")
                 .addEntity(Client.class)
                 .list();

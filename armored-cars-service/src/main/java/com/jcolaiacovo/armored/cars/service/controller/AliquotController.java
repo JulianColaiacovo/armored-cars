@@ -1,6 +1,6 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
-import com.jcolaiacovo.armored.cars.service.AliquotService;
+import com.jcolaiacovo.armored.cars.domain.service.AliquotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Julian on 15/01/2017.
  */
 @RestController
-@RequestMapping("/aliquot")
+@RequestMapping("/aliquots")
 public class AliquotController {
 
     private AliquotService aliquotService;

@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.ArmoredDao;
@@ -23,13 +23,13 @@ public class ArmoredService extends AbstractDaoService<Armored> {
         this.armoredDao = armoredDao;
     }
 
-    public List<Armored> getAllArmoreds() {
-        return this.armoredDao.getAllArmoreds();
-    }
-
     @Override
     protected AbstractDao<Armored> getDao() {
         return this.armoredDao;
+    }
+
+    public List<Armored> getAll() {
+        return this.armoredDao.getAll();
     }
 
 }

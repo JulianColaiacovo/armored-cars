@@ -3,11 +3,10 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
     function ($rootScope, $scope, $location, $http, Client) {
 
         $scope.initialize = function () {
-            $rootScope.section = "CLIENT_LIST";
+            $rootScope.section = "CLIENT-LIST";
             $scope.page_size = 15;
             $scope.current_page = 1;
             $scope.loadClients();
-            $scope.lastBillDate = null;
         };
 
         $scope.loadClients = function () {
@@ -19,11 +18,11 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
         $scope.initialize();
 
         $scope.view = function (id) {
-            $location.path("client/view/" + id);
+            $location.path("clients/view/" + id);
         };
 
         $scope.edit = function (id) {
-            $location.path("client/edit/" + id);
+            $location.path("clients/edit/" + id);
         };
 
         $scope.delete = function (id) {
@@ -59,7 +58,7 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
         };
 
         var onDeleteOk = function () {
-            $location.path('/client/');
+            $location.path('/clients/');
         };
 
         var onDeleteError = function (response) {

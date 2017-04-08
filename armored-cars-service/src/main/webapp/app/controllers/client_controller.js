@@ -67,7 +67,7 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
         };
 
         var onSaveOk = function (response) {
-            $location.path('/client/view/' + response.id);
+            $location.path('/clients/view/' + response.id);
         };
 
         var onSaveError = function (response) {

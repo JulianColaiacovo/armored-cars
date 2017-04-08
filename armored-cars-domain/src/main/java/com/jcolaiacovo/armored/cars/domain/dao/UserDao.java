@@ -4,7 +4,6 @@ import com.jcolaiacovo.armored.cars.domain.model.User;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,7 +12,7 @@ import java.util.Optional;
 public class UserDao extends AbstractDao<User> {
 
     @Autowired
-    public UserDao(@Qualifier(value = "sessionFactory") SessionFactory sessionFactory) {
+    public UserDao(SessionFactory sessionFactory) {
         super(User.class, sessionFactory);
     }
 

@@ -19,7 +19,7 @@ public class BillDao extends AbstractDao<Bill> {
         super(Bill.class, sessionFactory);
     }
 
-    public List<Bill> getAllBills() {
+    public List<Bill> getAll() {
         return (List<Bill>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL;")
                 .addEntity(Bill.class)
                 .list();

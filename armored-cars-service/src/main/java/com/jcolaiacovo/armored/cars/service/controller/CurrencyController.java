@@ -1,7 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.model.Currency;
-import com.jcolaiacovo.armored.cars.service.CurrencyService;
+import com.jcolaiacovo.armored.cars.domain.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Julian on 14/01/2017.
  */
 @RestController
-@RequestMapping("/currency")
+@RequestMapping("/currencies")
 public class CurrencyController {
 
     private CurrencyService currencyService;
@@ -24,8 +24,8 @@ public class CurrencyController {
     }
 
     @GetMapping
-    public List<Currency> getAllCurrencies() {
-        return this.currencyService.getAllCurrencies();
+    public List<Currency> getAll() {
+        return this.currencyService.getAll();
     }
 
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ public class ArmoredDao extends AbstractDao<Armored> {
         super(Armored.class, sessionFactory);
     }
 
-    public List<Armored> getAllArmoreds() {
+    @Transactional
+    public List<Armored> getAll() {
         return (List<Armored>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from ARMORED;")
                 .addEntity(Armored.class)
                 .list();

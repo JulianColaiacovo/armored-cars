@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.UserDao;
 import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;

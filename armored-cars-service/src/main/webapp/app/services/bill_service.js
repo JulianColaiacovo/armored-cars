@@ -1,7 +1,7 @@
 //begin bill_service.js
 App.factory('Bill', ['$resource', '$rootScope', 'BillTypeCode', function ($resource, $rootScope) {
 
-    var urlBase = "/" + $rootScope.appContext + "/bill";
+    var urlBase = "/" + $rootScope.appContext + "/bills";
 
     var billOp = {};
 
@@ -18,11 +18,11 @@ App.factory('Bill', ['$resource', '$rootScope', 'BillTypeCode', function ($resou
     };
 
     billOp.save = function (body, callback, onError) {
-        $resource(urlBase + '/save/', {}, {}).save({}, body, callback, onError);
+        $resource(urlBase, {}, {}).save({}, body, callback, onError);
     };
 
     billOp.delete = function (clientId, body, callback, onError) {
-        $resource(urlBase + '/delete/' + clientId, {}, {}).delete({}, body, callback, onError);
+        $resource(urlBase + '/' + clientId, {}, {}).delete({}, body, callback, onError);
     };
 
     return billOp;

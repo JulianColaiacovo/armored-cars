@@ -2,14 +2,14 @@
 
 <div class="container-fluid">
 
-    <h2 ng-if="isNewClient()">Registrar perdido</h2>
-    <h2 ng-if="section == 'CLIENT-EDIT'">Editar pedido</h2>
-    <h2 ng-if="section == 'CLIENT-VIEW'">Datos del pedido</h2>
+    <h2 ng-if="isNew()">Registrar blindaje</h2>
+    <h2 ng-if="isEdit()">Editar pedido</h2>
+    <h2 ng-if="isView()">Datos del pedido</h2>
     <hr/>
-    <h3>Detalle de entrega</h3>
     <div class="row">
         <div class="col-xs-12">
             <form name="form" ng-submit="save()">
+                <h3>Detalle de entrega</h3>
                 <table class="table table-hover">
                     <tbody>
                     <tr ng-if="!isNew()">
@@ -17,8 +17,8 @@
                         <td>{{armored.id}}</td>
                     </tr>
                     <tr>
-                        <td>C&oacute;digo</td>
-                        <td>
+                        <td class="col-xs-6">C&oacute;digo</td>
+                        <td class="col-xs-6">
                             <input name="code" ng-if="canEditData()" type="text" ng-model="armored.code"
                                    class="input-tag" ng-pattern="/^[0-9]+$/" required/>
                             <p ng-if="!canEditData()">{{armored.code}}</p>
@@ -30,41 +30,132 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Tipo de documento</td>
-                        <td>
-                            <select ng-if="canEditData()" ng-model="client.document_type"
-                                    ng-change="documentTypeChanged()"
-                                    ng-options="document_type for document_type in document_types"></select>
-                            <p ng-if=" !canEditData()">{{client.document_type}}</p>
+                        <td class="col-xs-6">Fecha de entrada</td>
+                        <td class="col-xs-6">
+                            <input name="entry_date" ng-if="canEditData()" type="date" ng-model="armored.entry_date"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.entry_date}}</p>
                         </td>
                     </tr>
                     <tr>
-                        <td>Número de documento</td>
-                        <td>
-                            <input name="document" ng-if="canEditData()" type="text" ng-model="client.document"
-                                   ng-pattern="getDocumentNumberPattern()" required class="input-tag">
-                            <p ng-if="!canEditData()">{{client.document}}</p>
-                            <div ng-show="clientForm.document.$dirty" ng-messages="clientForm.document.$error"
+                        <td class="col-xs-6">Fecha de entrerga estimada</td>
+                        <td class="col-xs-6">
+                            <input name="delivery_date" ng-if="canEditData()" type="date"
+                                   ng-model="armored.delivery_date"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.delivery_date}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Fecha de salida</td>
+                        <td class="col-xs-6">
+                            <input name="departure_date" ng-if="canEditData()" type="date"
+                                   ng-model="armored.departure_date"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.departure_date}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Stock</td>
+                        <td class="col-xs-6">
+                            <select ng-if="canEditData()" ng-model="armored.stock_status"
+                                    ng-change="documentTypeChanged()"
+                                    ng-options="stock_status for stock_status in stock_statuses"></select>
+                            <p ng-if=" !canEditData()">{{armored.stock_status}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Precio</td>
+                        <td class="col-xs-6">
+                            <input name="price" ng-if="canEditData()" type="numeric"
+                                   ng-model="armored.price"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.price}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3>Detalle del auto</h3>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td class="col-xs-6">Marca</td>
+                        <td class="col-xs-6">
+                            <input name="brand" ng-if="canEditData()" type="text" ng-model="armored.car.brand"
+                                   class="input-tag" required/>
+                            <p ng-if="!canEditData()">{{armored.car.brand}}</p>
+                            <div ng-show="form.brand.$dirty" ng-messages="form.brand.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
-                                <div ng-message="pattern">
-                                    El n&uacute;mero de documento no tiene un formato v&aacute;lido
-                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>E-mail</td>
-                        <td>
-                            <input ng-if="canEditData()" type="text" ng-model="client.email" class="input-tag">
-                            <p ng-if="!canEditData()">{{client.email}}</p>
+                        <td class="col-xs-6">Modelo</td>
+                        <td class="col-xs-6">
+                            <input name="model" ng-if="canEditData()" type="text" ng-model="armored.car.model"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.car.model}}</p>
                         </td>
                     </tr>
                     <tr>
-                        <td>Teléfono</td>
-                        <td>
-                            <input ng-if="canEditData()" type="text" ng-model="client.phone" class="input-tag">
-                            <p ng-if="!canEditData()">{{client.phone}}</p>
+                        <td class="col-xs-6">N&uacute;mero de chassis</td>
+                        <td class="col-xs-6">
+                            <input name="chassis_number" ng-if="canEditData()" type="text"
+                                   ng-model="armored.car.chassis_number"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.car.chassis_number}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">N&uacute;mero de motor</td>
+                        <td class="col-xs-6">
+                            <input name="motor_number" ng-if="canEditData()" type="text"
+                                   ng-model="armored.car.motor_number"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.car.motor_number}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Patente</td>
+                        <td class="col-xs-6">
+                            <input name="domain" ng-if="canEditData()" type="text" ng-model="armored.car.domain"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.car.domain}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3>Datos de facturación y referencia</h3>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td class="col-xs-6">Titular (RENAR)</td>
+                        <td class="col-xs-6">
+                            <input name="owner" ng-if="canEditData()" type="text"
+                                   ng-model="armored.billing_and_reference.owner"
+                                   class="input-tag" required/>
+                            <p ng-if="!canEditData()">{{armored.billing_and_reference.owner}}</p>
+                            <div ng-show="form.owner.$dirty" ng-messages="form.owner.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Persona de contacto</td>
+                        <td class="col-xs-6">
+                            <input name="domain" ng-if="canEditData()" type="text" ng-model="armored.billing_and_reference.contact_person"
+                                   class="input-tag"/>
+                            <p ng-if="!canEditData()">{{armored.billing_and_reference.contact_person}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">Cliente a facturar</td>
+                        <td class="col-xs-6">
+                            <input name="domain" ng-if="canEditData()" type="text" ng-model="armored.billing_and_reference.bill_to_client.id"
+                                   class="input-tag" required/>
+                            <p ng-if="!canEditData()">{{armored.billing_and_reference.bill_to_client.id}}</p>
                         </td>
                     </tr>
                     </tbody>

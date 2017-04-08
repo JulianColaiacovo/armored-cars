@@ -10,8 +10,16 @@ window.App = angular
             'ui.bootstrap',
             'ngSanitize',
             'chieffancypants.loadingBar',
-            'http-auth-interceptor'
+            'http-auth-interceptor',
+            'datetimepicker'
         ]
-    );
+    ).config([
+        'datetimepickerProvider',
+        function (datetimepickerProvider) {
+            datetimepickerProvider.setOptions({
+                locale: 'es'
+            });
+        }
+    ]);
 
 //end app.config/application.js

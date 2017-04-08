@@ -1,7 +1,7 @@
 //begin document_type_service.js
 App.factory('DocumentType', ['$resource', '$rootScope', function ($resource, $rootScope) {
 
-    var urlBase = "/" + $rootScope.appContext + "/document-type/";
+    var urlBase = "/" + $rootScope.appContext + "/document-types/";
 
     var documentTypeOp = {};
 

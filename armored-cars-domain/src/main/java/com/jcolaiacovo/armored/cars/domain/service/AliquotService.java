@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.model.Aliquot;
 import org.springframework.stereotype.Service;

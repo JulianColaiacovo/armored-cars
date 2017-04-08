@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.CurrencyDao;
@@ -23,8 +23,8 @@ public class CurrencyService extends AbstractDaoService<Currency> {
         this.currencyDao = currencyDao;
     }
 
-    public List<Currency>  getAllCurrencies() {
-        return this.currencyDao.getAllCurrencies();
+    public List<Currency>  getAll() {
+        return this.currencyDao.getAll();
     }
 
     @Override

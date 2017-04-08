@@ -26,7 +26,7 @@ public class CommissionPayment {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COMMISSION_ID", nullable = false)
     private Commission commission;
 

@@ -1,7 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.model.UserLevel;
-import com.jcolaiacovo.armored.cars.service.UserLevelService;
+import com.jcolaiacovo.armored.cars.domain.service.UserLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Julian on 29/01/2017.
  */
 @RestController
-@RequestMapping("/user-level")
+@RequestMapping("/user-levels")
 public class UserLevelController {
 
     private UserLevelService userLevelService;
@@ -24,8 +24,8 @@ public class UserLevelController {
     }
 
     @GetMapping
-    public List<UserLevel> getAllDocumentTypes() {
-        return this.userLevelService.getAllUserLevels();
+    public List<UserLevel> getAll() {
+        return this.userLevelService.getAll();
     }
 
 }

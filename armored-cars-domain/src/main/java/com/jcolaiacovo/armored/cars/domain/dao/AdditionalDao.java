@@ -20,7 +20,7 @@ public class AdditionalDao extends AbstractDao<Additional> {
         super(Additional.class, sessionFactory);
     }
 
-    public List<Additional> getAllAdditionals() {
+    public List<Additional> getAll() {
         return (List<Additional>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from ADDITIONAL;")
                 .addEntity(Additional.class)
                 .list();

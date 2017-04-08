@@ -19,7 +19,7 @@ public class AdditionalCollectionDao extends AbstractDao<AdditionalCollection> {
         super(AdditionalCollection.class, sessionFactory);
     }
 
-    public List<AdditionalCollection> getAllAdditionalCollections() {
+    public List<AdditionalCollection> getAll() {
         return (List<AdditionalCollection>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from ADDITIONAL_COLLECTION;")
                 .addEntity(AdditionalCollection.class)
                 .list();

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -18,6 +19,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @EnableSpringConfigured
+@EnableTransactionManagement
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = {"com.jcolaiacovo.armored.cars"})
 public class WebMvcConfig extends WebMvcConfigurerAdapter {

@@ -19,7 +19,7 @@ public class CurrencyDao extends AbstractDao<Currency> {
         super(Currency.class, sessionFactory);
     }
 
-    public List<Currency> getAllCurrencies() {
+    public List<Currency> getAll() {
         return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY;")
                 .addEntity(Currency.class)
                 .list();

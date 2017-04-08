@@ -1,7 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.model.Armored;
-import com.jcolaiacovo.armored.cars.service.ArmoredService;
+import com.jcolaiacovo.armored.cars.domain.service.ArmoredService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Julian on 14/01/2017.
  */
 @RestController
-@RequestMapping("/armored")
+@RequestMapping("/armoreds")
 public class ArmoredController {
 
     private ArmoredService armoredService;
@@ -22,23 +22,23 @@ public class ArmoredController {
     }
 
     @GetMapping
-    public List<Armored> getAllArmoreds() {
-        return this.armoredService.getAllArmoreds();
+    public List<Armored> getAll() {
+        return this.armoredService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Armored getArmoredById(@PathVariable int id) {
+    public Armored getById(@PathVariable int id) {
         return this.armoredService.getById(id);
     }
 
-    @PostMapping("/save")
-    public Armored saveArmored(@RequestBody Armored armored) {
+    @PostMapping
+    public Armored save(@RequestBody Armored armored) {
         this.armoredService.save(armored);
         return armored;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteArmored(@PathVariable int id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
         this.armoredService.delete(id);
     }
 

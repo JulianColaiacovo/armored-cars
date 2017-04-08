@@ -31,7 +31,7 @@ public class Commission {
     @Column(name = "CONVERSION", nullable = false)
     private BigDecimal conversion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CURRENCY_ID", nullable = false)
     private Currency currency;
 
@@ -39,7 +39,7 @@ public class Commission {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARMORED_ID", nullable = false)
     private Armored armored;
 

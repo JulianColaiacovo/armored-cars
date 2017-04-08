@@ -1,7 +1,7 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.domain.model.BillType;
-import com.jcolaiacovo.armored.cars.service.BillTypeService;
+import com.jcolaiacovo.armored.cars.domain.service.BillTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Julian on 29/01/2017.
  */
 @RestController
-@RequestMapping("/bill-type")
+@RequestMapping("/bill-types")
 public class BillTypeController {
 
     private BillTypeService billTypeService;

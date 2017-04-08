@@ -22,7 +22,7 @@ public class Collection {
     @GeneratedValue
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BILL_ID", nullable = false)
     private Bill bill;
 
@@ -48,7 +48,7 @@ public class Collection {
     @Column(name = "DESCRIPTION", nullable = false)
     private BigDecimal description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CLIENT_ID", nullable = false)
     private Client client;
 

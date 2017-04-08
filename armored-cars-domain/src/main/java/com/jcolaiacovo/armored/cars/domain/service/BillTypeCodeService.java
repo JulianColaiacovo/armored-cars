@@ -1,12 +1,12 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
-import com.jcolaiacovo.armored.cars.domain.dao.BillTypeCodeDao;
+import com.google.common.collect.Lists;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Julian on 09/01/2017.
@@ -15,15 +15,26 @@ import java.util.List;
 @Service
 public class BillTypeCodeService {
 
-    private BillTypeCodeDao billTypeCodeDao;
-
-    @Autowired
-    public BillTypeCodeService(BillTypeCodeDao billTypeCodeDao) {
-        this.billTypeCodeDao = billTypeCodeDao;
+    public List<BillTypeCode> getBillTypeCodes(Boolean active) {
+        if (active == null) {
+            return this.getAllBillTypeCodes();
+        } else if (active) {
+            return this.getActiveBillTypeCodes();
+        } else {
+            return this.getDisabledBillTypeCodes();
+        }
     }
 
-    public List<BillTypeCode> getBillTypeCodes(Boolean enabled) {
-        return this.billTypeCodeDao.getBillTypeCodes(enabled);
+    private List<BillTypeCode> getAllBillTypeCodes() {
+        return Lists.newArrayList(BillTypeCode.values());
+    }
+
+    private List<BillTypeCode> getActiveBillTypeCodes() {
+        return this.getAllBillTypeCodes().stream().filter(BillTypeCode::isActive).collect(Collectors.toList());
+    }
+
+    private List<BillTypeCode> getDisabledBillTypeCodes() {
+        return this.getAllBillTypeCodes().stream().filter(billTypeCode -> !billTypeCode.isActive()).collect(Collectors.toList());
     }
 
 }

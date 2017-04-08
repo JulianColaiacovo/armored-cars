@@ -26,7 +26,7 @@ public class Bill {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARMORED_ID", nullable = false)
     private Armored armored;
 
@@ -36,7 +36,7 @@ public class Bill {
     @Column(name = "NUMBER", nullable = false)
     private Long number;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CURRENCY_ID", nullable = false)
     private Currency currency;
 
@@ -68,14 +68,14 @@ public class Bill {
     @Column(name = "TOTAL_AMOUNT", nullable = false)
     private BigDecimal totalAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "APPLY_BILL_ID")
     private Bill applyBill;
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BILL_TO_ID", nullable = false)
     private Client billTo;
 

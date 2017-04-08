@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.service;
+package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.BillDao;
@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Julian on 15/03/2017.
  */
-@Service
 @Transactional
+@Service
 public class BillService extends AbstractDaoService<Bill> {
 
     private BillDao billDao;
@@ -20,6 +21,10 @@ public class BillService extends AbstractDaoService<Bill> {
     @Autowired
     public BillService(BillDao billDao) {
         this.billDao = billDao;
+    }
+
+    public List<Bill> getAll() {
+        return this.billDao.getAll();
     }
 
     @Override
