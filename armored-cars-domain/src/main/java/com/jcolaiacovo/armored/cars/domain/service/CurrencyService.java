@@ -23,8 +23,18 @@ public class CurrencyService extends AbstractDaoService<Currency> {
         this.currencyDao = currencyDao;
     }
 
-    public List<Currency>  getAll() {
-        return this.currencyDao.getAll();
+    public Currency getByCode(String code) {
+        return this.currencyDao.getByCode(code);
+    }
+
+    public List<Currency> getCurrencies(Boolean enabled) {
+        if (enabled == null) {
+            return this.currencyDao.getAll();
+        } else if (enabled) {
+            return this.currencyDao.getEnabledCurrencies();
+        } else {
+            return this.currencyDao.getDisablesCurrencies();
+        }
     }
 
     @Override

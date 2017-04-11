@@ -1,7 +1,8 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
-import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
+import com.jcolaiacovo.armored.cars.api.model.BillTypeCodeDTO;
 import com.jcolaiacovo.armored.cars.domain.service.BillTypeCodeService;
+import com.jcolaiacovo.armored.cars.domain.transformer.BillTypeCodeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,16 +18,19 @@ import java.util.List;
 @RequestMapping("/bill-type-codes")
 public class BillTypeCodeController {
 
+    private BillTypeCodeTransformer billTypeCodeTransformer;
     private BillTypeCodeService billTypeCodeService;
 
     @Autowired
-    public BillTypeCodeController(BillTypeCodeService billTypeCodeService) {
+    public BillTypeCodeController(BillTypeCodeTransformer billTypeCodeTransformer,
+                                  BillTypeCodeService billTypeCodeService) {
+        this.billTypeCodeTransformer = billTypeCodeTransformer;
         this.billTypeCodeService = billTypeCodeService;
     }
 
     @GetMapping
-    public List<BillTypeCode> getBillTypeCodes(@RequestParam(required = false) Boolean enabled) {
-        return this.billTypeCodeService.getBillTypeCodes(enabled);
+    public List<BillTypeCodeDTO> getAll(@RequestParam(required = false) Boolean enabled) {
+        return this.billTypeCodeTransformer.transformToDTOAll(this.billTypeCodeService.getBillTypeCodes(enabled));
     }
 
 }

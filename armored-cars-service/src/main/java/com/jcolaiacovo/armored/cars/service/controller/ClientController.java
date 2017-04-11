@@ -1,7 +1,9 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
+import com.jcolaiacovo.armored.cars.api.model.ClientDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.domain.service.ClientService;
+import com.jcolaiacovo.armored.cars.domain.transformer.ClientTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,27 +16,32 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
+    private final ClientTransformer clientTransformer;
 
     @Autowired
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, ClientTransformer clientTransformer) {
         this.clientService = clientService;
+        this.clientTransformer = clientTransformer;
     }
 
     @GetMapping
-    public List<Client> getAll() {
-        return this.clientService.getAll();
+    public List<ClientDTO> getAll() {
+        List<Client> clients = this.clientService.getAll();
+        return this.clientTransformer.transformToDTOAll(clients);
     }
 
     @GetMapping("/{id}")
-    public Client getById(@PathVariable int id) {
-        return this.clientService.getById(id);
+    public ClientDTO getById(@PathVariable int id) {
+        Client client = this.clientService.getById(id);
+        return this.clientTransformer.transformToDTO(client);
     }
 
     @PostMapping
-    public Client save(@RequestBody Client client) {
+    public ClientDTO save(@RequestBody ClientDTO clientDTO) {
+        Client client = this.clientTransformer.transform(clientDTO);
         this.clientService.save(client);
-        return client;
+        return this.clientTransformer.transformToDTO(client);
     }
 
     @DeleteMapping("/{id}")

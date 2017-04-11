@@ -25,9 +25,9 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             $location.path("clients/edit/" + id);
         };
 
-        $scope.delete = function (id) {
-            if (confirm("Esta seguro que desea eliminar el cliente numero " + id + "?")) {
-                Client.delete(id, onDeleteOk, onDeleteError);
+        $scope.delete = function (client) {
+            if (confirm("Esta seguro que desea eliminar el cliente " + client.name + "?")) {
+                Client.delete(client.id, onDeleteOk, onDeleteError);
             }
         };
 

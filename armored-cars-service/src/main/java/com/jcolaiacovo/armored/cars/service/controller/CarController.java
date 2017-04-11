@@ -1,7 +1,9 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
+import com.jcolaiacovo.armored.cars.api.model.CarDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Car;
 import com.jcolaiacovo.armored.cars.domain.service.CarService;
+import com.jcolaiacovo.armored.cars.domain.transformer.CarTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,13 @@ import java.util.List;
 @RequestMapping("/cars")
 public class CarController {
 
-    private CarService carService;
+    private final CarService carService;
+    private final CarTransformer carTransformer;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, CarTransformer carTransformer) {
         this.carService = carService;
+        this.carTransformer = carTransformer;
     }
 
     @GetMapping
@@ -32,9 +36,10 @@ public class CarController {
     }
 
     @PostMapping
-    public Car save(@RequestBody Car car) {
+    public CarDTO save(@RequestBody CarDTO carDTO) {
+        Car car = this.carTransformer.transform(carDTO);
         this.carService.save(car);
-        return car;
+        return this.carTransformer.transformToDTO(car);
     }
 
     @DeleteMapping("/{id}")

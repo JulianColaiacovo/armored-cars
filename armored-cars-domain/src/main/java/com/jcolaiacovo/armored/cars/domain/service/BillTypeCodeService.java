@@ -1,11 +1,11 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
-import com.google.common.collect.Lists;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,7 +26,7 @@ public class BillTypeCodeService {
     }
 
     private List<BillTypeCode> getAllBillTypeCodes() {
-        return Lists.newArrayList(BillTypeCode.values());
+        return BillTypeCode.getAllBillTypeCodes();
     }
 
     private List<BillTypeCode> getActiveBillTypeCodes() {

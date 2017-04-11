@@ -20,6 +20,10 @@
             <groupId>com.jcolaiacovo.armored.cars</groupId>
             <artifactId>armored-cars-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jcolaiacovo.armored.cars</groupId>
+            <artifactId>armored-cars-api</artifactId>
+        </dependency>
 
         <!-- Jetty -->
         <dependency>

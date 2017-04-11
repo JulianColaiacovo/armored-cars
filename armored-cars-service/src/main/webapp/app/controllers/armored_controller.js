@@ -4,6 +4,7 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
 
         $scope.initialize = function () {
             $scope.isSaving = false;
+            $scope.armored = {};
             setSection();
             loadStockStatuses();
             loadData();
@@ -20,11 +21,8 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
         $scope.save = function () {
             if ($scope.form.$valid) {
                 $scope.isSaving = true;
-                Client.get($scope.armored.billing_and_reference.bill_to_client.id, function (client) {
-                    $scope.armored.billing_and_reference.bill_to_client = client;
-                    Armored.save($scope.armored, onSaveOk, onSaveError);
-                    $scope.isSaving = false;
-                });
+                Armored.save($scope.armored, onSaveOk, onSaveError);
+                $scope.isSaving = false;
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
                     angular.forEach(controls, function (control) {
@@ -35,17 +33,11 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
         };
 
         var loadData = function () {
-            if ($scope.isNew()) {
-                $scope.armored = {
-                    "stock_status": "WITHOUT_STOCK",
-                    "billing_and_reference": {
-                        "bill_to_client": {
-                            "id": 1
-                        }
-                    }
-                };
-            } else {
+            if (!$scope.isNew()) {
                 Armored.get($routeParams.armored_id, function (response) {
+                    response.entry_date = new Date(response.entry_date);
+                    response.departure_date = new Date(response.departure_date);
+                    response.delivery_date = new Date(response.delivery_date);
                     $scope.armored = response;
                 });
             }
@@ -67,13 +59,14 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
 
         var onSaveError = function (response) {
             if (response.status != 200) {
-                $rootScope.globalError = 'Error saving armored';
+                $rootScope.globalError = 'Error al guardar el blindaje';
             }
         };
 
         var loadStockStatuses = function () {
             StockStatus.getAll(function (response) {
                 $scope.stock_statuses = response;
+                $scope.armored.stock_status = $scope.armored.stock_status || 'WITHOUT_STOCK';
             });
         };
 

@@ -1,7 +1,7 @@
 //begin bill_type_code_service.js
-App.factory('BillTypeCode', ['$resource', '$rootScope', function ($resource, $rootScope) {
+App.factory('Currency', ['$resource', '$rootScope', function ($resource, $rootScope) {
 
-    var urlBase = "/" + $rootScope.appContext + "/bill-type-codes";
+    var urlBase = "/" + $rootScope.appContext + "/currencies";
 
     var billTypeCodeOp = {};
 

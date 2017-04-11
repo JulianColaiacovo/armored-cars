@@ -5,6 +5,13 @@
 
     <name>Armored Cars</name>
     <description>Aplicación para facturar autos blindados</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.jcolaiacovo.armored.cars</groupId>
+            <artifactId>armored-cars</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <groupId>com.jcolaiacovo.armored.cars</groupId>
     <artifactId>armored-cars</artifactId>
@@ -12,6 +19,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>armored-cars-api</module>
         <module>armored-cars-domain</module>
         <module>armored-cars-service</module>
     </modules>

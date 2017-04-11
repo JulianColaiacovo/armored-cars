@@ -4,6 +4,8 @@ BASE_PATH = "/";
 LOGIN_PATH = '/users/login';
 ARMORED_LIST_PATH = '/armoreds';
 ARMORED_ACTION_PATH = '/armoreds/:action/:armored_id?';
+BILL_LIST_PATH = '/bills';
+BILL_ACTION_PATH = '/bills/:action/:bill_id?';
 CLIENT_LIST_PATH = '/clients';
 CLIENT_ACTION_PATH = '/clients/:action/:client_id?';
 NOTFOUND_PATH = "/errors/404";
@@ -20,6 +22,12 @@ App.config(['$routeProvider', function ($routeProvider) {
     }).when(ARMORED_ACTION_PATH, {
         templateUrl: 'assets/armored/actions.html',
         controller: 'ArmoredController'
+    }).when(BILL_LIST_PATH, {
+        templateUrl: 'assets/bill/list.html',
+        controller: 'BillListController'
+    }).when(BILL_ACTION_PATH, {
+        templateUrl: 'assets/bill/actions.html',
+        controller: 'BillController'
     }).when(CLIENT_LIST_PATH, {
         templateUrl: 'assets/clients/list.html',
         controller: 'ClientListController'
