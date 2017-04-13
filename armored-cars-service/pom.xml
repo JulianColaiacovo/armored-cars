@@ -20,6 +20,10 @@
             <groupId>com.jcolaiacovo.armored.cars</groupId>
             <artifactId>armored-cars-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jcolaiacovo.armored.cars</groupId>
+            <artifactId>armored-cars-api</artifactId>
+        </dependency>
 
         <!-- Jetty -->
         <dependency>
@@ -127,18 +131,6 @@
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Ejecutar gulp. -->
-                    <execution>
-                        <id>gulp</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>gulp</executable>
-                            <workingDirectory>${basedir}/src/main/webapp/</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>

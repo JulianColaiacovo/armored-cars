@@ -37,7 +37,7 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
 
         var onDeleteError = function (response) {
             if (response.status != 200) {
-                $rootScope.globalError = 'Error deleting client';
+                $rootScope.globalError = 'Error al borrar el blindaje';
             }
         };
 

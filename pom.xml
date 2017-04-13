@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>armored-cars-api</module>
         <module>armored-cars-domain</module>
         <module>armored-cars-service</module>
     </modules>

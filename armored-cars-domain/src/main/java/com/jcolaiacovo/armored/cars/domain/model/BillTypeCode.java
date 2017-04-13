@@ -1,6 +1,7 @@
 package com.jcolaiacovo.armored.cars.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.jcolaiacovo.armored.cars.domain.model.BillCode.*;
 import static com.jcolaiacovo.armored.cars.domain.model.BillType.*;
@@ -8,7 +9,6 @@ import static com.jcolaiacovo.armored.cars.domain.model.BillType.*;
 /**
  * Created by Julian on 09/01/2017.
  */
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BillTypeCode {
 
     BILL_A(BILL, A, true),
@@ -35,6 +35,10 @@ public enum BillTypeCode {
         this.billType = billType;
         this.billCode = billCode;
         this.active = active;
+    }
+
+    public static List<BillTypeCode> getAllBillTypeCodes() {
+        return Arrays.asList(values());
     }
 
     public BillType getBillType() {

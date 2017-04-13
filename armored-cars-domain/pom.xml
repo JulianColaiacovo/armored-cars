@@ -15,6 +15,11 @@
     <description>Armored Cars Domain</description>
 
     <dependencies>
+        <!-- Self projects -->
+        <dependency>
+            <groupId>com.jcolaiacovo.armored.cars</groupId>
+            <artifactId>armored-cars-api</artifactId>
+        </dependency>
 
         <!-- Logs -->
         <dependency>

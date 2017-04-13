@@ -65,7 +65,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="col-xs-6">Precio</td>
+                        <td class="col-xs-6">Valor de cotizaci&oacute;n</td>
                         <td class="col-xs-6">
                             <input name="price" ng-if="canEditData()" type="numeric"
                                    ng-model="armored.price"
@@ -153,9 +153,9 @@
                     <tr>
                         <td class="col-xs-6">Cliente a facturar</td>
                         <td class="col-xs-6">
-                            <input name="domain" ng-if="canEditData()" type="text" ng-model="armored.billing_and_reference.bill_to_client.id"
+                            <input name="domain" ng-if="canEditData()" type="text" ng-model="armored.billing_and_reference.bill_to_client_id"
                                    class="input-tag" required/>
-                            <p ng-if="!canEditData()">{{armored.billing_and_reference.bill_to_client.id}}</p>
+                            <p ng-if="!canEditData()">{{armored.billing_and_reference.bill_to_client_id}}</p>
                         </td>
                     </tr>
                     </tbody>

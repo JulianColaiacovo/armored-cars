@@ -1,78 +1,30 @@
-package com.jcolaiacovo.armored.cars.domain.model;
+package com.jcolaiacovo.armored.cars.api.model;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Julian on 09/01/2017.
+ * Created by Julian on 10/04/2017.
  */
-@Entity
-@DynamicUpdate
-@DynamicInsert
-@Table(name = "BILL")
-public class Bill {
+public class BillDTO {
 
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
     private int id;
-
-    @Column(name = "DATE", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ARMORED_ID", nullable = false)
-    private Armored armored;
-
-    @Column(name = "CONVERSION", nullable = false)
+    private int armoredId;
     private BigDecimal conversion;
-
-    @Column(name = "NUMBER", nullable = false)
     private Long number;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CURRENCY_ID", nullable = false)
-    private Currency currency;
-
-    @Column(name = "ALIQUOT", nullable = false)
+    private String currencyCode;
     private BigDecimal aliquot;
-
-    @Column(name = "TAXED_AMOUNT", nullable = false)
     private BigDecimal taxedAmount;
-
-    @Column(name = "UNTAXED_AMOUNT", nullable = false)
     private BigDecimal untaxedAmount;
-
-    @Column(name = "BILL_TYPE_CODE", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private BillTypeCode billTypeCode;
-
-    @Column(name = "VAT_AMOUNT", nullable = false)
+    private String billTypeCode;
     private BigDecimal vatAmount;
-
-    @Column(name = "TOTAL_AMOUNT", nullable = false)
     private BigDecimal totalAmount;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "APPLY_BILL_ID")
-    private Bill applyBill;
-
-    @Column(name = "DESCRIPTION")
+    private Integer applyBillId;
     private String description;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BILL_TO_ID", nullable = false)
-    private Client billTo;
-
-    @Column(name = "FINANCIAL_ADVANCE", nullable = false)
+    private int billToId;
     private Boolean financialAdvance;
-
 
     public int getId() {
         return id;
@@ -90,12 +42,12 @@ public class Bill {
         this.date = date;
     }
 
-    public Armored getArmored() {
-        return armored;
+    public int getArmoredId() {
+        return armoredId;
     }
 
-    public void setArmored(Armored armored) {
-        this.armored = armored;
+    public void setArmoredId(int armoredId) {
+        this.armoredId = armoredId;
     }
 
     public BigDecimal getConversion() {
@@ -114,12 +66,12 @@ public class Bill {
         this.number = number;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public BigDecimal getAliquot() {
@@ -146,11 +98,11 @@ public class Bill {
         this.untaxedAmount = untaxedAmount;
     }
 
-    public BillTypeCode getBillTypeCode() {
+    public String getBillTypeCode() {
         return billTypeCode;
     }
 
-    public void setBillTypeCode(BillTypeCode billTypeCode) {
+    public void setBillTypeCode(String billTypeCode) {
         this.billTypeCode = billTypeCode;
     }
 
@@ -170,12 +122,12 @@ public class Bill {
         this.totalAmount = totalAmount;
     }
 
-    public Bill getApplyBill() {
-        return applyBill;
+    public Integer getApplyBillId() {
+        return applyBillId;
     }
 
-    public void setApplyBill(Bill applyBill) {
-        this.applyBill = applyBill;
+    public void setApplyBillId(Integer applyBillId) {
+        this.applyBillId = applyBillId;
     }
 
     public String getDescription() {
@@ -186,12 +138,12 @@ public class Bill {
         this.description = description;
     }
 
-    public Client getBillTo() {
-        return billTo;
+    public int getBillToId() {
+        return billToId;
     }
 
-    public void setBillTo(Client billTo) {
-        this.billTo = billTo;
+    public void setBillToId(int billToId) {
+        this.billToId = billToId;
     }
 
     public Boolean getFinancialAdvance() {
