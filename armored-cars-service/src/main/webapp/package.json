@@ -12,7 +12,7 @@
   },
   "scripts": {
     "preinstall": "npm list bower -g || npm i -g bower",
-    "postinstall": "bower cache clean && bower install"
+    "postinstall": "bower cache clean && bower install && gulp"
   },
   "dependencies": {
     "gulp-install": "^0.6.0"
