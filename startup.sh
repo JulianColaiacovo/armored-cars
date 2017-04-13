@@ -1,0 +1,1 @@
+nohup java -jar ./armored-cars-service/target/armored-cars-service-jar-with-dependencies.jar&
