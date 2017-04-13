@@ -133,18 +133,6 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <!-- Ejecutar gulp. -->
-                    <execution>
-                        <id>gulp</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>gulp</executable>
-                            <workingDirectory>${basedir}/src/main/webapp/</workingDirectory>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
