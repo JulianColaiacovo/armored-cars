@@ -1,6 +1,6 @@
 sudo apt-get update
-curl -sL https://deb.nodesource.com/setup_6.x
 sudo apt-get -y install nodejs
+sudo apt-get -y install npm
 sudo apt-get -y install openjdk-8-jdk
 sudo apt-get -y install maven
 
