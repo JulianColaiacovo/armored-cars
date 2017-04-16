@@ -8,4 +8,4 @@ mkdir ${HOME}/npm-global
 npm config set prefix ${HOME}/npm-global
 export PATH="${HOME}/npm-global/bin:$PATH"
 
-mvn clean install
+sh compile.sh
