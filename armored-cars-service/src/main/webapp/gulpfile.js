@@ -29,7 +29,7 @@ gulp.task('components', function () {
 });
 
 gulp.task('scripts', function () {
-    return gulp.src(['app/config/**/*.js', 'app/controllers/**/*.js', 'app/routes/**/*.js', 'app/services/**/*.js'])
+    return gulp.src(['app/config/**/*.js', 'app/controllers/**/*.js', 'app/routes/**/*.js', 'app/services/**/*.js', 'app/formatters/**/*.js'])
         .pipe(concat('script.js'))
         .pipe(gulp.dest('dist/'));
 });

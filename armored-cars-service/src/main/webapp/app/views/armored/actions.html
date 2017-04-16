@@ -34,7 +34,7 @@
                         <td class="col-xs-6">
                             <input name="entry_date" ng-if="canEditData()" type="date" ng-model="armored.entry_date"
                                    class="input-tag"/>
-                            <p ng-if="!canEditData()">{{armored.entry_date}}</p>
+                            <p ng-if="!canEditData()">{{armored.entry_date|date:'dd-MM-yyyy'}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -43,7 +43,7 @@
                             <input name="delivery_date" ng-if="canEditData()" type="date"
                                    ng-model="armored.delivery_date"
                                    class="input-tag"/>
-                            <p ng-if="!canEditData()">{{armored.delivery_date}}</p>
+                            <p ng-if="!canEditData()">{{armored.delivery_date|date:'dd-MM-yyyy'}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +52,7 @@
                             <input name="departure_date" ng-if="canEditData()" type="date"
                                    ng-model="armored.departure_date"
                                    class="input-tag"/>
-                            <p ng-if="!canEditData()">{{armored.departure_date}}</p>
+                            <p ng-if="!canEditData()">{{armored.departure_date|date:'dd-MM-yyyy'}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -60,14 +60,14 @@
                         <td class="col-xs-6">
                             <select ng-if="canEditData()" ng-model="armored.stock_status"
                                     ng-change="documentTypeChanged()"
-                                    ng-options="stock_status for stock_status in stock_statuses"></select>
-                            <p ng-if=" !canEditData()">{{armored.stock_status}}</p>
+                                    ng-options="stock_status as stock_status|StockStatusFormatter for stock_status in stock_statuses"></select>
+                            <p ng-if=" !canEditData()">{{armored.stock_status|StockStatusFormatter}}</p>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-xs-6">Valor de cotizaci&oacute;n</td>
                         <td class="col-xs-6">
-                            <input name="price" ng-if="canEditData()" type="numeric"
+                            <input name="price" ng-if="canEditData()" type="number"
                                    ng-model="armored.price"
                                    class="input-tag"/>
                             <p ng-if="!canEditData()">{{armored.price}}</p>

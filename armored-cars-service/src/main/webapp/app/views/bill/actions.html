@@ -20,7 +20,7 @@
                         <td>
                             <input name="date" ng-if="canEditData()" type="date" ng-model="bill.date"
                                    class="input-tag" required/>
-                            <p ng-if="!canEditData()">{{bill.date}}</p>
+                            <p ng-if="!canEditData()">{{bill.date|date:'dd-MM-yyyy'}}</p>
                             <div ng-show="form.date.$dirty" ng-messages="form.date.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
