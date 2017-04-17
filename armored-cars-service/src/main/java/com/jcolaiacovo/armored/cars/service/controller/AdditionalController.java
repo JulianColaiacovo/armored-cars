@@ -1,7 +1,9 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
+import com.jcolaiacovo.armored.cars.api.model.AdditionalDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Additional;
 import com.jcolaiacovo.armored.cars.domain.service.AdditionalService;
+import com.jcolaiacovo.armored.cars.domain.transformer.AdditionalTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,26 +17,31 @@ import java.util.List;
 public class AdditionalController {
 
     private AdditionalService additionalService;
+    private AdditionalTransformer additionalTransformer;
 
     @Autowired
-    public AdditionalController(AdditionalService additionalService) {
+    public AdditionalController(AdditionalService additionalService, AdditionalTransformer additionalTransformer) {
         this.additionalService = additionalService;
+        this.additionalTransformer = additionalTransformer;
     }
 
     @GetMapping
-    public List<Additional> getAll() {
-        return this.additionalService.getAll();
+    public List<AdditionalDTO> getAll() {
+        List<Additional> additionals = this.additionalService.getAll();
+        return this.additionalTransformer.transformToDTOAll(additionals);
     }
 
     @GetMapping("/{id}")
-    public Additional getById(@PathVariable int id) {
-        return this.additionalService.getById(id);
+    public AdditionalDTO getById(@PathVariable int id) {
+        Additional additional = this.additionalService.getById(id);
+        return this.additionalTransformer.transformToDTO(additional);
     }
 
     @PostMapping
-    public Additional save(@RequestBody Additional additional) {
+    public AdditionalDTO save(@RequestBody AdditionalDTO additionalDTO) {
+        Additional additional = this.additionalTransformer.transform(additionalDTO);
         this.additionalService.save(additional);
-        return additional;
+        return this.additionalTransformer.transformToDTO(additional);
     }
 
     @DeleteMapping("/{id}")

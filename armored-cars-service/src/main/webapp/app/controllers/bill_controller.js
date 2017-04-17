@@ -1,4 +1,4 @@
-//begin armored_controller.js
+//begin bill_controller.js
 App.controller('BillController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Aliquot', 'Bill', 'BillTypeCode', 'Currency', 'Armored', 'Client',
     function ($rootScope, $scope, $location, $routeParams, $http, Aliquot, Bill, BillTypeCode, Currency, Armored, Client) {
 
@@ -61,11 +61,11 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
         };
 
         var setSection = function () {
-            if ($location.url().toLowerCase().indexOf("view") != -1) {
+            if ($routeParams.action == "view") {
                 $rootScope.section = "BILL-VIEW"
-            } else if ($location.url().toLowerCase().indexOf("add") != -1) {
+            } else if ($routeParams.action == "add") {
                 $rootScope.section = "BILL-ADD"
-            } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
+            } else if ($routeParams.action == "edit") {
                 $rootScope.section = "BILL-EDIT"
             }
         };
@@ -106,4 +106,4 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
         $scope.initialize();
 
     }]);
-//end armored_controller.js
+//end bill_controller.js

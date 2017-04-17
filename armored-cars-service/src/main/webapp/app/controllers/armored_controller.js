@@ -44,11 +44,11 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
         };
 
         var setSection = function () {
-            if ($location.url().toLowerCase().indexOf("view") != -1) {
+            if ($routeParams.action == "view") {
                 $rootScope.section = "ARMORED-VIEW"
-            } else if ($location.url().toLowerCase().indexOf("add") != -1) {
+            } else if ($routeParams.action == "add") {
                 $rootScope.section = "ARMORED-ADD"
-            } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
+            } else if ($routeParams.action == "edit") {
                 $rootScope.section = "ARMORED-EDIT"
             }
         };

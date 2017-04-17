@@ -2,6 +2,8 @@
 
 BASE_PATH = "/";
 LOGIN_PATH = '/users/login';
+ADDITIONAL_LIST_PATH = '/additionals';
+ADDITIONAL_ACTION_PATH = '/additionals/:action/:additional_id?';
 ARMORED_LIST_PATH = '/armoreds';
 ARMORED_ACTION_PATH = '/armoreds/:action/:armored_id?';
 BILL_LIST_PATH = '/bills';
@@ -18,6 +20,12 @@ App.config(['$routeProvider', function ($routeProvider) {
     }).when(LOGIN_PATH, {
         templateUrl: 'assets/login.html',
         controller: 'LoginController'
+    }).when(ADDITIONAL_LIST_PATH, {
+        templateUrl: 'assets/additional/list.html',
+        controller: 'AdditionalListController'
+    }).when(ADDITIONAL_ACTION_PATH, {
+        templateUrl: 'assets/additional/actions.html',
+        controller: 'AdditionalController'
     }).when(ARMORED_LIST_PATH, {
         templateUrl: 'assets/armored/list.html',
         controller: 'ArmoredListController'

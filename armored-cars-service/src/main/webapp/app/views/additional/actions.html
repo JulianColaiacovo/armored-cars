@@ -1,0 +1,92 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <h2 ng-if="isNew()">Registrar adicional</h2>
+    <h2 ng-if="section == 'ADDITIONAL-EDIT'">Editar adicional</h2>
+    <h2 ng-if="section == 'ADDITIONAL-VIEW'">Datos del adicional</h2>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <form name="form" ng-submit="save()">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-if="!isNew()">
+                        <td>Id del adicional</td>
+                        <td>{{additional.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha</td>
+                        <td>
+                            <input name="date" ng-if="canEditData()" type="date" ng-model="additional.date"
+                                   class="input-tag" required/>
+                            <p ng-if="!canEditData()">{{additional.date|date:'dd-MM-yyyy'}}</p>
+                            <div ng-show="form.date.$dirty" ng-messages="form.date.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                                <div ng-message="pattern">El nombre no tiene un formato v&aacute;lido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>N&uacute;mero de blindaje</td>
+                        <td>
+                            <input name="armored_id" ng-if="canEditData()" type="text" ng-model="additional.armored_id"
+                                   required
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{additional.armored_id}}</p>
+                            <div ng-show="form.armored_id.$dirty" ng-messages="form.armored_id.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Moneda</td>
+                        <td>
+                            <select ng-if="canEditData()" ng-model="additional.currency_code"
+                                    ng-init="additional.currency_code = additional.currency_code || currencies[0].code"
+                                    ng-options="currency.code as currency.code for currency in currencies"></select>
+                            <p ng-if=" !canEditData()">{{additional.currency_code}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Conversi&oacute;n</td>
+                        <td>
+                            <input name="conversion" ng-if="canEditData()" type="number" ng-model="additional.conversion"
+                                   required
+                                   ng-change="updateVatAndTotal()"
+                                   min="0.01"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{additional.conversion}}</p>
+                            <div ng-show="form.conversion.$dirty" ng-messages="form.conversion.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monto</td>
+                        <td>
+                            <input name="amount" ng-if="canEditData()" type="number"
+                                   ng-model="additional.amount"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{additional.amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n</td>
+                        <td>
+                            <input ng-if="canEditData()" type="text" ng-model="additional.description">
+                            <p ng-if=" !canEditData()">{{additional.description}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-include src="'assets/partials/save.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

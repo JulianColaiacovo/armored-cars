@@ -58,11 +58,11 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         };
 
         var setSection = function () {
-            if ($location.url().toLowerCase().indexOf("view") != -1) {
+            if ($routeParams.action == "view") {
                 $rootScope.section = "COLLECTION-VIEW"
-            } else if ($location.url().toLowerCase().indexOf("add") != -1) {
+            } else if ($routeParams.action == "add") {
                 $rootScope.section = "COLLECTION-ADD"
-            } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
+            } else if ($routeParams.action == "edit") {
                 $rootScope.section = "COLLECTION-EDIT"
             }
         };

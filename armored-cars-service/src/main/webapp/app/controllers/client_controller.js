@@ -47,11 +47,11 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
         };
 
         var setSection = function () {
-            if ($location.url().toLowerCase().indexOf("view") != -1) {
+            if ($routeParams.action == "view") {
                 $rootScope.section = "CLIENT-VIEW"
-            } else if ($location.url().toLowerCase().indexOf("add") != -1) {
+            } else if ($routeParams.action == "add") {
                 $rootScope.section = "CLIENT-ADD"
-            } else if ($location.url().toLowerCase().indexOf("edit") != -1) {
+            } else if ($routeParams.action == "edit") {
                 $rootScope.section = "CLIENT-EDIT"
             }
         };
