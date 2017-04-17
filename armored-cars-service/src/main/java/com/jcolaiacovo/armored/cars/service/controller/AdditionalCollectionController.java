@@ -1,8 +1,9 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
+import com.jcolaiacovo.armored.cars.api.model.AdditionalCollectionDTO;
 import com.jcolaiacovo.armored.cars.domain.model.AdditionalCollection;
-import com.jcolaiacovo.armored.cars.domain.model.Armored;
 import com.jcolaiacovo.armored.cars.domain.service.AdditionalCollectionService;
+import com.jcolaiacovo.armored.cars.domain.transformer.AdditionalCollectionTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,26 +17,32 @@ import java.util.List;
 public class AdditionalCollectionController {
 
     private AdditionalCollectionService additionalCollectionService;
+    private AdditionalCollectionTransformer additionalCollectionTransformer;
 
     @Autowired
-    public AdditionalCollectionController(AdditionalCollectionService additionalCollectionService) {
+    public AdditionalCollectionController(AdditionalCollectionService additionalCollectionService,
+                                          AdditionalCollectionTransformer additionalCollectionTransformer) {
         this.additionalCollectionService = additionalCollectionService;
+        this.additionalCollectionTransformer = additionalCollectionTransformer;
     }
 
     @GetMapping
-    public List<AdditionalCollection> getAll() {
-        return this.additionalCollectionService.getAll();
+    public List<AdditionalCollectionDTO> getAll() {
+        List<AdditionalCollection> additionalCollections = this.additionalCollectionService.getAll();
+        return this.additionalCollectionTransformer.transformToDTOAll(additionalCollections);
     }
 
     @GetMapping("/{id}")
-    public AdditionalCollection getById(@PathVariable int id) {
-        return this.additionalCollectionService.getById(id);
+    public AdditionalCollectionDTO getById(@PathVariable int id) {
+        AdditionalCollection additionalCollection = this.additionalCollectionService.getById(id);
+        return this.additionalCollectionTransformer.transformToDTO(additionalCollection);
     }
 
     @PostMapping
-    public AdditionalCollection save(@RequestBody AdditionalCollection additionalCollection) {
+    public AdditionalCollectionDTO save(@RequestBody AdditionalCollectionDTO additionalCollectionDTO) {
+        AdditionalCollection additionalCollection = this.additionalCollectionTransformer.transform(additionalCollectionDTO);
         this.additionalCollectionService.save(additionalCollection);
-        return additionalCollection;
+        return this.additionalCollectionTransformer.transformToDTO(additionalCollection);
     }
 
     @DeleteMapping("/{id}")

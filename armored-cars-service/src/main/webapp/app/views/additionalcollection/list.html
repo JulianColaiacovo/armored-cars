@@ -1,0 +1,41 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <h2>Cobros de adicionales</h2>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">Id cobro de adicional</th>
+                    <th class="col-xs-1">Monto</th>
+                    <th class="col-xs-1">Fecha</th>
+                    <th class="col-xs-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="additionalcollection in additionalcollections | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
+                    <td ng-click="view(additionalcollection.id)">{{additionalcollection.id}}</td>
+                    <td ng-click="view(additionalcollection.id)">{{additionalcollection.amount}}</td>
+                    <td ng-click="view(additionalcollection.id)">{{additionalcollection.date|date:'dd-MM-yyyy'}}</td>
+                    <td>
+                        <a ng-click="edit(additionalcollection.id)">Editar</a>
+                        &nbsp;|&nbsp;
+                        <a ng-click="delete(additionalcollection)">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row text-center">
+                <pagination boundary-links="true" total-items="additionalcollections.length" page="current_page"
+                            class="pagination-sm"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                            items-per-page="page_size">
+                </pagination>
+            </div>
+        </div>
+    </div>
+</div>

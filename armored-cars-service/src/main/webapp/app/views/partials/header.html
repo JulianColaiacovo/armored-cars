@@ -4,39 +4,46 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li ng-class="{active: $root.section.indexOf('CLIENT-') != -1 }" class="dropdown">
+                <li ng-class="{active: $root.section.indexOf('CLIENT-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Clientes</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/clients">Listado</a>
                         <a class="dropdown-item" href="#/clients/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('ARMORED-') != -1 }" class="dropdown">
+                <li ng-class="{active: $root.section.indexOf('ARMORED-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Blindajes</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/armoreds">Listado</a>
                         <a class="dropdown-item" href="#/armoreds/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('BILL-') != -1 }" class="dropdown">
+                <li ng-class="{active: $root.section.indexOf('BILL-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Facturaci&oacute;n</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/bills">Listado</a>
                         <a class="dropdown-item" href="#/bills/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('COLLECTION-') != -1 }" class="dropdown">
+                <li ng-class="{active: $root.section.indexOf('COLLECTION-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Cobranzas</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/collections">Listado</a>
                         <a class="dropdown-item" href="#/collections/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('ADDITIONAL-') != -1 }" class="dropdown">
+                <li ng-class="{active: $root.section.indexOf('ADDITIONAL-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Adicionales</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/additionals">Listado</a>
                         <a class="dropdown-item" href="#/additionals/add">Registrar</a>
+                    </div>
+                </li>
+                <li ng-class="{active: $root.section.indexOf('ADDITIONALCOLLECTION-') == 0}" class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">Cobros de adicionales</a>
+                    <div class="dropdown-content">
+                        <a class="dropdown-item" href="#/additional-collections">Listado</a>
+                        <a class="dropdown-item" href="#/additional-collections/add">Registrar</a>
                     </div>
                 </li>
             </ul>
