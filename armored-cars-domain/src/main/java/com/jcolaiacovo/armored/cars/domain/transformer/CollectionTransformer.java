@@ -37,6 +37,7 @@ public class CollectionTransformer extends AbstractApiTransformer<Collection, Co
         collection.setGainAmount(collectionDTO.getGainAmount());
         collection.setIibbAmount(collectionDTO.getIibbAmount());
         collection.setSussAmount(collectionDTO.getSussAmount());
+        collection.setTotalAmount(collectionDTO.getTotalAmount());
         if (Optional.ofNullable(collectionDTO.getBillId()).filter(integer -> integer > 0).isPresent()) {
             collection.setBill(this.billService.getById(collectionDTO.getBillId()));
         }
@@ -57,11 +58,12 @@ public class CollectionTransformer extends AbstractApiTransformer<Collection, Co
         collectionDTO.setGainAmount(collection.getGainAmount());
         collectionDTO.setIibbAmount(collection.getIibbAmount());
         collectionDTO.setSussAmount(collection.getSussAmount());
+        collectionDTO.setTotalAmount(collection.getTotalAmount());
         Optional<Integer> billId = Optional.ofNullable(collection.getBill()).map(Bill::getId);
         if (billId.isPresent()) {
             collectionDTO.setBillId(billId.get());
         }
-        collection.setClient(this.clientService.getById(collectionDTO.getClientId()));
+        collectionDTO.setClientId(collection.getClient().getId());
 
         return collectionDTO;
     }

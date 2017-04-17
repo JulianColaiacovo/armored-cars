@@ -9,6 +9,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th class="col-xs-1">Id</th>
                     <th class="col-xs-1">Tipo de factura</th>
                     <th class="col-xs-1">N&uacute;mero de factura</th>
                     <th class="col-xs-1">Total</th>
@@ -18,6 +19,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="bill in bills | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
+                    <td ng-click="view(bill.id)">{{bill.id}}</td>
                     <td ng-click="view(bill.id)">{{bill.bill_type_code}}</td>
                     <td ng-click="view(bill.id)">{{bill.number}}</td>
                     <td ng-click="view(bill.id)">{{bill.total_amount}}</td>

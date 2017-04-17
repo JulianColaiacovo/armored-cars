@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by Julian on 14/01/2017.
  */
+@Transactional
 @Service
 public class CollectionService extends AbstractDaoService<Collection> {
 

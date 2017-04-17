@@ -1,4 +1,4 @@
-//begin armored_list_controller.js
+//begin bill_list_controller.js
 App.controller('BillListController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Bill',
     function ($rootScope, $scope, $location, $routeParams, $http, Bill) {
 
@@ -25,9 +25,9 @@ App.controller('BillListController', ['$rootScope', '$scope', '$location', '$rou
             $location.path("bills/edit/" + id);
         };
 
-        $scope.delete = function (armored) {
-            if (confirm("Esta seguro que desea eliminar la factura numero " + armored.code + "?")) {
-                Armored.delete(armored.id, onDeleteOk, onDeleteError);
+        $scope.delete = function (bill) {
+            if (confirm("Esta seguro que desea eliminar la factura numero " + bill.id + "?")) {
+                Bill.delete(bill.id, onDeleteOk, onDeleteError);
             }
         };
 
@@ -42,4 +42,4 @@ App.controller('BillListController', ['$rootScope', '$scope', '$location', '$rou
         };
 
     }]);
-//end armored_list_controller.js
+//end bill_list_controller.js

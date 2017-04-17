@@ -41,11 +41,14 @@ public class Collection {
     @Column(name = "VAT_AMOUNT", nullable = false)
     private BigDecimal vatAmount;
 
+    @Column(name = "TOTAL_AMOUNT", nullable = false)
+    private BigDecimal totalAmount;
+
     @Column(name = "DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION")
     private BigDecimal description;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -132,4 +135,11 @@ public class Collection {
         this.client = client;
     }
 
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 }

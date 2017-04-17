@@ -1,0 +1,140 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <h2 ng-if="isNew()">Registrar cobranza</h2>
+    <h2 ng-if="section == 'COLLECTION-EDIT'">Editar cobranza</h2>
+    <h2 ng-if="section == 'COLLECTION-VIEW'">Datos de la cobranza</h2>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <form name="form" ng-submit="save()">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-if="!isNew()">
+                        <td>Id de cobranza</td>
+                        <td>{{collection.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha</td>
+                        <td>
+                            <input name="date" ng-if="canEditData()" type="date" ng-model="collection.date"
+                                   class="input-tag" required/>
+                            <p ng-if="!canEditData()">{{collection.date|date:'dd-MM-yyyy'}}</p>
+                            <div ng-show="form.date.$dirty" ng-messages="form.date.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                                <div ng-message="pattern">El nombre no tiene un formato v&aacute;lido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>N&uacute;mero de factura</td>
+                        <td>
+                            <input name="bill_id" ng-if="canEditData()" type="text" ng-model="collection.bill_id"
+                                   required
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.bill_id}}</p>
+                            <div ng-show="form.bill_id.$dirty" ng-messages="form.bill_id.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cliente</td>
+                        <td>
+                            <input name="client_id" ng-if="canEditData()" type="text" ng-model="collection.client_id"
+                                   required
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.client_id}}</p>
+                            <div ng-show="form.client_id.$dirty" ng-messages="form.client_id.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="bill">
+                        <td>Moneda</td>
+                        <td>
+                            <p>{{bill.currency_code}}</p>
+                        </td>
+                    </tr>
+                    <tr ng-if="bill">
+                        <td>Conversi&oacute;n</td>
+                        <td>
+                            <p>{{bill.conversion}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monto</td>
+                        <td>
+                            <input name="base_amount" ng-if="canEditData()" type="number"
+                                   ng-model="collection.base_amount"
+                                   ng-change="updateTotal()"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.base_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ganancias</td>
+                        <td>
+                            <input name="gain_amount" ng-if="canEditData()" type="number"
+                                   ng-model="collection.gain_amount"
+                                   ng-change="updateTotal()"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.gain_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>I.V.A.</td>
+                        <td>
+                            <input name="vat_amount" ng-if="canEditData()" type="number"
+                                   ng-model="collection.vat_amount"
+                                   ng-change="updateTotal()"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.vat_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>SUSS</td>
+                        <td>
+                            <input name="suss_amount" ng-if="canEditData()" type="number"
+                                   ng-model="collection.suss_amount"
+                                   ng-change="updateTotal()"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.suss_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>IIBB</td>
+                        <td>
+                            <input name="iibb_amount" ng-if="canEditData()" type="number"
+                                   ng-model="collection.iibb_amount"
+                                   ng-change="updateTotal()"
+                                   class="input-tag">
+                            <p ng-if="!canEditData()">{{collection.iibb_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>
+                            <p">{{collection.total_amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n</td>
+                        <td>
+                            <input ng-if="canEditData()" type="text" ng-model="collection.description">
+                            <p ng-if=" !canEditData()">{{collection.description}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-include src="'assets/partials/save.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

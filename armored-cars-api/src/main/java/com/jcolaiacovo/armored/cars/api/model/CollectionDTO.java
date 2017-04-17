@@ -16,6 +16,7 @@ public class CollectionDTO {
     private BigDecimal sussAmount;
     private BigDecimal gainAmount;
     private BigDecimal vatAmount;
+    private BigDecimal totalAmount;
     private DateTime date;
     private BigDecimal description;
     private int clientId;
@@ -74,6 +75,14 @@ public class CollectionDTO {
 
     public void setVatAmount(BigDecimal vatAmount) {
         this.vatAmount = vatAmount;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public DateTime getDate() {
