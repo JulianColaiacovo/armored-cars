@@ -17,22 +17,15 @@ import static org.joda.time.DateTime.now;
 
 @Service
 @Transactional
-public class SecurityService {
+public class AccountService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     private UserDao userDao;
 
     @Autowired
-    public SecurityService(UserDao userDao) {
+    public AccountService(UserDao userDao) {
         this.userDao = userDao;
-    }
-
-    public SecurityToken login(String userName, String password) {
-        User user = this.validateUser(userName, password);
-
-        int tokenHash = new HashCodeBuilder().append(user).append(password).append(now().getMillis()).toHashCode();
-        return new SecurityToken(tokenHash, userName);
     }
 
     public void changePassword(String userName, String oldPassword, String newPassword, String repeatNewPassword) {
@@ -40,17 +33,6 @@ public class SecurityService {
             throw new RuntimeException("New passwords not equals");
         }
 
-        User user = this.validateUser(userName, oldPassword);
-
-        user.setPassword(newPassword);
-        this.userDao.save(user);
-    }
-
-    public void logout(String tokenHash) {
-
-    }
-
-    private User validateUser(String userName, String password) {
         Optional<User> optionalUser = this.userDao.getUserByUsername(userName);
 
         if (!optionalUser.isPresent()) {
@@ -58,11 +40,12 @@ public class SecurityService {
         }
         User user = optionalUser.get();
 
-        if (!user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(oldPassword)) {
             throw new RuntimeException("Invalid username or password");
         }
 
-        return optionalUser.get();
+        user.setPassword(newPassword);
+        this.userDao.save(user);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
+import com.jcolaiacovo.armored.cars.api.model.ChangePasswordDTO;
 import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;
 import com.jcolaiacovo.armored.cars.domain.login.User;
 import com.jcolaiacovo.armored.cars.domain.service.SecurityService;
@@ -20,6 +21,16 @@ public class SecurityController {
     @PutMapping
     public SecurityToken login(@RequestBody User user) {
         return this.securityService.login(user.getUserName(), user.getPassword());
+    }
+
+    @PostMapping("/change-password")
+    public ChangePasswordDTO login(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        this.securityService.changePassword(changePasswordDTO.getUserName(),
+                changePasswordDTO.getOldPassword(),
+                changePasswordDTO.getNewPassword(),
+                changePasswordDTO.getRepeatNewPassword());
+
+        return changePasswordDTO;
     }
 
     @DeleteMapping

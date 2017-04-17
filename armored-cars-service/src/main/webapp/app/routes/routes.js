@@ -2,6 +2,7 @@
 
 BASE_PATH = "/";
 LOGIN_PATH = '/users/login';
+ACCOUNT_CHANGEPASSWORD_PATH = '/accounts/change-password';
 ADDITIONAL_LIST_PATH = '/additionals';
 ADDITIONAL_ACTION_PATH = '/additionals/:action/:additional_id?';
 ADDITIONALCOLLECTION_LIST_PATH = '/additional-collections';
@@ -22,6 +23,9 @@ App.config(['$routeProvider', function ($routeProvider) {
     }).when(LOGIN_PATH, {
         templateUrl: 'assets/login.html',
         controller: 'LoginController'
+    }).when(ACCOUNT_CHANGEPASSWORD_PATH, {
+        templateUrl: 'assets/account/changepassword.html',
+        controller: 'ChangePasswordController'
     }).when(ADDITIONAL_LIST_PATH, {
         templateUrl: 'assets/additional/list.html',
         controller: 'AdditionalListController'
