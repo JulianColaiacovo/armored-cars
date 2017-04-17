@@ -11,15 +11,9 @@ window.App = angular
             'ngSanitize',
             'chieffancypants.loadingBar',
             'http-auth-interceptor',
-            'datetimepicker'
+            'datetimepicker',
+            'angular-md5'
         ]
-    ).config([
-        'datetimepickerProvider',
-        function (datetimepickerProvider) {
-            datetimepickerProvider.setOptions({
-                locale: 'es'
-            });
-        }
-    ]);
+    );
 
 //end app.config/application.js

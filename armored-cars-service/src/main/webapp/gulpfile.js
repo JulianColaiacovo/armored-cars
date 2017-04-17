@@ -22,6 +22,7 @@ gulp.task('components', function () {
         'components/html2canvas/dist/html2canvas.min.js',
         'components/jquery/dist/jquery.min.js',
         'components/moment/min/moment.min.js',
+        'components/angular-md5/angular-md5.min.js',
         'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
     ])
         .pipe(concat('components.js'))

@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import static org.joda.time.DateTime.now;
@@ -37,30 +35,13 @@ public class SecurityService {
             throw new RuntimeException("Invalid username or password");
         }
 
-        String str = getMD5(password);
-
         User user = optionalUser.get();
-        if (!str.equals(user.getPassword())) {
+        if (!password.equals(user.getPassword())) {
             throw new RuntimeException("Invalid username or password");
         }
 
         int tokenHash = new HashCodeBuilder().append(user).append(password).append(now().getMillis()).toHashCode();
         return new SecurityToken(tokenHash, userName);
-    }
-
-    private String getMD5(String password) {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] array = messageDigest.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte anArray : array) {
-                sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Invalid algorithm", e);
-            throw new RuntimeException(e);
-        }
     }
 
     public void logout(String tokenHash) {
