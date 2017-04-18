@@ -31,6 +31,12 @@ public class ClientController {
         return this.clientTransformer.transformToDTOAll(clients);
     }
 
+    @GetMapping("/search")
+    public List<ClientDTO> search(@RequestParam(required = false) String name, @RequestParam(required = false) String document) {
+        List<Client> clients = this.clientService.search(name, document);
+        return this.clientTransformer.transformToDTOAll(clients);
+    }
+
     @GetMapping("/{id}")
     public ClientDTO getById(@PathVariable int id) {
         Client client = this.clientService.getById(id);

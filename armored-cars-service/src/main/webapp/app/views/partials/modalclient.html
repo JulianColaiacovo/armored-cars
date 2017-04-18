@@ -1,0 +1,45 @@
+<div id="client_modal" ng-show="modals.client.visible" class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span ng-click="modals.client.visible = false" class="close">&times;</span>
+            <label class="modal-label">Nombre:&nbsp;</label>
+            <input type="text" ng-model="modals.client.name"/>
+            <label class="modal-label">Documento:&nbsp;</label>
+            <input type="text" ng-model="modals.client.document"/>
+            <button type="button" ng-click="clientModalSearch()" class="modal-search">Buscar</button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">Nombre</th>
+                    <th class="col-xs-1">Tipo de documento</th>
+                    <th class="col-xs-1">Número de documento</th>
+                    <th class="col-xs-1">E-mail</th>
+                    <th class="col-xs-1">Teléfono</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="client in modals.client.items | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
+                    <td ng-click="selectClient(client)">{{client.name}}</td>
+                    <td ng-click="selectClient(client)">{{client.document_type}}</td>
+                    <td ng-click="selectClient(client)">{{client.document}}</td>
+                    <td ng-click="selectClient(client)">{{client.email}}</td>
+                    <td ng-click="selectClient(client)">{{client.phone}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="row text-center">
+                <pagination boundary-links="true" total-items="modals.client.items.length" page="current_page"
+                            class="pagination-sm"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                            items-per-page="page_size">
+                </pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

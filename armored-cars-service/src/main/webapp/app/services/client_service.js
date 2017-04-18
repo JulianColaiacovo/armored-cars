@@ -13,6 +13,15 @@ App.factory('Client', ['$resource', '$rootScope', function ($resource, $rootScop
         });
     };
 
+    clientOp.search = function (name, document, callback) {
+        $resource(urlBase + '/search', {
+            name: name,
+            document: document
+        }, {}).query(function (response) {
+            callback(response);
+        });
+    };
+
     clientOp.getAll = function (callback) {
         $resource(urlBase, {}, {}).query(callback);
     };

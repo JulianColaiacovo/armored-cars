@@ -5,9 +5,11 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
         $scope.initialize = function () {
             $scope.isSaving = false;
             $scope.armored = {};
+            initModals();
             setSection();
             loadStockStatuses();
             loadData();
+            $scope.clientModalSearch();
         };
 
         $scope.isNew = function () {
@@ -19,8 +21,9 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
         };
 
         $scope.save = function () {
-            if ($scope.form.$valid) {
+            if ($scope.form.$valid && $scope.modals.client.selected != null) {
                 $scope.isSaving = true;
+                $scope.armored.billing_and_reference.bill_to_client_id = $scope.modals.client.selected.id;
                 Armored.save($scope.armored, onSaveOk, onSaveError);
                 $scope.isSaving = false;
             } else {
@@ -32,12 +35,48 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
             }
         };
 
+        $scope.showClientModal = function () {
+            $scope.modals.client.visible = true;
+        };
+
+        var hideClientModal = function () {
+            $scope.modals.client.visible = false;
+        };
+
+        $scope.clientModalSearch = function () {
+            var client = $scope.modals.client;
+            Client.search(client.name, client.document, function (response) {
+                $scope.modals.client.items = response;
+            });
+        };
+
+        $scope.selectClient = function (client) {
+            $scope.modals.client.selected = client;
+            hideClientModal();
+        };
+
+        var initModals = function () {
+            $scope.modals = {
+                "client": {
+                    "visible": false,
+                    "selected": null
+                }
+            };
+        };
+
         var loadData = function () {
-            if (!$scope.isNew()) {
+            if ($scope.isNew()) {
+                $scope.armored = {
+                    "price": 0
+                };
+            } else {
                 Armored.get($routeParams.armored_id, function (response) {
                     response.entry_date = new Date(response.entry_date);
                     response.departure_date = new Date(response.departure_date);
                     response.delivery_date = new Date(response.delivery_date);
+                    Client.get(response.billing_and_reference.bill_to_client_id, function (client) {
+                        $scope.modals.client.selected = client;
+                    });
                     $scope.armored = response;
                 });
             }

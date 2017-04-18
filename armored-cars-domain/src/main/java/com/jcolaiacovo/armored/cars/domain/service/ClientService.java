@@ -31,6 +31,10 @@ public class ClientService extends AbstractDaoService<Client> {
         return this.clientDao.getAll();
     }
 
+    public List<Client> search(String name, String document) {
+        return this.clientDao.search(name, document);
+    }
+
     public void save(Client client) {
         if (this.isGenericClient(client.getId())) {
             throw new ModifyGenericClientException();
