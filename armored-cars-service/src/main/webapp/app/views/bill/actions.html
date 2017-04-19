@@ -33,7 +33,8 @@
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.bill_type_code"
                                     ng-change="updateVatAndTotal()"
-                                    ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in bill_type_codes"></select>
+                                    ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in bill_type_codes">
+                            </select>
                             <p ng-if=" !canEditData()">{{bill.bill_type_code|BillTypeCodeFormatter}}</p>
                         </td>
                     </tr>
@@ -62,6 +63,7 @@
                         <td>
                             <input name="armored_id" ng-if="canEditData()" type="text" ng-model="bill.armored_id"
                                    required
+                                   ng-change="searchArmoredClient()"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{bill.armored_id}}</p>
                             <div ng-show="form.armored_id.$dirty" ng-messages="form.armored_id.$error"
@@ -70,17 +72,10 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>N&uacute;mero de cliente</td>
+                    <tr ng-if="client">
+                        <td>Cliente</td>
                         <td>
-                            <input name="bill_to_id" ng-if="canEditData()" type="text" ng-model="bill.bill_to_id"
-                                   required
-                                   class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.bill_to_id}}</p>
-                            <div ng-show="form.bill_to_id.$dirty" ng-messages="form.bill_to_id.$error"
-                                 style="color:maroon" role="alert">
-                                <div ng-message="required">El campo es requerido</div>
-                            </div>
+                            <p>{{client|ClientFormatter}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -133,8 +128,8 @@
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.aliquot"
                                     ng-change="updateVatAndTotal()"
-                                    ng-options="aliquot as aliquot for aliquot in aliquots"></select>
-                            <p ng-if=" !canEditData()">{{bill.aliquot}}</p>
+                                    ng-options="aliquot as aliquot|AliquotFormatter for aliquot in aliquots"></select>
+                            <p ng-if=" !canEditData()">{{bill.aliquot|AliquotFormatter}}</p>
                         </td>
                     </tr>
                     <tr>

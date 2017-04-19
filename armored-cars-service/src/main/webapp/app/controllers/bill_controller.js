@@ -43,6 +43,17 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
             }
         };
 
+        $scope.searchArmoredClient = function () {
+            var armoredId = $scope.bill.armored_id;
+            if (armoredId) {
+                Client.get(armoredId, function (response) {
+                    $scope.client = response;
+                });
+            } else {
+                $scope.client = null;
+            }
+        };
+
         var isBillTypeA = function () {
             return $scope.bill.bill_type_code.endsWith('_A');
         };
