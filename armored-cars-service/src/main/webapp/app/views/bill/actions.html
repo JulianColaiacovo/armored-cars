@@ -33,8 +33,8 @@
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.bill_type_code"
                                     ng-change="updateVatAndTotal()"
-                                    ng-options="bill_type_code.id as bill_type_code.id for bill_type_code in bill_type_codes"></select>
-                            <p ng-if=" !canEditData()">{{bill.bill_type_code}}</p>
+                                    ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in bill_type_codes"></select>
+                            <p ng-if=" !canEditData()">{{bill.bill_type_code|BillTypeCodeFormatter}}</p>
                         </td>
                     </tr>
                     <tr>

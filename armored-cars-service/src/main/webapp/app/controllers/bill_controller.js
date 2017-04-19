@@ -21,11 +21,11 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
         };
 
         $scope.updateVatAndTotal = function () {
-            if ($scope.bill.bill_type_code === 'A') {
+            if (isBillTypeA()) {
                 $scope.bill.vat_amount = $scope.bill.taxed_amount * $scope.bill.aliquot / 100;
                 $scope.bill.total_amount = $scope.bill.vat_amount + $scope.bill.taxed_amount + $scope.bill.untaxed_amount;
             } else {
-                $scope.bill.vat_amount = ($scope.bill.taxed_amount * 100) / ($scope.bill.aliquot + 100);
+                $scope.bill.vat_amount = $scope.bill.taxed_amount - ($scope.bill.taxed_amount * 100) / ($scope.bill.aliquot + 100);
                 $scope.bill.total_amount = $scope.bill.taxed_amount + $scope.bill.untaxed_amount;
             }
         };
@@ -43,15 +43,23 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
             }
         };
 
+        var isBillTypeA = function () {
+            return $scope.bill.bill_type_code.endsWith('_A');
+        };
+
         var loadData = function () {
             if ($scope.isNew()) {
                 $scope.bill = {
+                    "date": new Date(),
                     "aliquot": 21,
                     "taxed_amount": 1,
                     "untaxed_amount": 0,
                     "total_amount": 0,
-                    "vat_amount": 0
+                    "vat_amount": 0,
+                    "currency_code": "ARS",
+                    "bill_type_code": "BILL_A"
                 };
+                $scope.updateVatAndTotal();
             } else {
                 Bill.get($routeParams.bill_id, function (response) {
                     response.date = new Date(response.date);
@@ -92,14 +100,12 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
         var loadBillTypeCodes = function () {
             BillTypeCode.getAllEnabled(function (response) {
                 $scope.bill_type_codes = response;
-                $scope.bill.bill_type_code = $scope.bill.bill_type_code || 'BILL_A';
             });
         };
 
         var loadCurrencies = function () {
             Currency.getAllEnabled(function (response) {
                 $scope.currencies = response;
-                $scope.bill.currency_code = $scope.bill.currency_code || 'ARS';
             });
         };
 
