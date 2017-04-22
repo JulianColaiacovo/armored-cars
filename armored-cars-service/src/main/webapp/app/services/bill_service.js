@@ -1,5 +1,5 @@
 //begin bill_service.js
-App.factory('Bill', ['$resource', '$rootScope', 'BillTypeCode', function ($resource, $rootScope) {
+App.factory('Bill', ['$resource', '$rootScope', '$http', function ($resource, $rootScope, $http) {
 
     var urlBase = "/" + $rootScope.appContext + "/bills";
 
@@ -11,6 +11,14 @@ App.factory('Bill', ['$resource', '$rootScope', 'BillTypeCode', function ($resou
         }, {}).get(function (response) {
             callback(response);
         });
+    };
+
+    billOp.getNextNumber = function (billTypeCode, callback) {
+        $http.get(urlBase + '/next-number', {
+            params: { billTypeCode: billTypeCode }
+        }).then(function(response) {
+            callback(response.data)
+        }, {});
     };
 
     billOp.getAll = function (callback) {

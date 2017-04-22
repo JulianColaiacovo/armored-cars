@@ -1,6 +1,6 @@
 //begin bill_controller.js
-App.controller('BillController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Aliquot', 'Bill', 'BillTypeCode', 'Currency', 'Armored', 'Client',
-    function ($rootScope, $scope, $location, $routeParams, $http, Aliquot, Bill, BillTypeCode, Currency, Armored, Client) {
+App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location', '$routeParams', '$http', 'Aliquot', 'Bill', 'BillTypeCode', 'Currency', 'Armored', 'Client',
+    function ($rootScope, $scope, $filter, $location, $routeParams, $http, Aliquot, Bill, BillTypeCode, Currency, Armored, Client) {
 
         $scope.initialize = function () {
             $scope.isSaving = false;
@@ -46,7 +46,21 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
         $scope.searchArmoredClient = function () {
             var armoredId = $scope.bill.armored_id;
             if (armoredId) {
-                Client.get(armoredId, function (response) {
+                Armored.getBillToClient(armoredId, function (response) {
+                    $scope.client = response;
+                });
+            } else {
+                $scope.client = null;
+            }
+        };
+
+        $scope.updateBillNumber = function () {
+            setDefaultBillNumber();
+        };
+
+        var loadBillClient = function (clientId) {
+            if (clientId) {
+                Client.get(clientId, function (response) {
                     $scope.client = response;
                 });
             } else {
@@ -70,13 +84,26 @@ App.controller('BillController', ['$rootScope', '$scope', '$location', '$routePa
                     "currency_code": "ARS",
                     "bill_type_code": "BILL_A"
                 };
+                setDefaultBillNumber();
                 $scope.updateVatAndTotal();
             } else {
                 Bill.get($routeParams.bill_id, function (response) {
                     response.date = new Date(response.date);
                     $scope.bill = response;
+                    setBillNumber(response.number);
+                    loadBillClient($scope.bill.bill_to_id);
                 });
             }
+        };
+        
+        var setDefaultBillNumber = function () {
+            Bill.getNextNumber($scope.bill.bill_type_code, function (billNumber) {
+                setBillNumber(billNumber);
+            });
+        };
+
+        var setBillNumber = function (billNumber) {
+            $scope.bill.number = $filter('BillNumberFormatter')(billNumber);
         };
 
         var setSection = function () {

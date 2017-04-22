@@ -2,6 +2,7 @@ package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.api.model.BillDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Bill;
+import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import com.jcolaiacovo.armored.cars.domain.service.BillService;
 import com.jcolaiacovo.armored.cars.domain.transformer.BillTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class BillController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         this.billService.delete(id);
+    }
+
+    @GetMapping("/next-number")
+    public long getById(@RequestParam BillTypeCode billTypeCode) {
+        return this.billService.getNextBillNumber(billTypeCode);
     }
 
 }

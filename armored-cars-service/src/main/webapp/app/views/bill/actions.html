@@ -32,7 +32,7 @@
                         <td>Tipo de factura</td>
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.bill_type_code"
-                                    ng-change="updateVatAndTotal()"
+                                    ng-change="updateVatAndTotal();updateBillNumber()"
                                     ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in bill_type_codes">
                             </select>
                             <p ng-if=" !canEditData()">{{bill.bill_type_code|BillTypeCodeFormatter}}</p>
@@ -41,7 +41,9 @@
                     <tr>
                         <td>N&uacute;mero de comprobante</td>
                         <td>
-                            <input name="number" ng-if="canEditData()" type="text" ng-model="bill.number" required
+                            <input name="number" ng-if="canEditData()" type="text" ng-model="bill.number"
+                                   ui-mask="9999-99999999"
+                                   required
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{bill.number}}</p>
                             <div ng-show="form.number.$dirty" ng-messages="form.number.$error"

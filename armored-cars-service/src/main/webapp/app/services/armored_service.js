@@ -13,6 +13,14 @@ App.factory('Armored', ['$resource', '$rootScope', function ($resource, $rootSco
         });
     };
 
+    armoredOp.getBillToClient = function (armoredId, callback) {
+        $resource(urlBase + '/:armored_id/bill-to-client', {
+            armored_id: armoredId
+        }, {}).get(function (response) {
+            callback(response);
+        });
+    };
+
     armoredOp.getAll = function (callback) {
         $resource(urlBase, {}, {}).query(callback);
     };

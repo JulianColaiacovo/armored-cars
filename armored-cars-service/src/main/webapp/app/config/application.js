@@ -12,7 +12,8 @@ window.App = angular
             'chieffancypants.loadingBar',
             'http-auth-interceptor',
             'datetimepicker',
-            'angular-md5'
+            'angular-md5',
+            'ui.mask'
         ]
     );
 

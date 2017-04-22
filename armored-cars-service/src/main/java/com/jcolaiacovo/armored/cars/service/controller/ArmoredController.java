@@ -1,9 +1,12 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.api.model.ArmoredDTO;
+import com.jcolaiacovo.armored.cars.api.model.ClientDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Armored;
+import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.domain.service.ArmoredService;
 import com.jcolaiacovo.armored.cars.domain.transformer.ArmoredTransformer;
+import com.jcolaiacovo.armored.cars.domain.transformer.ClientTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +19,15 @@ import java.util.List;
 @RequestMapping("/armoreds")
 public class ArmoredController {
 
-    private ArmoredService armoredService;
-    private ArmoredTransformer armoredTransformer;
+    private final ArmoredService armoredService;
+    private final ArmoredTransformer armoredTransformer;
+    private final ClientTransformer clientTransformer;
 
     @Autowired
-    public ArmoredController(ArmoredService armoredService, ArmoredTransformer armoredTransformer) {
+    public ArmoredController(ArmoredService armoredService, ArmoredTransformer armoredTransformer, ClientTransformer clientTransformer) {
         this.armoredService = armoredService;
         this.armoredTransformer = armoredTransformer;
+        this.clientTransformer = clientTransformer;
     }
 
     @GetMapping
@@ -35,6 +40,12 @@ public class ArmoredController {
     public ArmoredDTO getById(@PathVariable int id) {
         Armored armored = this.armoredService.getById(id);
         return this.armoredTransformer.transformToDTO(armored);
+    }
+
+    @GetMapping("/{id}/bill-to-client")
+    public ClientDTO getBillToClient(@PathVariable int id) {
+        Client client = this.armoredService.getById(id).getBillingAndReference().getBillToClient();
+        return this.clientTransformer.transformToDTO(client);
     }
 
     @PostMapping

@@ -21,9 +21,9 @@
                 <tr ng-repeat="bill in bills | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
                     <td ng-click="view(bill.id)">{{bill.id}}</td>
                     <td ng-click="view(bill.id)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
-                    <td ng-click="view(bill.id)">{{bill.number}}</td>
+                    <td ng-click="view(bill.id)">{{bill.number|BillNumberFormatter}}</td>
                     <td ng-click="view(bill.id)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
-                    <td ng-click="view(bill.id)">{{bill.financial_advance}}</td>
+                    <td ng-click="view(bill.id)">{{bill.financial_advance|BooleanFormatter}}</td>
                     <td>
                         <a ng-click="edit(bill.id)">Editar</a>
                         &nbsp;|&nbsp;
