@@ -23,21 +23,25 @@ gulp.task('components', function () {
         'components/jquery/dist/jquery.min.js',
         'components/moment/min/moment.min.js',
         'components/angular-md5/angular-md5.min.js',
+        'components/angular-ui-validate/dist/validate.min.js',
         'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
     ])
         .pipe(concat('components.js'))
         .pipe(gulp.dest('dist/'));
 });
 
+var gulpSources = ['app/config/**/*.js', 'app/controllers/**/*.js', 'app/routes/**/*.js', 'app/services/**/*.js', 
+    'app/formatters/**/*.js', 'app/directives/**/*.js'];
+
 gulp.task('scripts', function () {
-    return gulp.src(['app/config/**/*.js', 'app/controllers/**/*.js', 'app/routes/**/*.js', 'app/services/**/*.js', 'app/formatters/**/*.js'])
+    return gulp.src(gulpSources)
         .pipe(concat('script.js'))
         .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('watch', ['scripts'], function () {
     watch('app/**/*.js', function () {
-        gulp.src(['app/config/**/*.js', 'app/controllers/**/*.js', 'app/routes/**/*.js', 'app/services/**/*.js'])
+        gulp.src(gulpSources)
             .pipe(concat('script.js'))
             .pipe(gulp.dest('dist/')).on('error', errorHandler);
     });

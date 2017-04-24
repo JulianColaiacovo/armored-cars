@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -14,6 +15,12 @@ public class UserDao extends AbstractDao<User> {
     @Autowired
     public UserDao(SessionFactory sessionFactory) {
         super(User.class, sessionFactory);
+    }
+
+    public List<User> getAll() {
+        return (List<User>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from USER;")
+                .addEntity(User.class)
+                .list();
     }
 
     public Optional<User> getUserByUsername(String userName) {

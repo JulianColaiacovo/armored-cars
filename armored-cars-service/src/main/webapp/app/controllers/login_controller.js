@@ -11,7 +11,7 @@ App.controller('LoginController', ['$rootScope', '$scope', '$cookies', '$locatio
                 "user_name": $scope.user.user_name,
                 "password": md5.createHash($scope.user.password || '')
             };
-            Security.query($rootScope.appContext).login(login,
+            Security.login(login,
                 function (data) {
                     $rootScope.login(data.token, $scope.user.user_name)
                 },

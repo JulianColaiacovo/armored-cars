@@ -15,6 +15,8 @@ CLIENT_LIST_PATH = '/clients';
 CLIENT_ACTION_PATH = '/clients/:action/:client_id?';
 COLLECTION_LIST_PATH = '/collections';
 COLLECTION_ACTION_PATH = '/collections/:action/:collection_id?';
+USER_LIST_PATH = '/users';
+USER_ACTION_PATH = '/users/:action/:user_id?';
 NOTFOUND_PATH = "/errors/404";
 
 App.config(['$routeProvider', function ($routeProvider) {
@@ -62,6 +64,12 @@ App.config(['$routeProvider', function ($routeProvider) {
     }).when(COLLECTION_ACTION_PATH, {
         templateUrl: 'assets/collection/actions.html',
         controller: 'CollectionController'
+    }).when(USER_LIST_PATH, {
+        templateUrl: 'assets/user/list.html',
+        controller: 'UserListController'
+    }).when(USER_ACTION_PATH, {
+        templateUrl: 'assets/user/actions.html',
+        controller: 'UserController'
     }).otherwise({
         templateUrl: 'assets/not_found.html'
     });

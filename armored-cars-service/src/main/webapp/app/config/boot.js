@@ -1,24 +1,27 @@
 //begin boot.js
-App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$timeout', '$route', 'Security',
-    function ($rootScope, $templateCache, $cookies, $location, $modal, $timeout, $route, Security) {
+App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$timeout', '$route', 'Security', 'User',
+    function ($rootScope, $templateCache, $cookies, $location, $modal, $timeout, $route, Security, User) {
 
         $rootScope.initialize = function () {
             if ($cookies.get("token")) $rootScope.token = $cookies.get("token");
             if ($cookies.get("logged_user")) $rootScope.logged_user = $cookies.get("logged_user");
+            refreshPermissions();
         };
 
-        $rootScope.login = function (token, userName) {
+        $rootScope.login = function (token, user) {
             $rootScope.token = token;
-            $rootScope.logged_user = userName;
+            $rootScope.logged_user = user;
 
             $cookies.put("token", $rootScope.token);
             $cookies.put("logged_user", $rootScope.logged_user);
+
+            refreshPermissions();
 
             $location.path(BASE_PATH);
         };
 
         $rootScope.logout = function () {
-            Security.query($rootScope.appContext).logout({token: $rootScope.token}, function () {
+            Security.logout({token: $rootScope.token}, function () {
                 $rootScope.token = null;
                 $rootScope.logged_user = null;
 
@@ -42,6 +45,29 @@ App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$ti
                 $location.path(LOGIN_PATH);
             }
         });
+
+        $rootScope.isFinancialOrAccounting = function () {
+            return $rootScope.isFinancial() || $rootScope.isAccounting();
+        };
+
+        $rootScope.isFinancial = function () {
+            return $rootScope.user_data.user_level == "FINANCIAL";
+        };
+
+        $rootScope.isAccounting = function () {
+            return $rootScope.user_data.user_level == "ACCOUNTING";
+        };
+
+        $rootScope.isWorkshop = function () {
+            return $rootScope.user_data.user_level == "WORKSHOP";
+        };
+
+        var refreshPermissions = function () {
+            $rootScope.user_data = { user_level: 'WORKSHOP' };
+            User.getByName($rootScope.logged_user, function (response) {
+                $rootScope.user_data = response;
+            });
+        };
 
         $rootScope.initialize();
     }]);

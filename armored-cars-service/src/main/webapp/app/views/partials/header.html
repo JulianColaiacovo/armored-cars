@@ -18,32 +18,43 @@
                         <a class="dropdown-item" href="#/armoreds/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('BILL-') == 0}" class="dropdown">
+                <li ng-if="isFinancialOrAccounting()"
+                    ng-class="{active: $root.section.indexOf('BILL-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Facturaci&oacute;n</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/bills">Listado</a>
                         <a class="dropdown-item" href="#/bills/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('COLLECTION-') == 0}" class="dropdown">
+                <li ng-if="isFinancialOrAccounting()"
+                    ng-class="{active: $root.section.indexOf('COLLECTION-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Cobranzas</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/collections">Listado</a>
                         <a class="dropdown-item" href="#/collections/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('ADDITIONAL-') == 0}" class="dropdown">
+                <li ng-if="isFinancialOrAccounting()"
+                    ng-class="{active: $root.section.indexOf('ADDITIONAL-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Adicionales</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/additionals">Listado</a>
                         <a class="dropdown-item" href="#/additionals/add">Registrar</a>
                     </div>
                 </li>
-                <li ng-class="{active: $root.section.indexOf('ADDITIONALCOLLECTION-') == 0}" class="dropdown">
+                <li ng-if="isFinancialOrAccounting()"
+                    ng-class="{active: $root.section.indexOf('ADDITIONALCOLLECTION-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Cobros de adicionales</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/additional-collections">Listado</a>
                         <a class="dropdown-item" href="#/additional-collections/add">Registrar</a>
+                    </div>
+                </li>
+                <li ng-if="isFinancial()" ng-class="{active: $root.section.indexOf('USER-') == 0}" class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">Usuarios</a>
+                    <div class="dropdown-content">
+                        <a class="dropdown-item" href="#/users">Listado</a>
+                        <a class="dropdown-item" href="#/users/add">Registrar</a>
                     </div>
                 </li>
                 <li ng-class="{active: $root.section.indexOf('ACCOUNT-') == 0}" class="dropdown">

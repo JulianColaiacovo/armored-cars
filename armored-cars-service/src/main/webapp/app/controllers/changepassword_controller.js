@@ -1,6 +1,6 @@
 //begin changepassword_controller.js
-App.controller('ChangePasswordController', ['$rootScope', '$scope', '$cookies', '$location', 'Account', 'md5',
-    function ($rootScope, $scope, $cookies, $location, Account, md5) {
+App.controller('ChangePasswordController', ['$rootScope', '$scope', '$cookies', '$location', 'User', 'md5',
+    function ($rootScope, $scope, $cookies, $location, User, md5) {
 
         $scope.initialize = function () {
             $scope.isSaving = false;
@@ -16,7 +16,7 @@ App.controller('ChangePasswordController', ['$rootScope', '$scope', '$cookies', 
                     "new_password": md5.createHash($scope.password.new || ''),
                     "repeat_new_password": md5.createHash($scope.password.repeat_new || '')
                 };
-                Account.change_password(data, onSaveOk, onSaveError);
+                User.change_password(data, onSaveOk, onSaveError);
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
                     angular.forEach(controls, function (control) {
@@ -28,6 +28,10 @@ App.controller('ChangePasswordController', ['$rootScope', '$scope', '$cookies', 
 
         $scope.canEditData = function () {
             return true;
+        };
+
+        $scope.validateRepeatPassword = function (repeatPassword) {
+            return $scope.password.new == repeatPassword;
         };
 
         var onSaveOk = function (response) {

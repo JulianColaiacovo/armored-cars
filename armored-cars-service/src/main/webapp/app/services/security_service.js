@@ -1,15 +1,19 @@
 //begin security_service.js
 App.factory('Security', ['$resource', '$rootScope', function ($resource, $rootScope) {
-    return {
-        query: function (appContext) {
-            return $resource("/" + appContext + "/security/", {},
-                {
-                    login: {method: 'PUT'},
-                    logout: {method: 'DELETE'}
-                }
-            )
-        }
-    }
+
+    var urlBase = "/armored-cars/security/";
+
+    var securityOp = {};
+
+    securityOp.login = function (body, callback, onError) {
+        $resource(urlBase, {}, { 'put': { method: 'PUT' } }).put({}, body, callback, onError);
+    };
+
+    securityOp.logout = function (params, callback, onError) {
+        $resource(urlBase, params, {}).delete({}, {}, callback, onError);
+    };
+
+    return securityOp;
 }
 ]);
 

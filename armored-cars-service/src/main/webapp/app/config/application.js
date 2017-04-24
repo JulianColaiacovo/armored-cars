@@ -13,7 +13,8 @@ window.App = angular
             'http-auth-interceptor',
             'datetimepicker',
             'angular-md5',
-            'ui.mask'
+            'ui.mask',
+            'ui.validate'
         ]
     );
 

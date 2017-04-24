@@ -8,7 +8,6 @@ public class ChangePasswordDTO {
     private String userName;
     private String oldPassword;
     private String newPassword;
-    private String repeatNewPassword;
 
     public String getUserName() {
         return userName;
@@ -32,14 +31,6 @@ public class ChangePasswordDTO {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
-    }
-
-    public String getRepeatNewPassword() {
-        return repeatNewPassword;
-    }
-
-    public void setRepeatNewPassword(String repeatNewPassword) {
-        this.repeatNewPassword = repeatNewPassword;
     }
 
 }

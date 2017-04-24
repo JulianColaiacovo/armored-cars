@@ -1,0 +1,68 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <h2 ng-if="isNew()">Registrar usuario</h2>
+    <h2 ng-if="section == 'USER-EDIT'">Editar usuario</h2>
+    <h2 ng-if="section == 'USER-VIEW'">Datos del usuario</h2>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <form name="form" ng-submit="save()">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td>Usuario</td>
+                        <td>
+                            <input name="user_name" ng-if="isNew()" type="text" ng-model="user.user_name"
+                                   class="input-tag" required/>
+                            <p ng-if="!isNew()">{{user.user_name}}</p>
+                            <div ng-show="form.user_name.$dirty" ng-messages="form.user_name.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                                <div ng-message="pattern">El nombre no tiene un formato v&aacute;lido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="canEditData()">
+                        <td>Contrase&ntilde;a</td>
+                        <td>
+                            <input name="password" type="password" ng-model="user.password"
+                                   required
+                                   class="input-tag">
+                            <div ng-show="form.password.$dirty" ng-messages="form.password.$error"
+                                 style="color:maroon" role="alert">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="canEditData()">
+                        <td>Repetir contrase&ntilde;a</td>
+                        <td>
+                            <input name="repeat_password" type="password" ng-model="user.repeat_password"
+                                   ui-validate=" 'validateRepeatPassword($value)' "
+                                   class="input-tag">
+                            <div ng-show="form.repeat_password.$dirty && form.repeat_password.$error.validator"
+                                 style="color:maroon">
+                                Las contrase&ntilde;a deben ser iguales
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Permisos</td>
+                        <td>
+                            <select ng-if="canEditData()" ng-model="user.user_level"
+                                    ng-options="user_level as user_level|UserLevelFormatter for user_level in user_levels">
+                            </select>
+                            <p ng-if=" !canEditData()">{{user.user_level|UserLevelFormatter}}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-include src="'assets/partials/save.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,10 +1,11 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
+import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.UserDao;
 import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;
+import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.domain.model.User;
 import com.jcolaiacovo.armored.cars.domain.model.UserLevel;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,32 +13,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.joda.time.DateTime.now;
 
 @Service
 @Transactional
-public class SecurityService {
+public class UserService extends AbstractDaoService<User> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private UserDao userDao;
 
     @Autowired
-    public SecurityService(UserDao userDao) {
+    public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public SecurityToken login(String userName, String password) {
-        User user = this.validateUser(userName, password);
-
-        int tokenHash = new HashCodeBuilder().append(user).append(password).append(now().getMillis()).toHashCode();
-        return new SecurityToken(tokenHash, userName);
+    public List<User> getAll() {
+        return this.userDao.getAll();
     }
 
-    public void logout(String tokenHash) {
+    public User getByName(String name) {
+        return this.userDao.getUserByUsername(name)
+                .orElseThrow(() -> new RuntimeException("Can not find user"));
+    }
 
+    public void changePassword(String userName, String oldPassword, String newPassword) {
+        User user = this.validateUser(userName, oldPassword);
+
+        user.setPassword(newPassword);
+        this.userDao.save(user);
     }
 
     private User validateUser(String userName, String password) {
@@ -53,6 +60,11 @@ public class SecurityService {
         }
 
         return optionalUser.get();
+    }
+
+    @Override
+    protected AbstractDao<User> getDao() {
+        return this.userDao;
     }
 
 }
