@@ -40,7 +40,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("web/assets/**").addResourceLocations("/components/", "/config/",
+        registry.addResourceHandler("web/assets/**/*").addResourceLocations("/components/", "/config/",
                 "/app/assets/styles/", "/app/assets/images/", "/dist/", "/app/views/");
     }
 
