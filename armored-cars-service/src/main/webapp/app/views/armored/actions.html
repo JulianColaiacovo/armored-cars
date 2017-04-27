@@ -64,7 +64,7 @@
                             <p ng-if=" !canEditData()">{{armored.stock_status|StockStatusFormatter}}</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="isFinancial()">
                         <td class="col-xs-6">Valor de cotizaci&oacute;n</td>
                         <td class="col-xs-6">
                             <input name="price" ng-if="canEditData()" type="number"

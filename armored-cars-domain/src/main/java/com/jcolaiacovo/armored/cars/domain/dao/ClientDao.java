@@ -26,6 +26,14 @@ public class ClientDao extends AbstractDao<Client> {
                 .list();
     }
 
+    public Optional<Client> findByName(String name) {
+        Client client = (Client) this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct cli from Client as cli where cli.name = :name")
+                .setString("name", name)
+                .uniqueResult();
+        return Optional.ofNullable(client);
+    }
+
     public List<Client> search(String name, String document) {
         String likeName = Optional.ofNullable(name).map(s -> '%' + s + '%').orElse("%");
         String likeDocument = Optional.ofNullable(document).map(s -> '%' + s + '%').orElse("%");

@@ -31,6 +31,25 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
             }
         };
 
+        $scope.selectFile = function (files) {
+            $scope.selectedFile = files[0];
+        };
+
+        $scope.uploadFile = function () {
+            var fd = new FormData();
+            //Take the first selected file
+            fd.append("file", $scope.selectedFile);
+
+            $http.post("/" + $rootScope.appContext + "/armoreds/excel", fd, {
+                withCredentials: true,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            }).success(function (data, status, headers, config) {
+                $location.path("armoreds/")
+            }).error("");
+
+        };
+
         var onDeleteOk = function () {
             $location.path('/armoreds/');
         };

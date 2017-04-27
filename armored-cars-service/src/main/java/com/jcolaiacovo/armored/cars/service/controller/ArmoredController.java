@@ -9,6 +9,7 @@ import com.jcolaiacovo.armored.cars.domain.transformer.ArmoredTransformer;
 import com.jcolaiacovo.armored.cars.domain.transformer.ClientTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class ArmoredController {
         Armored armored = this.armoredTransformer.transform(armoredDTO);
         this.armoredService.save(armored);
         return this.armoredTransformer.transformToDTO(armored);
+    }
+
+    @PostMapping("/excel")
+    public void loadExcel(@RequestParam MultipartFile file) {
+        this.armoredService.loadExcel(file);
     }
 
     @DeleteMapping("/{id}")

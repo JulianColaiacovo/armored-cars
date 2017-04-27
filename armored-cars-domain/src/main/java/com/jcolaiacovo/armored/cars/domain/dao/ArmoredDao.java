@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Julian on 21/02/2017.
@@ -25,6 +26,15 @@ public class ArmoredDao extends AbstractDao<Armored> {
         return (List<Armored>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from ARMORED;")
                 .addEntity(Armored.class)
                 .list();
+    }
+
+    @Transactional
+    public Optional<Armored> findByCode(int code) {
+        Armored armored = (Armored) this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct armored from Armored as armored where armored.code = :code")
+                .setInteger("code", code)
+                .uniqueResult();
+        return Optional.ofNullable(armored);
     }
 
 }

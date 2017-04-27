@@ -18,8 +18,28 @@ COLLECTION_ACTION_PATH = '/collections/:action/:collection_id?';
 USER_LIST_PATH = '/users';
 USER_ACTION_PATH = '/users/:action/:user_id?';
 NOTFOUND_PATH = "/errors/404";
+FORBIDDEN_PATH = "/forbidden/403";
 
 App.config(['$routeProvider', function ($routeProvider) {
+
+    var financialPermission = function ($q, $location, $rootScope) {
+        var deferred = $q.defer();
+        deferred.resolve();
+        if (!$rootScope.isFinancial()) {
+            $location.path(FORBIDDEN_PATH);
+        }
+        return deferred.promise;
+    };
+
+    var accountingPermission = function ($q, $location, $rootScope) {
+        var deferred = $q.defer();
+        deferred.resolve();
+        if (!$rootScope.isFinancialOrAccounting()) {
+            $location.path(FORBIDDEN_PATH);
+        }
+        return deferred.promise;
+    };
+
     $routeProvider.when(BASE_PATH, {
         redirectTo: CLIENT_LIST_PATH
     }).when(LOGIN_PATH, {
@@ -30,16 +50,20 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: 'ChangePasswordController'
     }).when(ADDITIONAL_LIST_PATH, {
         templateUrl: 'assets/additional/list.html',
-        controller: 'AdditionalListController'
+        controller: 'AdditionalListController',
+        resolve: { app: accountingPermission }
     }).when(ADDITIONAL_ACTION_PATH, {
         templateUrl: 'assets/additional/actions.html',
-        controller: 'AdditionalController'
+        controller: 'AdditionalController',
+        resolve: { app: accountingPermission }
     }).when(ADDITIONALCOLLECTION_LIST_PATH, {
         templateUrl: 'assets/additionalcollection/list.html',
-        controller: 'AdditionalCollectionListController'
+        controller: 'AdditionalCollectionListController',
+        resolve: { app: accountingPermission }
     }).when(ADDITIONALCOLLECTION_ACTION_PATH, {
         templateUrl: 'assets/additionalcollection/actions.html',
-        controller: 'AdditionalCollectionController'
+        controller: 'AdditionalCollectionController',
+        resolve: { app: accountingPermission }
     }).when(ARMORED_LIST_PATH, {
         templateUrl: 'assets/armored/list.html',
         controller: 'ArmoredListController'
@@ -48,28 +72,36 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: 'ArmoredController'
     }).when(BILL_LIST_PATH, {
         templateUrl: 'assets/bill/list.html',
-        controller: 'BillListController'
+        controller: 'BillListController',
+        resolve: { app: accountingPermission }
     }).when(BILL_ACTION_PATH, {
         templateUrl: 'assets/bill/actions.html',
-        controller: 'BillController'
+        controller: 'BillController',
+        resolve: { app: accountingPermission }
     }).when(CLIENT_LIST_PATH, {
         templateUrl: 'assets/clients/list.html',
-        controller: 'ClientListController'
+        controller: 'ClientListController',
     }).when(CLIENT_ACTION_PATH, {
         templateUrl: 'assets/clients/actions.html',
-        controller: 'ClientController'
+        controller: 'ClientController',
     }).when(COLLECTION_LIST_PATH, {
         templateUrl: 'assets/collection/list.html',
-        controller: 'CollectionListController'
+        controller: 'CollectionListController',
+        resolve: { app: accountingPermission }
     }).when(COLLECTION_ACTION_PATH, {
         templateUrl: 'assets/collection/actions.html',
-        controller: 'CollectionController'
+        controller: 'CollectionController',
+        resolve: { app: accountingPermission }
     }).when(USER_LIST_PATH, {
         templateUrl: 'assets/user/list.html',
-        controller: 'UserListController'
+        controller: 'UserListController',
+        resolve: { app: financialPermission }
     }).when(USER_ACTION_PATH, {
         templateUrl: 'assets/user/actions.html',
-        controller: 'UserController'
+        controller: 'UserController',
+        resolve: { app: financialPermission }
+    }).when(FORBIDDEN_PATH, {
+        templateUrl: 'assets/forbidden.html'
     }).otherwise({
         templateUrl: 'assets/not_found.html'
     });

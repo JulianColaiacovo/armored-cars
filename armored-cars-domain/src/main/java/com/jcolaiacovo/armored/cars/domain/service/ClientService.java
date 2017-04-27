@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Julian on 14/01/2017.
@@ -31,12 +32,20 @@ public class ClientService extends AbstractDaoService<Client> {
         return this.clientDao.getAll();
     }
 
+    public Client getGenericClient() {
+        return this.getById(GENERIC_CLIENT_ID);
+    }
+
+    public Optional<Client> findByName(String name) {
+        return this.clientDao.findByName(name);
+    }
+
     public List<Client> search(String name, String document) {
         return this.clientDao.search(name, document);
     }
 
     public void save(Client client) {
-        if (this.isGenericClient(client.getId())) {
+        if (this.isGenericClient(client)) {
             throw new ModifyGenericClientException();
         } else {
             super.save(client);
@@ -54,6 +63,10 @@ public class ClientService extends AbstractDaoService<Client> {
     @Override
     protected AbstractDao<Client> getDao() {
         return this.clientDao;
+    }
+
+    public boolean isGenericClient(Client client) {
+        return this.isGenericClient(client.getId());
     }
 
     private boolean isGenericClient(int idClient) {
