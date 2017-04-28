@@ -58,6 +58,10 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             setDefaultBillNumber();
         };
 
+        $scope.isCreditNote = function () {
+            return $scope.bill.bill_type_code.startsWith('CREDIT_NOTE_');
+        };
+
         var loadBillClient = function (clientId) {
             if (clientId) {
                 Client.get(clientId, function (response) {

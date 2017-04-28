@@ -52,8 +52,8 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>N&uacute;mero de factura</td>
+                    <tr ng-show="isCreditNote()">
+                        <td>Factura asociada</td>
                         <td>
                             <input name="apply_bill_id" ng-if="canEditData()" type="text" ng-model="bill.apply_bill_id"
                                    class="input-tag">
