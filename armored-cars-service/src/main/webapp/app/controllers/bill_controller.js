@@ -5,11 +5,14 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         $scope.initialize = function () {
             $scope.isSaving = false;
             $scope.bill = {};
+            $scope.formattedData = {};
+            initModals();
             setSection();
             loadAliquots();
             loadBillTypeCodes();
             loadCurrencies();
             loadData();
+            $scope.armoredModalSearch();
         };
 
         $scope.isNew = function () {
@@ -33,6 +36,10 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         $scope.save = function () {
             if ($scope.form.$valid) {
                 $scope.isSaving = true;
+                $scope.bill.armored_id = $scope.modals.armored.selected.id;
+                $scope.bill.bill_to = $scope.client.id;
+                var billNumber = $scope.formattedData.billNumber.replace("-", "");
+                $scope.bill.number = Number(billNumber);
                 Bill.save($scope.bill, onSaveOk, onSaveError);
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
@@ -43,10 +50,38 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             }
         };
 
-        $scope.searchArmoredClient = function () {
-            var armoredId = $scope.bill.armored_id;
-            if (armoredId) {
-                Armored.getBillToClient(armoredId, function (response) {
+        $scope.updateBillNumber = function () {
+            setDefaultBillNumber();
+        };
+
+        $scope.isCreditNote = function () {
+            return $scope.bill.bill_type_code.startsWith('CREDIT_NOTE_');
+        };
+
+        $scope.selectArmored = function (armored) {
+            $scope.modals.armored.selected = armored;
+            $scope.hideArmoredModal();
+            searchArmoredClient(armored);
+        };
+
+        $scope.armoredModalSearch = function () {
+            var armored = $scope.modals.armored.selected | {};
+            Armored.search(armored.code, armored.brand, function (response) {
+                $scope.modals.armored.items = response;
+            });
+        };
+
+        $scope.showArmoredModal = function () {
+            $scope.modals.armored.visible = true;
+        };
+
+        $scope.hideArmoredModal = function () {
+            $scope.modals.armored.visible = false;
+        };
+
+        var searchArmoredClient = function (armored) {
+            if (armored && armored.id) {
+                Armored.getBillToClient(armored.id, function (response) {
                     $scope.client = response;
                 });
             } else {
@@ -54,12 +89,13 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             }
         };
 
-        $scope.updateBillNumber = function () {
-            setDefaultBillNumber();
-        };
-
-        $scope.isCreditNote = function () {
-            return $scope.bill.bill_type_code.startsWith('CREDIT_NOTE_');
+        var initModals = function () {
+            $scope.modals = {
+                "armored": {
+                    "visible": false,
+                    "selected": null
+                }
+            };
         };
 
         var loadBillClient = function (clientId) {

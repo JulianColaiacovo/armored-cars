@@ -41,7 +41,7 @@
                     <tr>
                         <td>N&uacute;mero de comprobante</td>
                         <td>
-                            <input name="number" ng-if="canEditData()" type="text" ng-model="bill.number"
+                            <input name="number" ng-if="canEditData()" type="text" ng-model="formattedData.billNumber"
                                    ui-mask="9999-99999999"
                                    required
                                    class="input-tag">
@@ -62,15 +62,25 @@
                     </tr>
                     <tr>
                         <td>N&uacute;mero de blindaje</td>
-                        <td>
-                            <input name="armored_id" ng-if="canEditData()" type="text" ng-model="bill.armored_id"
-                                   required
-                                   ng-change="searchArmoredClient()"
-                                   class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.armored_id}}</p>
-                            <div ng-show="form.armored_id.$dirty" ng-messages="form.armored_id.$error"
-                                 style="color:maroon" role="alert">
-                                <div ng-message="required">El campo es requerido</div>
+                        <td class="col-xs-6">
+                            <button name="select_armored" type="button"
+                                    ng-if="modals.armored.selected == null"
+                                    ng-click="showArmoredModal()"
+                                    class="input-tag">
+                                Seleccionar blindaje
+                            </button>
+                            <div ng-if="modals.armored.selected == null" style="color:maroon">
+                                El campo es requerido
+                            </div>
+                            <div ng-if="modals.armored.selected">
+                                <p>
+                                    <button name="armored_remove" type="button"
+                                            ng-if="canEditData()"
+                                            ng-click="selectArmored(null)">
+                                        &times;
+                                    </button>
+                                    {{modals.armored.selected|ArmoredFormatter}}
+                                </p>
                             </div>
                         </td>
                     </tr>
@@ -161,6 +171,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <div ng-include src="'assets/partials/modalarmored.html'"></div>
                 <div ng-include src="'assets/partials/save.html'"></div>
             </form>
         </div>

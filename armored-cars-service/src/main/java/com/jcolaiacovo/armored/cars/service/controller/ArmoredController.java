@@ -37,6 +37,12 @@ public class ArmoredController {
         return this.armoredTransformer.transformToDTOAll(armoreds);
     }
 
+    @GetMapping("/search")
+    public List<ArmoredDTO> search(@RequestParam(required = false) String code, @RequestParam(required = false) String brand) {
+        List<Armored> armoreds = this.armoredService.search(code, brand);
+        return this.armoredTransformer.transformToDTOAll(armoreds);
+    }
+
     @GetMapping("/{id}")
     public ArmoredDTO getById(@PathVariable int id) {
         Armored armored = this.armoredService.getById(id);

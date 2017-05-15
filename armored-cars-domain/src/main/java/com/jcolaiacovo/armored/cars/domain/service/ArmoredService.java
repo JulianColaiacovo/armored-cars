@@ -3,6 +3,7 @@ package com.jcolaiacovo.armored.cars.domain.service;
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.ArmoredDao;
 import com.jcolaiacovo.armored.cars.domain.model.Armored;
+import com.jcolaiacovo.armored.cars.domain.model.Client;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class ArmoredService extends AbstractDaoService<Armored> {
 
     public Optional<Armored> findByCode(int code) {
         return this.armoredDao.findByCode(code);
+    }
+
+    public List<Armored> search(String code, String brand) {
+        return this.armoredDao.search(code, brand);
     }
 
     public void loadExcel(MultipartFile excel) {
