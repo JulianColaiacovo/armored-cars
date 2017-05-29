@@ -1,68 +1,38 @@
-package com.jcolaiacovo.armored.cars.domain.service;
+package com.jcolaiacovo.armored.cars.domain.parser.armored;
 
-import com.google.common.collect.Lists;
+import com.jcolaiacovo.armored.cars.domain.helper.ExcelHelper;
 import com.jcolaiacovo.armored.cars.domain.model.*;
+import com.jcolaiacovo.armored.cars.domain.parser.RowParser;
+import com.jcolaiacovo.armored.cars.domain.parser.armored.exception.ArmoredWithoutBrandException;
+import com.jcolaiacovo.armored.cars.domain.parser.armored.exception.ArmoredWithoutCodeException;
+import com.jcolaiacovo.armored.cars.domain.service.ClientService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
- * Created by Julian on 26/04/2017.
+ * Created by Julian on 27/05/2017.
  */
 @Component
-public class ArmoredExcelHelper {
+public class ArmoredRowParser extends RowParser<Armored> {
 
-    private final ClientService clientService;
+    private ClientService clientService;
+    private ExcelHelper excelHelper;
 
     @Autowired
-    public ArmoredExcelHelper(ClientService clientService) {
+    public ArmoredRowParser(ClientService clientService,
+                            ExcelHelper excelHelper) {
         this.clientService = clientService;
+        this.excelHelper = excelHelper;
     }
 
-    public List<Armored> parse(Workbook excel) {
-        Sheet sheet = excel.getSheetAt(0);
-
-        Iterator<Row> rowIterator = sheet.rowIterator();
-        rowIterator.next();
-        rowIterator.next();
-        rowIterator.next();
-
-        List<Armored> armoreds = Lists.newArrayList();
-        rowIterator.forEachRemaining(row -> armoreds.add(this.parse(row)));
-
-        return armoreds.stream().filter(this::isNotEmpty).collect(Collectors.toList());
-    }
-
-    public boolean isNotEmpty(Armored armored) {
-        return !this.isEmpty(armored);
-    }
-
-    public boolean isEmpty(Armored armored) {
-        return armored.getDeliveryDate() == null && armored.getDepartureDate() == null &&
-                armored.getEntryDate() == null && armored.getPrice().compareTo(BigDecimal.ZERO) == 0 &&
-                StringUtils.isBlank(armored.getCar().getBrand()) &&
-                StringUtils.isBlank(armored.getCar().getModel()) &&
-                StringUtils.isBlank(armored.getCar().getChassisNumber()) &&
-                StringUtils.isBlank(armored.getCar().getMotorNumber()) &&
-                StringUtils.isBlank(armored.getCar().getDomain()) &&
-                StringUtils.isBlank(armored.getBillingAndReference().getOwner()) &&
-                StringUtils.isBlank(armored.getBillingAndReference().getContactPerson()) &&
-                this.clientService.isGenericClient(armored.getBillingAndReference().getBillToClient());
-    }
-
-    private Armored parse(Row row) {
+    @Override
+    public Armored parse(Row row) {
         Armored armored = new Armored();
 
         this.setCode(armored, row);
@@ -77,8 +47,20 @@ public class ArmoredExcelHelper {
         return armored;
     }
 
+    @Override
+    public boolean isEmpty(Row row) {
+        return StringUtils.isBlank(this.getBrand(row)) || this.getCode(row) == 0;
+    }
+
+    private int getCode(Row row) {
+        return this.excelHelper.getIntegerValue(row.getCell(0));
+    }
+
     private void setCode(Armored armored, Row row) {
-        int code = (int) row.getCell(0).getNumericCellValue();
+        int code = this.getCode(row);
+        if (code == 0) {
+            throw new ArmoredWithoutCodeException();
+        }
         armored.setCode(code);
     }
 
@@ -112,11 +94,14 @@ public class ArmoredExcelHelper {
     private void setCar(Armored armored, Row row) {
         Car car = new Car();
 
-        String brand = this.getStringValue(row.getCell(6));
-        String model = this.getStringValue(row.getCell(7));
-        String chassis = this.getStringValue(row.getCell(8));
-        String motor = this.getStringValue(row.getCell(9));
-        String domain = this.getStringValue(row.getCell(10));
+        String brand = this.getBrand(row);
+        if (StringUtils.isBlank(brand)) {
+            throw new ArmoredWithoutBrandException();
+        }
+        String model = this.excelHelper.getStringValue(row.getCell(7));
+        String chassis = this.excelHelper.getStringValue(row.getCell(8));
+        String motor = this.excelHelper.getStringValue(row.getCell(9));
+        String domain = this.excelHelper.getStringValue(row.getCell(10));
 
         car.setBrand(brand);
         car.setModel(model);
@@ -127,8 +112,12 @@ public class ArmoredExcelHelper {
         armored.setCar(car);
     }
 
+    private String getBrand(Row row) {
+        return this.excelHelper.getStringValue(row.getCell(6));
+    }
+
     private void setStockStatus(Armored armored, Row row) {
-        String stockStatus = this.getStringValue(row.getCell(11));
+        String stockStatus = this.excelHelper.getStringValue(row.getCell(11));
         String stockStatusNormalized = StringUtils.stripAccents(stockStatus);
 
         if ("si".equalsIgnoreCase(stockStatusNormalized)) {
@@ -141,9 +130,9 @@ public class ArmoredExcelHelper {
     private void setBillingAndReference(Armored armored, Row row) {
         BillingAndReference billingAndReference = new BillingAndReference();
 
-        String owner = this.getStringValue(row.getCell(13));
-        String contactPerson = this.getStringValue(row.getCell(14));
-        String billTo = this.getStringValue(row.getCell(15));
+        String owner = this.excelHelper.getStringValue(row.getCell(13));
+        String contactPerson = this.excelHelper.getStringValue(row.getCell(14));
+        String billTo = this.excelHelper.getStringValue(row.getCell(15));
 
         billingAndReference.setOwner(owner);
         billingAndReference.setContactPerson(contactPerson);
@@ -157,10 +146,6 @@ public class ArmoredExcelHelper {
     private void setPrice(Armored armored, Row row) {
         double price = row.getCell(16).getNumericCellValue();
         armored.setPrice(BigDecimal.valueOf(price));
-    }
-
-    private String getStringValue(Cell cell) {
-        return Optional.ofNullable(cell).map(Cell::getStringCellValue).orElse(null);
     }
 
 }

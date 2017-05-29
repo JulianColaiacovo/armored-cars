@@ -3,7 +3,7 @@ package com.jcolaiacovo.armored.cars.domain.service;
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.ArmoredDao;
 import com.jcolaiacovo.armored.cars.domain.model.Armored;
-import com.jcolaiacovo.armored.cars.domain.model.Client;
+import com.jcolaiacovo.armored.cars.domain.parser.armored.ArmoredExcelParser;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +24,13 @@ import java.util.stream.Collectors;
 public class ArmoredService extends AbstractDaoService<Armored> {
 
     private ArmoredDao armoredDao;
-    private ArmoredExcelHelper armoredExcelHelper;
+    private ArmoredExcelParser armoredExcelParser;
 
     @Autowired
-    public ArmoredService(ArmoredDao armoredDao, ArmoredExcelHelper armoredExcelHelper) {
+    public ArmoredService(ArmoredDao armoredDao,
+                          ArmoredExcelParser armoredExcelParser) {
         this.armoredDao = armoredDao;
-        this.armoredExcelHelper = armoredExcelHelper;
+        this.armoredExcelParser = armoredExcelParser;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ArmoredService extends AbstractDaoService<Armored> {
     public void loadExcel(MultipartFile excel) {
         try {
             Workbook workbook = new HSSFWorkbook(excel.getInputStream());
-            List<Armored> armoreds = this.armoredExcelHelper.parse(workbook);
+            List<Armored> armoreds = this.armoredExcelParser.parse(workbook);
             List<Armored> bindArmoreds = this.bind(armoreds);
             this.armoredDao.saveAll(bindArmoreds);
         } catch (IOException e) {

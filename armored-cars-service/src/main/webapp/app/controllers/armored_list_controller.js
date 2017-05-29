@@ -46,7 +46,11 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
                 transformRequest: angular.identity
             }).success(function (data, status, headers, config) {
                 $location.path("armoreds/")
-            }).error("");
+            }).error(function (response) {
+                if (response.status != 200) {
+                    $rootScope.globalError = 'Error al cargar el excel de blindajes';
+                }
+            });
 
         };
 
