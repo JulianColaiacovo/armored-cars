@@ -6,6 +6,9 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
             $rootScope.section = "ARMORED-LIST";
             $scope.page_size = 15;
             $scope.current_page = 1;
+            $scope.uploadFileTexts = {
+                title: "Cargar excel de blindados"
+            };
             $scope.loadArmoreds();
         };
 
@@ -33,6 +36,11 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
 
         $scope.selectFile = function (files) {
             $scope.selectedFile = files[0];
+        };
+
+        $scope.deselectFile = function () {
+            $scope.selectedFile = null;
+            angular.element(document.querySelector('#file')).val('');
         };
 
         $scope.uploadFile = function () {

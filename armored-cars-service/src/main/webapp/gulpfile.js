@@ -5,6 +5,7 @@ var watch = require('gulp-watch');
 gulp.task('components', function () {
     return gulp.src([
         'components/angular/angular.min.js',
+        'components/angular-i18n/angular-locale_es-ar.js',
         'components/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'components/angular-cookies/angular-cookies.min.js',
         'components/angular-messages/angular-messages.min.js',

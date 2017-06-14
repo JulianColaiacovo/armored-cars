@@ -71,7 +71,7 @@ public class Bill {
     private Client billTo;
 
     @Column(name = "FINANCIAL_ADVANCE", nullable = false)
-    private Boolean financialAdvance;
+    private boolean financialAdvance;
 
 
     public int getId() {
@@ -194,11 +194,11 @@ public class Bill {
         this.billTo = billTo;
     }
 
-    public Boolean getFinancialAdvance() {
+    public boolean getFinancialAdvance() {
         return financialAdvance;
     }
 
-    public void setFinancialAdvance(Boolean financialAdvance) {
+    public void setFinancialAdvance(boolean financialAdvance) {
         this.financialAdvance = financialAdvance;
     }
 

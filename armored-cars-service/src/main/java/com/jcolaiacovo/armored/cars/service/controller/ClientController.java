@@ -6,6 +6,7 @@ import com.jcolaiacovo.armored.cars.domain.service.ClientService;
 import com.jcolaiacovo.armored.cars.domain.transformer.ClientTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class ClientController {
     public List<ClientDTO> search(@RequestParam(required = false) String name, @RequestParam(required = false) String document) {
         List<Client> clients = this.clientService.search(name, document);
         return this.clientTransformer.transformToDTOAll(clients);
+    }
+
+    @PostMapping("/excel")
+    public void loadExcel(@RequestParam MultipartFile file) {
+        this.clientService.loadExcel(file);
     }
 
     @GetMapping("/{id}")

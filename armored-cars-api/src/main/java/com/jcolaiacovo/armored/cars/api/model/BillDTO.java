@@ -24,7 +24,7 @@ public class BillDTO {
     private Integer applyBillId;
     private String description;
     private int billToId;
-    private Boolean financialAdvance;
+    private boolean financialAdvance;
 
     public int getId() {
         return id;
@@ -146,11 +146,11 @@ public class BillDTO {
         this.billToId = billToId;
     }
 
-    public Boolean getFinancialAdvance() {
+    public boolean getFinancialAdvance() {
         return financialAdvance;
     }
 
-    public void setFinancialAdvance(Boolean financialAdvance) {
+    public void setFinancialAdvance(boolean financialAdvance) {
         this.financialAdvance = financialAdvance;
     }
 

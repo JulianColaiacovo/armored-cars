@@ -4,7 +4,9 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
 
         $scope.initialize = function () {
             $scope.isSaving = false;
-            $scope.bill = {};
+            $scope.bill = {
+                bill_type_code: "BILL_A"
+            };
             $scope.formattedData = {};
             initModals();
             setSection();
@@ -34,10 +36,10 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         $scope.save = function () {
-            if ($scope.form.$valid) {
+            if ($scope.form.$valid && $scope.modals.armored.selected) {
                 $scope.isSaving = true;
                 $scope.bill.armored_id = $scope.modals.armored.selected.id;
-                $scope.bill.bill_to = $scope.client.id;
+                $scope.bill.bill_to_id = $scope.client.id;
                 var billNumber = $scope.formattedData.billNumber.replace("-", "");
                 $scope.bill.number = Number(billNumber);
                 Bill.save($scope.bill, onSaveOk, onSaveError);
@@ -94,6 +96,10 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                 "armored": {
                     "visible": false,
                     "selected": null
+                },
+                "bill": {
+                    "visible": false,
+                    "selected": null
                 }
             };
         };
@@ -105,6 +111,16 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                 });
             } else {
                 $scope.client = null;
+            }
+        };
+
+        var loadArmored = function (armoredId) {
+            if (armoredId) {
+                Armored.get(armoredId, function (response) {
+                    $scope.modals.armored.selected = response;
+                });
+            } else {
+                $scope.modals.armored.selected = null;
             }
         };
 
@@ -132,6 +148,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                     $scope.bill = response;
                     setBillNumber(response.number);
                     loadBillClient($scope.bill.bill_to_id);
+                    loadArmored($scope.bill.armored_id);
                 });
             }
         };
@@ -143,7 +160,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         var setBillNumber = function (billNumber) {
-            $scope.bill.number = $filter('BillNumberFormatter')(billNumber);
+            $scope.formattedData.billNumber = $filter('BillNumberFormatter')(billNumber);
         };
 
         var setSection = function () {

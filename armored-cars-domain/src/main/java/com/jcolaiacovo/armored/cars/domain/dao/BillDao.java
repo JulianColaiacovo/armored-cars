@@ -22,11 +22,13 @@ public class BillDao extends AbstractDao<Bill> {
     }
 
     public Optional<Bill> getLastBill(BillTypeCode billTypeCode) {
-        Bill bill = (Bill) this.getSessionFactory().getCurrentSession()
+        return this.getSessionFactory().getCurrentSession()
                 .createQuery("select distinct bill from Bill as bill where bill.billTypeCode = :billTypeCode order by bill.number desc")
                 .setString("billTypeCode", billTypeCode.name())
-                .uniqueResult();
-        return Optional.ofNullable(bill);
+                .list()
+                .stream()
+                .map(Bill.class::cast)
+                .findFirst();
     }
 
     public List<Bill> getAll() {

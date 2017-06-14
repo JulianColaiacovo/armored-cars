@@ -1,6 +1,6 @@
 //begin boot.js
-App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$timeout', '$route', 'Security', 'User',
-    function ($rootScope, $templateCache, $cookies, $location, $modal, $timeout, $route, Security, User) {
+App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$timeout', '$route', '$q', 'Security', 'User',
+    function ($rootScope, $templateCache, $cookies, $location, $modal, $timeout, $route, $q, Security, User) {
 
         $rootScope.initialize = function () {
             if ($cookies.get("token")) $rootScope.token = $cookies.get("token");
@@ -60,10 +60,12 @@ App.run(['$rootScope', '$templateCache', '$cookies', '$location', '$modal', '$ti
 
         $rootScope.isWorkshop = function () {
             return $rootScope.user_data.user_level == "WORKSHOP";
-        };
+        }; 
 
         var refreshPermissions = function () {
-            $rootScope.user_data = { user_level: 'WORKSHOP' };
+            if ($rootScope.user_data == null) {
+                $rootScope.user_data = { user_level: 'WORKSHOP' };
+            }
             User.getByName($rootScope.logged_user, function (response) {
                 $rootScope.user_data = response;
             });

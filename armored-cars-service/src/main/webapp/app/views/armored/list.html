@@ -4,14 +4,7 @@
 
     <h2>Blindajes</h2>
     <hr/>
-    <div>
-        <span>Subir excel de blindados</span>
-        <input id="file" type="file" name="file"
-               onchange="$('#upload-file-info').html($(this).val().replace(/\\/g, '/').replace(/.*\//, '')); angular.element(this).scope().selectFile(this.files)"/>
-        <button type="button" ng-disbled="selectedFile" ng-click="uploadFile()">
-            Subir archivo
-        </button>
-    </div>
+    <div ng-include src="'assets/partials/uploadexcel.html'"></div>
     <hr/>
     <div class="row">
         <div class="col-xs-12">

@@ -25,7 +25,9 @@ public class ArmoredController {
     private final ClientTransformer clientTransformer;
 
     @Autowired
-    public ArmoredController(ArmoredService armoredService, ArmoredTransformer armoredTransformer, ClientTransformer clientTransformer) {
+    public ArmoredController(ArmoredService armoredService,
+                             ArmoredTransformer armoredTransformer,
+                             ClientTransformer clientTransformer) {
         this.armoredService = armoredService;
         this.armoredTransformer = armoredTransformer;
         this.clientTransformer = clientTransformer;

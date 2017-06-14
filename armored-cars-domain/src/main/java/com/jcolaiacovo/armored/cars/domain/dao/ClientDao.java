@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class ClientDao extends AbstractDao<Client> {
                 .list();
     }
 
+    @Transactional
     public Optional<Client> findByName(String name) {
         Client client = (Client) this.getSessionFactory().getCurrentSession()
                 .createQuery("select distinct cli from Client as cli where cli.name = :name")

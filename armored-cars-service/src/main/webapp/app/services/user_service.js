@@ -14,7 +14,7 @@ App.factory('User', ['$resource', '$rootScope', function ($resource, $rootScope)
     };
 
     userOp.getByName = function (name, callback) {
-        $resource(urlBase + '/name/:name/', {
+        return $resource(urlBase + '/name/:name/', {
             name: name
         }, {}).get(function (response) {
             callback(response);

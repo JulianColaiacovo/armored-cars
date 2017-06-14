@@ -56,7 +56,7 @@
                             <input name="conversion" ng-if="canEditData()" type="number" ng-model="additional.conversion"
                                    required
                                    ng-change="updateVatAndTotal()"
-                                   min="0.01"
+                                   ng-min="0.01"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{additional.conversion}}</p>
                             <div ng-show="form.conversion.$dirty" ng-messages="form.conversion.$error"

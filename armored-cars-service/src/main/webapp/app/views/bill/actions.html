@@ -42,10 +42,10 @@
                         <td>N&uacute;mero de comprobante</td>
                         <td>
                             <input name="number" ng-if="canEditData()" type="text" ng-model="formattedData.billNumber"
-                                   ui-mask="9999-99999999"
+                                   ui-mask="9999-99999999" ui-mask-use-viewvalue="true"
                                    required
                                    class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.number}}</p>
+                            <p ng-if="!canEditData()">{{bill.number|BillNumberFormatter}}</p>
                             <div ng-show="form.number.$dirty" ng-messages="form.number.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
@@ -75,6 +75,7 @@
                             <div ng-if="modals.armored.selected">
                                 <p>
                                     <button name="armored_remove" type="button"
+                                            class="remove-selected"
                                             ng-if="canEditData()"
                                             ng-click="selectArmored(null)">
                                         &times;
@@ -105,7 +106,7 @@
                             <input name="conversion" ng-if="canEditData()" type="number" ng-model="bill.conversion"
                                    required
                                    ng-change="updateVatAndTotal()"
-                                   min="0.01"
+                                   ng-min="0.01"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{bill.conversion}}</p>
                             <div ng-show="form.conversion.$dirty" ng-messages="form.conversion.$error"
@@ -130,7 +131,7 @@
                             <input name="taxed_amount" ng-if="canEditData()" type="number"
                                    ng-change="updateVatAndTotal()"
                                    ng-model="bill.taxed_amount"
-                                   min="0.01"
+                                   ng-min="0.01"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{bill.taxed_amount}}</p>
                         </td>
@@ -172,6 +173,7 @@
                     </tbody>
                 </table>
                 <div ng-include src="'assets/partials/modalarmored.html'"></div>
+                <div ng-include src="'assets/partials/modalbill.html'"></div>
                 <div ng-include src="'assets/partials/save.html'"></div>
             </form>
         </div>

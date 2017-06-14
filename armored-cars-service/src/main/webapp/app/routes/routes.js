@@ -22,22 +22,16 @@ FORBIDDEN_PATH = "/forbidden/403";
 
 App.config(['$routeProvider', function ($routeProvider) {
 
-    var financialPermission = function ($q, $location, $rootScope) {
-        var deferred = $q.defer();
-        deferred.resolve();
+    var financialPermission = function ($location, $rootScope) {
         if (!$rootScope.isFinancial()) {
             $location.path(FORBIDDEN_PATH);
         }
-        return deferred.promise;
     };
 
-    var accountingPermission = function ($q, $location, $rootScope) {
-        var deferred = $q.defer();
-        deferred.resolve();
+    var accountingPermission = function ($location, $rootScope) {
         if (!$rootScope.isFinancialOrAccounting()) {
             $location.path(FORBIDDEN_PATH);
         }
-        return deferred.promise;
     };
 
     $routeProvider.when(BASE_PATH, {
