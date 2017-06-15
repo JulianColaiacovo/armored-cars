@@ -2,6 +2,7 @@ package com.jcolaiacovo.armored.cars.domain.parser.client;
 
 import com.jcolaiacovo.armored.cars.domain.helper.ExcelHelper;
 import com.jcolaiacovo.armored.cars.domain.model.Client;
+import com.jcolaiacovo.armored.cars.domain.parser.ExcelParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

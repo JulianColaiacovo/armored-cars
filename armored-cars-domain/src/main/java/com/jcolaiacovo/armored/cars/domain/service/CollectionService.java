@@ -27,6 +27,10 @@ public class CollectionService extends AbstractDaoService<Collection> {
         return this.collectionDao.getAll();
     }
 
+    public List<Collection> getByBillClientId(int clientId) {
+        return this.collectionDao.getByBillClientId(clientId);
+    }
+
     @Override
     protected AbstractDao<Collection> getDao() {
         return this.collectionDao;

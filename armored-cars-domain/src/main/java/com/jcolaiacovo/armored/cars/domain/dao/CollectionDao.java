@@ -18,6 +18,13 @@ public class CollectionDao extends AbstractDao<Collection> {
         super(Collection.class, sessionFactory);
     }
 
+    public List<Collection> getByBillClientId(int clientId) {
+        return this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct collection from Collection as collection where collection.bill.billTo.id = :billToId")
+                .setInteger("billToId", clientId)
+                .list();
+    }
+
     public List<Collection> getAll() {
         return (List<Collection>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from COLLECTION;")
                 .addEntity(Collection.class)

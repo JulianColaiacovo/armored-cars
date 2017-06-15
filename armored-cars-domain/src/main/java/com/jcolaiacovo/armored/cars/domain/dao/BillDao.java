@@ -31,6 +31,13 @@ public class BillDao extends AbstractDao<Bill> {
                 .findFirst();
     }
 
+    public List<Bill> getByClientId(int clientId) {
+        return this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct bill from Bill as bill where bill.billTo.id = :billToId order by bill.number desc")
+                .setInteger("billToId", clientId)
+                .list();
+    }
+
     public List<Bill> getAll() {
         return (List<Bill>) this.getSessionFactory().getCurrentSession().createSQLQuery("select * from BILL;")
                 .addEntity(Bill.class)

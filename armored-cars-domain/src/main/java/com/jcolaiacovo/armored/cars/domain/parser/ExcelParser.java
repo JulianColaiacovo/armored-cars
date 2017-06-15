@@ -1,4 +1,4 @@
-package com.jcolaiacovo.armored.cars.domain.parser.client;
+package com.jcolaiacovo.armored.cars.domain.parser;
 
 import com.google.common.collect.Lists;
 import com.jcolaiacovo.armored.cars.domain.helper.ExcelHelper;

@@ -30,6 +30,10 @@ public class BillService extends AbstractDaoService<Bill> {
         return this.billDao.getLastBill(billTypeCode).map(Bill::getNumber).map(number -> number + 1).orElse(INITIAL_BILL_NUMBER);
     }
 
+    public List<Bill> getBillsByClientId(int clientId) {
+        return this.billDao.getByClientId(clientId);
+    }
+
     public List<Bill> getAll() {
         return this.billDao.getAll();
     }
