@@ -54,6 +54,28 @@
                     </tr>
                     <tr ng-show="isCreditNote()">
                         <td>Factura asociada</td>
+                        <td class="col-xs-6">
+                            <button name="select_bill" type="button"
+                                    ng-if="modals.bill.selected == null"
+                                    ng-click="showBillModal()"
+                                    class="input-tag">
+                                Seleccionar factura
+                            </button>
+                            <div ng-if="modals.bill.selected == null" style="color:maroon">
+                                El campo es requerido
+                            </div>
+                            <div ng-if="modals.bill.selected">
+                                <p>
+                                    <button name="bill_remove" type="button"
+                                            class="remove-selected"
+                                            ng-if="canEditData()"
+                                            ng-click="selectBill(null)">
+                                        &times;
+                                    </button>
+                                    {{modals.bill.selected|BillFormatter}}
+                                </p>
+                            </div>
+                        </td>
                         <td>
                             <input name="apply_bill_id" ng-if="canEditData()" type="text" ng-model="bill.apply_bill_id"
                                    class="input-tag">
