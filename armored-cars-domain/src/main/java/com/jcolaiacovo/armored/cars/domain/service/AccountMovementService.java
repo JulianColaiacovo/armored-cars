@@ -35,9 +35,20 @@ public class AccountMovementService {
 
     public List<AccountMovement> getAccountMovementsByClientId(int clientId) {
         List<Bill> bills = this.billService.getBillsByClientId(clientId);
-        List<AccountMovement> billAccountMovements = this.billToAccountMovementConverter.convertAll(bills);
-
         List<Collection> collections = this.collectionService.getByBillClientId(clientId);
+
+        return this.convertBillsAndCollections(bills, collections);
+    }
+
+    public List<AccountMovement> getAccountMovementsByArmoredId(int armoredId) {
+        List<Bill> bills = this.billService.getBillsByArmoredId(armoredId);
+        List<Collection> collections = this.collectionService.getByArmoredId(armoredId);
+
+        return this.convertBillsAndCollections(bills, collections);
+    }
+
+    public List<AccountMovement> convertBillsAndCollections(List<Bill> bills, List<Collection> collections) {
+        List<AccountMovement> billAccountMovements = this.billToAccountMovementConverter.convertAll(bills);
         List<AccountMovement> collectionAccountMovements = this.collectionToAccountMovementConverter.convertAll(collections);
 
         List<AccountMovement> accountMovements = Lists.newArrayList();

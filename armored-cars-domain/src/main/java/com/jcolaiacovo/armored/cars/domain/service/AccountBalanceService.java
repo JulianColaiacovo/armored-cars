@@ -21,4 +21,8 @@ public class AccountBalanceService {
         return new AccountBalance(this.accountMovementService.getAccountMovementsByClientId(clientId));
     }
 
+    public AccountBalance getAccountBalanceByArmoredId(int armoredId) {
+        return new AccountBalance(this.accountMovementService.getAccountMovementsByArmoredId(armoredId));
+    }
+
 }
