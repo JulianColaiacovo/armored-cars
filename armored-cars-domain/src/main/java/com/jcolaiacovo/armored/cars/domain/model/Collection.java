@@ -23,7 +23,7 @@ public class Collection {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BILL_ID", nullable = false)
+    @JoinColumn(name = "BILL_ID")
     private Bill bill;
 
     @Column(name = "BASE_AMOUNT", nullable = false)

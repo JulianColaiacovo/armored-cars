@@ -1,12 +1,13 @@
 //begin collection_controller.js
-App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Bill', 'Currency', 'Collection',
-    function ($rootScope, $scope, $location, $routeParams, $http, Bill, Currency, Collection) {
+App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$routeParams', '$http', 'Bill', 'Currency', 'Collection', 'Client', 'BillTypeCode',
+    function ($rootScope, $scope, $location, $routeParams, $http, Bill, Currency, Collection, Client, BillTypeCode) {
 
         $scope.initialize = function () {
             $scope.isSaving = false;
+            initModals();
             setSection();
             loadData();
-            loadCurrencies();
+            loadModalBillTypeCodes();
         };
 
         $scope.isNew = function () {
@@ -25,6 +26,8 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         $scope.save = function () {
             if ($scope.form.$valid) {
                 $scope.isSaving = true;
+                $scope.collection.bill_id = $scope.modals.bill.selected.id;
+                $scope.collection.client_id = $scope.modals.client.selected.id;
                 Collection.save($scope.collection, onSaveOk, onSaveError);
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
@@ -33,6 +36,67 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                     });
                 });
             }
+        };
+
+        $scope.showClientModal = function () {
+            $scope.modals.client.visible = true;
+        };
+
+        $scope.hideClientModal = function () {
+            $scope.modals.client.visible = false;
+        };
+
+        $scope.clientModalSearch = function () {
+            var client = $scope.modals.client;
+            Client.search(client.name, client.document, function (response) {
+                $scope.modals.client.items = response;
+            });
+        };
+
+        $scope.selectClient = function (client) {
+            $scope.modals.client.selected = client;
+            $scope.hideClientModal();
+        };
+
+        $scope.showBillModal = function () {
+            $scope.modals.bill.visible = true;
+        };
+
+        $scope.hideBillModal = function () {
+            $scope.modals.bill.visible = false;
+        };
+
+        $scope.billModalSearch = function () {
+            Bill.search($scope.modals.bill.bill_type_code, function (response) {
+                $scope.modals.bill.items = response;
+            });
+        };
+
+        $scope.selectBill = function (bill) {
+            $scope.modals.bill.selected = bill;
+            $scope.hideBillModal();
+        };
+
+        var loadModalBillTypeCodes = function () {
+            BillTypeCode.getBillTypeCodesCollection(function (response) {
+                $scope.modals.bill.bill_type_codes = response;
+                if (response.length > 0) {
+                    $scope.modals.bill.bill_type_code = response[0]['id'];
+                }
+            });
+        };
+
+        var initModals = function () {
+            $scope.modals = {
+                "client": {
+                    "visible": false,
+                    "selected": null
+                },
+                "bill": {
+                    "visible": false,
+                    "selected": null
+                }
+            };
         };
 
         var loadData = function () {
@@ -49,9 +113,14 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                 Collection.get($routeParams.collection_id, function (collectionResponse) {
                     collectionResponse.date = new Date(collectionResponse.date);
                     $scope.collection = collectionResponse;
-                    Bill.get(collectionResponse.bill_id, function (billResponse) {
-                        billResponse.date = new Date(billResponse.date);
-                        $scope.bill = billResponse;
+                    if (collectionResponse.bill_id) {
+                        Bill.get(collectionResponse.bill_id, function (billResponse) {
+                            billResponse.date = new Date(billResponse.date);
+                            $scope.modals.bill.selected = billResponse;
+                        });
+                    }
+                    Client.get(collectionResponse.client_id, function (clientResponse) {
+                        $scope.modals.client.selected = clientResponse;
                     });
                 });
             }
@@ -77,13 +146,6 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
             if (response.status != 200) {
                 $rootScope.globalError = 'Error al guardar la cobranza';
             }
-        };
-
-        var loadCurrencies = function () {
-            Currency.getAllEnabled(function (response) {
-                $scope.currencies = response;
-                $scope.collection.currency_code = $scope.collection.currency_code || 'ARS';
-            });
         };
 
         $scope.initialize();

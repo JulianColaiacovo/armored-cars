@@ -39,7 +39,7 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
             $scope.modals.client.visible = true;
         };
 
-        var hideClientModal = function () {
+        $scope.hideClientModal = function () {
             $scope.modals.client.visible = false;
         };
 
@@ -52,7 +52,7 @@ App.controller('ArmoredController', ['$rootScope', '$scope', '$location', '$rout
 
         $scope.selectClient = function (client) {
             $scope.modals.client.selected = client;
-            hideClientModal();
+            $scope.hideClientModal();
         };
 
         var initModals = function () {

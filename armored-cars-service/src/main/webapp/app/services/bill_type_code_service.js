@@ -13,6 +13,12 @@ App.factory('BillTypeCode', ['$resource', '$rootScope', function ($resource, $ro
         });
     };
 
+    billTypeCodeOp.getBillTypeCodesCollection = function (callback) {
+        $resource(urlBase + "/collection", {}, {}).query(function (response) {
+            callback(response);
+        });
+    };
+
     billTypeCodeOp.getPossibleApplies = function (billTypeCode, callback) {
         $resource(urlBase + "/possible-applies", {
             billTypeCode: billTypeCode

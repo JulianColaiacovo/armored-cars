@@ -1,6 +1,5 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
-import com.jcolaiacovo.armored.cars.domain.model.Bill;
 import com.jcolaiacovo.armored.cars.domain.model.BillType;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.collections.Lists;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +24,13 @@ public class BillTypeCodeService {
         } else {
             return this.getDisabledBillTypeCodes();
         }
+    }
+
+    public List<BillTypeCode> getCollectionBillTypeCodes() {
+        List<BillTypeCode> billTypeCodes = this.getAllByBillType(BillType.BILL);
+        billTypeCodes.addAll(this.getAllByBillType(BillType.DEBIT_NOTE));
+
+        return billTypeCodes;
     }
 
     public List<BillTypeCode> getPossibleBillTypeToApply(BillTypeCode billTypeCode) {

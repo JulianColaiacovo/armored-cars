@@ -34,6 +34,11 @@ public class BillTypeCodeController {
         return this.billTypeCodeTransformer.transformToDTOAll(this.billTypeCodeService.getBillTypeCodes(enabled));
     }
 
+    @GetMapping(value = "collection")
+    public List<BillTypeCodeDTO> getBillTypeCodeForCollection() {
+        return this.billTypeCodeTransformer.transformToDTOAll(this.billTypeCodeService.getCollectionBillTypeCodes());
+    }
+
     @GetMapping(value = "possible-applies")
     public List<BillTypeCodeDTO> getPossibleBillTypeToApply(@RequestParam BillTypeCode billTypeCode) {
         return this.billTypeCodeTransformer.transformToDTOAll(this.billTypeCodeService.getPossibleBillTypeToApply(billTypeCode));
