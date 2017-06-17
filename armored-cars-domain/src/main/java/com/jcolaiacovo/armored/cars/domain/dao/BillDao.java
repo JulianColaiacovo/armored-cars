@@ -38,6 +38,13 @@ public class BillDao extends AbstractDao<Bill> {
                 .list();
     }
 
+    public List<Bill> search(BillTypeCode billTypeCode) {
+        return this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct bill from Bill as bill where bill.billTypeCode = :billTypeCode order by bill.number desc")
+                .setString("billTypeCode", billTypeCode.name())
+                .list();
+    }
+
     public List<Bill> getBillsByArmoredId(int armoredId) {
         return this.getSessionFactory().getCurrentSession()
                 .createQuery("select distinct bill from Bill as bill where bill.armored.id = :armoredId order by bill.number desc")

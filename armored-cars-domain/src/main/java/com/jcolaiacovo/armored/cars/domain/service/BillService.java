@@ -34,6 +34,10 @@ public class BillService extends AbstractDaoService<Bill> {
         return this.billDao.getByClientId(clientId);
     }
 
+    public List<Bill> search(BillTypeCode billTypeCode) {
+        return this.billDao.search(billTypeCode);
+    }
+
     public List<Bill> getBillsByArmoredId(int armoredId) {
         return this.billDao.getBillsByArmoredId(armoredId);
     }

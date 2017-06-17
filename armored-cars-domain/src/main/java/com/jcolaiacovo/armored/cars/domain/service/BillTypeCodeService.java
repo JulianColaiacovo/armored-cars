@@ -1,8 +1,11 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
+import com.jcolaiacovo.armored.cars.domain.model.Bill;
+import com.jcolaiacovo.armored.cars.domain.model.BillType;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.collections.Lists;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,19 @@ public class BillTypeCodeService {
         } else {
             return this.getDisabledBillTypeCodes();
         }
+    }
+
+    public List<BillTypeCode> getPossibleBillTypeToApply(BillTypeCode billTypeCode) {
+        if (BillType.CREDIT_NOTE.equals(billTypeCode.getBillType())) {
+            return this.getAllByBillType(BillType.BILL);
+        }
+        return Lists.newArrayList();
+    }
+
+    private List<BillTypeCode> getAllByBillType(BillType billType) {
+        return this.getBillTypeCodes(true).stream()
+                .filter(billTypeCode -> billType.equals(billTypeCode.getBillType()))
+                .collect(Collectors.toList());
     }
 
     private List<BillTypeCode> getAllBillTypeCodes() {

@@ -32,7 +32,7 @@
                         <td>Tipo de factura</td>
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.bill_type_code"
-                                    ng-change="updateVatAndTotal();updateBillNumber()"
+                                    ng-change="updateVatAndTotal();updateBillNumber();updateModalBillsToApply()"
                                     ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in bill_type_codes">
                             </select>
                             <p ng-if=" !canEditData()">{{bill.bill_type_code|BillTypeCodeFormatter}}</p>
@@ -76,13 +76,8 @@
                                 </p>
                             </div>
                         </td>
-                        <td>
-                            <input name="apply_bill_id" ng-if="canEditData()" type="text" ng-model="bill.apply_bill_id"
-                                   class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.apply_bill_id}}</p>
-                        </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="!isCreditNote() || modals.armored.selected">
                         <td>N&uacute;mero de blindaje</td>
                         <td class="col-xs-6">
                             <button name="select_armored" type="button"
@@ -98,7 +93,7 @@
                                 <p>
                                     <button name="armored_remove" type="button"
                                             class="remove-selected"
-                                            ng-if="canEditData()"
+                                            ng-if="canEditData() && !isCreditNote()"
                                             ng-click="selectArmored(null)">
                                         &times;
                                     </button>

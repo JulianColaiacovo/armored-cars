@@ -40,6 +40,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                 $scope.isSaving = true;
                 $scope.bill.armored_id = $scope.modals.armored.selected.id;
                 $scope.bill.bill_to_id = $scope.client.id;
+                $scope.bill.apply_bill_id = $scope.modals.bill.selected.id;
                 var billNumber = $scope.formattedData.billNumber.replace("-", "");
                 $scope.bill.number = Number(billNumber);
                 Bill.save($scope.bill, onSaveOk, onSaveError);
@@ -54,6 +55,15 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
 
         $scope.updateBillNumber = function () {
             setDefaultBillNumber();
+        };
+
+        $scope.updateModalBillsToApply = function () {
+            BillTypeCode.getPossibleApplies($scope.bill.bill_type_code, function (response) {
+                $scope.modals.bill.bill_type_codes = response;
+                if (response.length > 0) {
+                    $scope.modals.bill.bill_type_code = response[0]['id'];
+                }
+            });
         };
 
         $scope.isCreditNote = function () {
@@ -75,10 +85,43 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
 
         $scope.showArmoredModal = function () {
             $scope.modals.armored.visible = true;
+            BillTypeCode.getAllEnabled(function (response) {
+                $scope.modals.bill.bill_type_codes = response;
+            });
         };
 
         $scope.hideArmoredModal = function () {
             $scope.modals.armored.visible = false;
+        };
+
+        $scope.showBillModal = function () {
+            $scope.modals.bill.visible = true;
+        };
+
+        $scope.hideBillModal = function () {
+            $scope.modals.bill.visible = false;
+        };
+
+        $scope.billModalSearch = function () {
+            Bill.search($scope.modals.bill.bill_type_code, function (response) {
+                $scope.modals.bill.items = response;
+            });
+        };
+
+        $scope.selectBill = function (bill) {
+            $scope.modals.bill.selected = bill;
+            $scope.hideBillModal();
+            searchBillArmored(bill);
+        };
+
+        var searchBillArmored = function (bill) {
+            if (bill && bill.armored_id) {
+                Armored.get(bill.armored_id, function (response) {
+                    $scope.selectArmored(response);
+                });
+            } else {
+                $scope.selectArmored(null);
+            }
         };
 
         var searchArmoredClient = function (armored) {
@@ -115,12 +158,22 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         var loadArmored = function (armoredId) {
-            if (armoredId) {
+            if (armoredId != null) {
                 Armored.get(armoredId, function (response) {
                     $scope.modals.armored.selected = response;
                 });
             } else {
                 $scope.modals.armored.selected = null;
+            }
+        };
+
+        var loadApplyBill = function (billId) {
+            if (billId != null) {
+                Bill.get(billId, function (response) {
+                    $scope.modals.bill.selected = response;
+                });
+            } else {
+                $scope.modals.bill.selected = null;
             }
         };
 
@@ -149,6 +202,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                     setBillNumber(response.number);
                     loadBillClient($scope.bill.bill_to_id);
                     loadArmored($scope.bill.armored_id);
+                    loadApplyBill($scope.bill.apply_bill_id);
                 });
             }
         };

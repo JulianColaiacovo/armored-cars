@@ -32,6 +32,12 @@ public class BillController {
         return this.billTransformer.transformToDTOAll(bills);
     }
 
+    @GetMapping(value = "search")
+    public List<BillDTO> search(@RequestParam BillTypeCode billTypeCode) {
+        List<Bill> bills = this.billService.search(billTypeCode);
+        return this.billTransformer.transformToDTOAll(bills);
+    }
+
     @GetMapping("/{id}")
     public BillDTO getById(@PathVariable int id) {
         Bill bill = this.billService.getById(id);
