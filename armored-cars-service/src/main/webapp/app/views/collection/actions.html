@@ -92,6 +92,7 @@
                             <input name="base_amount" ng-if="canEditData()" type="number"
                                    ng-model="collection.base_amount"
                                    ng-change="updateTotal()"
+                                   required
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{collection.base_amount}}</p>
                         </td>
