@@ -1,0 +1,50 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <h2>Cuenta corriente</h2>
+    <hr/>
+    <div>
+        <span><strong>N&uacute;mero de blindaje</strong></span>
+        <button name="select_armored" type="button"
+                ng-if="modals.armored.selected == null"
+                ng-click="showArmoredModal()"
+                class="input-tag">
+            Seleccionar blindaje
+        </button>
+        <div ng-if="modals.armored.selected">
+            <p>
+                <button name="armored_remove" type="button"
+                        class="remove-selected"
+                        ng-click="selectArmored(null)">
+                    &times;
+                </button>
+                {{modals.armored.selected|ArmoredFormatter}}
+            </p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <span>Saldo: {{account_balance.balance|AmountFormatter:'USD'}}</span>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">Debe</th>
+                    <th class="col-xs-1">Haber</th>
+                    <th class="col-xs-1">Fecha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="account_movement in account_balance.account_movements">
+                    <td>{{account_movement.debit}}</td>
+                    <td>{{account_movement.credit}}</td>
+                    <td>{{account_movement.date_time}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-include src="'assets/partials/modalclient.html'"></div>
+        <div ng-include src="'assets/partials/modalarmored.html'"></div>
+    </div>
+</div>

@@ -53,6 +53,12 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             }
         };
 
+        $scope.currencyChanged = function () {
+            if ($scope.bill.currency_code == 'USD') {
+                $scope.bill.conversio
+            }
+        };
+
         $scope.updateBillNumber = function () {
             setDefaultBillNumber();
         };
@@ -77,7 +83,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         $scope.armoredModalSearch = function () {
-            var armored = $scope.modals.armored.selected | {};
+            var armored = $scope.modals.armored || {};
             Armored.search(armored.code, armored.brand, function (response) {
                 $scope.modals.armored.items = response;
             });

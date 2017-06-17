@@ -15,6 +15,7 @@ CLIENT_LIST_PATH = '/clients';
 CLIENT_ACTION_PATH = '/clients/:action/:client_id?';
 COLLECTION_LIST_PATH = '/collections';
 COLLECTION_ACTION_PATH = '/collections/:action/:collection_id?';
+ACCOUNT_BALANCE_PATH = '/account-balance';
 USER_LIST_PATH = '/users';
 USER_ACTION_PATH = '/users/:action/:user_id?';
 NOTFOUND_PATH = "/errors/404";
@@ -94,6 +95,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'assets/user/actions.html',
         controller: 'UserController',
         resolve: { app: financialPermission }
+    }).when(ACCOUNT_BALANCE_PATH, {
+        templateUrl: 'assets/list/accountbalance.html',
+        controller: 'AccountBalanceController',
+        resolve: { app: accountingPermission }
     }).when(FORBIDDEN_PATH, {
         templateUrl: 'assets/forbidden.html'
     }).otherwise({

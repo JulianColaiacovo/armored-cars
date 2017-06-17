@@ -14,7 +14,8 @@ public class CollectionToAccountMovementConverter extends AbstractConverter<Coll
 
     @Override
     public AccountMovement convert(Collection value) {
-        return new AccountMovement(BigDecimal.ZERO, value.getTotalAmount(), value.getDate());
+        BigDecimal usdAmount = value.getTotalAmount().divide(value.getBill().getConversion(), BigDecimal.ROUND_CEILING);
+        return new AccountMovement(BigDecimal.ZERO, usdAmount, value.getDate());
     }
 
 }

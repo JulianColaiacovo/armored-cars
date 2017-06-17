@@ -113,7 +113,8 @@
                         <td>
                             <select ng-if="canEditData()" ng-model="bill.currency_code"
                                     ng-init="bill.currency_code = bill.currency_code || currencies[0].code"
-                                    ng-options="currency.code as currency.code for currency in currencies"></select>
+                                    ng-options="currency.code as currency.code for currency in currencies"
+                                    ng-change="currencyChanged()"></select>
                             <p ng-if=" !canEditData()">{{bill.currency_code}}</p>
                         </td>
                     </tr>
@@ -123,6 +124,7 @@
                             <input name="conversion" ng-if="canEditData()" type="number" ng-model="bill.conversion"
                                    required
                                    ng-change="updateVatAndTotal()"
+                                   ng-disabled="bill.currency_code == 'USD'"
                                    ng-min="0.01"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{bill.conversion}}</p>
