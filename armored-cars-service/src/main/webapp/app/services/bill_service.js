@@ -21,6 +21,10 @@ App.factory('Bill', ['$resource', '$rootScope', '$http', function ($resource, $r
         }, {});
     };
 
+    billOp.getUncollectedBills = function (callback) {
+        $resource(urlBase + "/uncollected", {}, {}).query(callback);
+    };
+
     billOp.getAll = function (callback) {
         $resource(urlBase, {}, {}).query(callback);
     };

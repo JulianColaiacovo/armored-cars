@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +46,33 @@ public class BillDao extends AbstractDao<Bill> {
                 .list();
     }
 
+    public List<Bill> getUncollectedBills() {
+        return this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct B from Bill as B where B.totalAmount != " +
+                        "ifnull((select sum(AB.totalAmount) from Bill as AB where B.id = AB.applyBill.id), 0) + " +
+                        "ifnull((select sum(C.totalAmount) from Collection as C where B.id = C.bill.id), 0)")
+                .list();
+    }
+
+    public BigDecimal getCollectedAmount(int billId) {
+        List<BigDecimal> collections = this.getSessionFactory().getCurrentSession()
+                .createQuery("select bill.totalAmount from Bill as bill where bill.applyBill.id = :billId")
+                .setInteger("billId", billId)
+                .list();
+        return collections.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     public List<Bill> getBillsByArmoredId(int armoredId) {
         return this.getSessionFactory().getCurrentSession()
                 .createQuery("select distinct bill from Bill as bill where bill.armored.id = :armoredId order by bill.number desc")
                 .setInteger("armoredId", armoredId)
+                .list();
+    }
+
+    public List<Bill> getBillsByApplyBillId(int billId) {
+        return this.getSessionFactory().getCurrentSession()
+                .createQuery("select distinct bill from Bill as bill where bill.applyBill.id = :billId order by bill.number desc")
+                .setInteger("billId", billId)
                 .list();
     }
 

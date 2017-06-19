@@ -247,6 +247,10 @@ div.inline {
     display: inline;
 }
 
+.no-results {
+    margin-left: 15px;
+}
+
 .error {
     width: 800px;
     text-align: center;

@@ -11,11 +11,19 @@ public class AccountMovement {
 
     private BigDecimal debit;
     private BigDecimal credit;
+    private Integer billId;
+    private Integer collectionId;
     private DateTime dateTime;
 
-    public AccountMovement(BigDecimal debit, BigDecimal credit, DateTime dateTime) {
+    public AccountMovement(BigDecimal debit,
+                           BigDecimal credit,
+                           Integer billId,
+                           Integer collectionId,
+                           DateTime dateTime) {
         this.debit = debit;
         this.credit = credit;
+        this.billId = billId;
+        this.collectionId = collectionId;
         this.dateTime = dateTime;
     }
 
@@ -30,5 +38,12 @@ public class AccountMovement {
     public DateTime getDateTime() {
         return dateTime;
     }
-    
+
+    public Integer getBillId() {
+        return billId;
+    }
+
+    public Integer getCollectionId() {
+        return collectionId;
+    }
 }

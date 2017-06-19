@@ -1,12 +1,8 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.api.model.ChangePasswordDTO;
-import com.jcolaiacovo.armored.cars.api.model.ClientDTO;
 import com.jcolaiacovo.armored.cars.api.model.UserDTO;
-import com.jcolaiacovo.armored.cars.domain.login.SecurityToken;
-import com.jcolaiacovo.armored.cars.domain.model.Client;
 import com.jcolaiacovo.armored.cars.domain.model.User;
-import com.jcolaiacovo.armored.cars.domain.service.SecurityService;
 import com.jcolaiacovo.armored.cars.domain.service.UserService;
 import com.jcolaiacovo.armored.cars.domain.transformer.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;

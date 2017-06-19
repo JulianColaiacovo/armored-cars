@@ -1,10 +1,12 @@
 package com.jcolaiacovo.armored.cars.service.controller;
 
 import com.jcolaiacovo.armored.cars.api.model.BillDTO;
+import com.jcolaiacovo.armored.cars.api.model.UncollectedBillDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Bill;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import com.jcolaiacovo.armored.cars.domain.service.BillService;
 import com.jcolaiacovo.armored.cars.domain.transformer.BillTransformer;
+import com.jcolaiacovo.armored.cars.domain.transformer.UncollectedBillTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +21,15 @@ public class BillController {
 
     private final BillService billService;
     private final BillTransformer billTransformer;
+    private final UncollectedBillTransformer uncollectedBillTransformer;
 
     @Autowired
-    public BillController(BillService billService, BillTransformer billTransformer) {
+    public BillController(BillService billService,
+                          BillTransformer billTransformer,
+                          UncollectedBillTransformer uncollectedBillTransformer) {
         this.billService = billService;
         this.billTransformer = billTransformer;
+        this.uncollectedBillTransformer = uncollectedBillTransformer;
     }
 
     @GetMapping
@@ -36,6 +42,12 @@ public class BillController {
     public List<BillDTO> search(@RequestParam BillTypeCode billTypeCode) {
         List<Bill> bills = this.billService.search(billTypeCode);
         return this.billTransformer.transformToDTOAll(bills);
+    }
+
+    @GetMapping(value = "uncollected")
+    public List<UncollectedBillDTO> getUncollectedBills() {
+        List<Bill> bills = this.billService.getUncollectedBills();
+        return this.uncollectedBillTransformer.transformToDTOAll(bills);
     }
 
     @GetMapping("/{id}")

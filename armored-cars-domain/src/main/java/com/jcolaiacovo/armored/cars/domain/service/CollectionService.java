@@ -2,11 +2,13 @@ package com.jcolaiacovo.armored.cars.domain.service;
 
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.CollectionDao;
+import com.jcolaiacovo.armored.cars.domain.model.Bill;
 import com.jcolaiacovo.armored.cars.domain.model.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,6 +35,10 @@ public class CollectionService extends AbstractDaoService<Collection> {
 
     public List<Collection> getByArmoredId(int armoredId) {
         return this.collectionDao.getByArmoredId(armoredId);
+    }
+
+    public BigDecimal getCollectedAmountByBillId(int billId) {
+        return this.collectionDao.getCollectedAmountByBillId(billId);
     }
 
     @Override

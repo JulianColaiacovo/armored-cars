@@ -13,7 +13,7 @@ public class AccountMovementTransformer extends AbstractApiTransformer<AccountMo
 
     @Override
     public AccountMovement transform(AccountMovementDTO value) {
-        return new AccountMovement(value.getDebit(), value.getCredit(), value.getDateTime());
+        return new AccountMovement(value.getDebit(), value.getCredit(), value.getBillId(), value.getCollectionId(), value.getDateTime());
     }
 
     @Override
@@ -22,6 +22,8 @@ public class AccountMovementTransformer extends AbstractApiTransformer<AccountMo
 
         accountMovementDTO.setDebit(value.getDebit());
         accountMovementDTO.setCredit(value.getCredit());
+        accountMovementDTO.setBillId(value.getBillId());
+        accountMovementDTO.setCollectionId(value.getCollectionId());
         accountMovementDTO.setDateTime(value.getDateTime());
 
         return accountMovementDTO;

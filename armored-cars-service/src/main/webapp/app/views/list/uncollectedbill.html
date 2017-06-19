@@ -1,0 +1,33 @@
+<div ng-include src="'assets/partials/header.html'"></div>
+
+<div class="container-fluid">
+    <h2>Documentos sin cobrar</h2>
+    <hr/>
+    <div class="row">
+        <div class="no-results" ng-hide="uncollected_bills">
+            No se encontraron documentos sin cobrar
+        </div>
+        <div class="col-xs-12" ng-show="uncollected_bills">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">Tipo</th>
+                    <th class="col-xs-1">N&uacute;mero</th>
+                    <th class="col-xs-1">Total</th>
+                    <th class="col-xs-1">Cobrado</th>
+                    <th class="col-xs-1">Restante</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="uncollected_bill in uncollected_bills">
+                    <td>{{uncollected_bill.bill.bill_type_code|BillTypeCodeFormatter}}</td>
+                    <td>{{uncollected_bill.bill.number|BillNumberFormatter}}</td>
+                    <td>{{uncollected_bill.total_amount}}</td>
+                    <td>{{uncollected_bill.collected_amount}}</td>
+                    <td>{{uncollected_bill.amount_to_collect}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

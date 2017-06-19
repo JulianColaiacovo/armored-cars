@@ -11,6 +11,8 @@ public class AccountMovementDTO {
 
     private BigDecimal debit;
     private BigDecimal credit;
+    private Integer billId;
+    private Integer collectionId;
     private DateTime dateTime;
 
     public BigDecimal getDebit() {
@@ -37,4 +39,19 @@ public class AccountMovementDTO {
         this.dateTime = dateTime;
     }
 
+    public Integer getBillId() {
+        return billId;
+    }
+
+    public void setBillId(Integer billId) {
+        this.billId = billId;
+    }
+
+    public Integer getCollectionId() {
+        return collectionId;
+    }
+
+    public void setCollectionId(Integer collectionId) {
+        this.collectionId = collectionId;
+    }
 }

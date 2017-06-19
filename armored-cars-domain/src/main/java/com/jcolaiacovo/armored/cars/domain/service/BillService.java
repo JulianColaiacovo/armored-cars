@@ -1,14 +1,19 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
+import com.google.common.collect.Sets;
 import com.jcolaiacovo.armored.cars.domain.dao.AbstractDao;
 import com.jcolaiacovo.armored.cars.domain.dao.BillDao;
 import com.jcolaiacovo.armored.cars.domain.model.Bill;
+import com.jcolaiacovo.armored.cars.domain.model.BillType;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Julian on 15/03/2017.
@@ -17,6 +22,7 @@ import java.util.List;
 @Service
 public class BillService extends AbstractDaoService<Bill> {
 
+    private static final Set<BillType> UNCOLLECTED_BILL_TYPES = Sets.newHashSet(BillType.BILL, BillType.DEBIT_NOTE);
     private static final long INITIAL_BILL_NUMBER = 100000001L;
 
     private BillDao billDao;
@@ -38,6 +44,20 @@ public class BillService extends AbstractDaoService<Bill> {
         return this.billDao.search(billTypeCode);
     }
 
+    public List<Bill> getUncollectedBills() {
+        return this.billDao.getUncollectedBills().stream()
+                .filter(this::isUncollectedBillType)
+                .collect(Collectors.toList());
+    }
+
+    public BigDecimal getCollectedAmount(int billId) {
+        return this.billDao.getCollectedAmount(billId);
+    }
+
+    public List<Bill> getBillsByApplyBillId(int billId) {
+        return this.billDao.getBillsByApplyBillId(billId);
+    }
+
     public List<Bill> getBillsByArmoredId(int armoredId) {
         return this.billDao.getBillsByArmoredId(armoredId);
     }
@@ -49,6 +69,10 @@ public class BillService extends AbstractDaoService<Bill> {
     @Override
     protected AbstractDao<Bill> getDao() {
         return this.billDao;
+    }
+
+    private boolean isUncollectedBillType(Bill bill) {
+        return UNCOLLECTED_BILL_TYPES.contains(bill.getBillTypeCode().getBillType());
     }
 
 }

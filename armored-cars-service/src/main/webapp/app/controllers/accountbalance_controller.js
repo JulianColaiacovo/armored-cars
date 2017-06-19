@@ -3,9 +3,10 @@ App.controller('AccountBalanceController', ['$rootScope', '$scope', '$location',
     function ($rootScope, $scope, $location, $routeParams, $http, Armored, Client, AccountBalance) {
 
         $scope.initialize = function () {
-            $rootScope.section = "ACCOUNTBALANCE-VIEW";
-            $scope.account_balance = {};
+            $rootScope.section = "LISTS-ACCOUNTBALANCE-VIEW";
             initModals();
+            $scope.armoredModalSearch();
+            $scope.clientModalSearch();
         };
 
         $scope.selectArmored = function (armored) {
@@ -16,7 +17,7 @@ App.controller('AccountBalanceController', ['$rootScope', '$scope', '$location',
                     $scope.account_balance = response;
                 });
             } else {
-                $scope.account_balance = [];
+                $scope.account_balance = null;
             }
         };
 
@@ -33,6 +34,34 @@ App.controller('AccountBalanceController', ['$rootScope', '$scope', '$location',
 
         $scope.hideArmoredModal = function () {
             $scope.modals.armored.visible = false;
+        };
+
+
+        $scope.showClientModal = function () {
+            $scope.modals.client.visible = true;
+        };
+
+        $scope.hideClientModal = function () {
+            $scope.modals.client.visible = false;
+        };
+
+        $scope.clientModalSearch = function () {
+            var client = $scope.modals.client;
+            Client.search(client.name, client.document, function (response) {
+                $scope.modals.client.items = response;
+            });
+        };
+
+        $scope.selectClient = function (client) {
+            $scope.modals.client.selected = client;
+            $scope.hideClientModal();
+            if (client) {
+                AccountBalance.getBalanceOfClient(client.id, function (response) {
+                    $scope.account_balance = response;
+                });
+            } else {
+                $scope.account_balance = null;
+            }
         };
 
         var initModals = function () {

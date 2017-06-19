@@ -5,27 +5,52 @@
     <h2>Cuenta corriente</h2>
     <hr/>
     <div>
-        <span><strong>N&uacute;mero de blindaje</strong></span>
-        <button name="select_armored" type="button"
-                ng-if="modals.armored.selected == null"
-                ng-click="showArmoredModal()"
-                class="input-tag">
-            Seleccionar blindaje
-        </button>
-        <div ng-if="modals.armored.selected">
-            <p>
-                <button name="armored_remove" type="button"
-                        class="remove-selected"
-                        ng-click="selectArmored(null)">
-                    &times;
-                </button>
-                {{modals.armored.selected|ArmoredFormatter}}
-            </p>
+        <div class="inline" ng-hide="modals.client.selected">
+            <button name="select_armored" type="button"
+                    ng-if="modals.armored.selected == null"
+                    ng-click="showArmoredModal()"
+                    class="input-tag">
+                Seleccionar blindaje
+            </button>
+            <div ng-if="modals.armored.selected">
+                <p>
+                    <strong>Blindaje seleccionado</strong>:&nbsp;
+                    <button name="armored_remove" type="button"
+                            class="remove-selected"
+                            ng-click="selectArmored(null)">
+                        &times;
+                    </button>
+                    {{modals.armored.selected|ArmoredFormatter}}
+                </p>
+            </div>
+        </div>
+
+        <div class="inline" ng-hide="modals.armored.selected">
+            <button name="select_client" type="button"
+                    ng-if="modals.client.selected == null"
+                    ng-click="showClientModal()"
+                    class="input-tag">
+                Seleccionar cliente
+            </button>
+            <div ng-if="modals.client.selected">
+                <p>
+                    <strong>Cliente seleccionado</strong>:&nbsp;
+                    <button name="domain" type="button"
+                            class="remove-selected"
+                            ng-click="selectClient(null)">
+                        &times;
+                    </button>
+                    {{modals.client.selected|ClientFormatter}}
+                </p>
+            </div>
         </div>
     </div>
     <hr/>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="no-results" ng-hide="account_balance">
+            No se encontraron movimientos
+        </div>
+        <div class="col-xs-12" ng-show="account_balance">
             <span>Saldo: {{account_balance.balance|AmountFormatter:'USD'}}</span>
             <table class="table table-hover">
                 <thead>
@@ -33,13 +58,26 @@
                     <th class="col-xs-1">Debe</th>
                     <th class="col-xs-1">Haber</th>
                     <th class="col-xs-1">Fecha</th>
+                    <th class="col-xs-1"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="account_movement in account_balance.account_movements">
                     <td>{{account_movement.debit}}</td>
                     <td>{{account_movement.credit}}</td>
-                    <td>{{account_movement.date_time}}</td>
+                    <td>{{account_movement.date_time|date:'dd-MM-yyyy'}}</td>
+                    <td>
+                        <div class="inline" ng-show="account_movement.bill_id">
+                            <a ng-href="#/bills/view/{{account_movement.bill_id}}">
+                                <button>Ver factura</button>
+                            </a>
+                        </div>
+                        <div class="inline" ng-show="account_movement.collection_id">
+                            <a ng-href="#/collections/view/{{account_movement.collection_id}}">
+                                <button>Ver cobranza</button>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -51,10 +51,11 @@
                     </div>
                 </li>
                 <li ng-if="isFinancialOrAccounting()"
-                    ng-class="{active: $root.section.indexOf('ACCOUNTBALANCE-') == 0}" class="dropdown">
+                    ng-class="{active: $root.section.indexOf('LISTS-') == 0}" class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Listados</a>
                     <div class="dropdown-content">
                         <a class="dropdown-item" href="#/account-balance">Cuenta corriente</a>
+                        <a class="dropdown-item" href="#/uncollected-bills">Documentos sin cobrar</a>
                     </div>
                 </li>
                 <li ng-if="isFinancial()" ng-class="{active: $root.section.indexOf('USER-') == 0}" class="dropdown">
