@@ -30,14 +30,26 @@
                     </tr>
                     <tr>
                         <td>N&uacute;mero de blindaje</td>
-                        <td>
-                            <input name="armored_id" ng-if="canEditData()" type="text" ng-model="additional.armored_id"
-                                   required
-                                   class="input-tag">
-                            <p ng-if="!canEditData()">{{additional.armored_id}}</p>
-                            <div ng-show="form.armored_id.$dirty" ng-messages="form.armored_id.$error"
-                                 style="color:maroon" role="alert">
-                                <div ng-message="required">El campo es requerido</div>
+                        <td class="col-xs-6">
+                            <button name="select_armored" type="button"
+                                    ng-if="modals.armored.selected == null"
+                                    ng-click="showArmoredModal()"
+                                    class="input-tag">
+                                Seleccionar blindaje
+                            </button>
+                            <div ng-if="modals.armored.selected == null" style="color:maroon">
+                                El campo es requerido
+                            </div>
+                            <div ng-if="modals.armored.selected">
+                                <p>
+                                    <button name="armored_remove" type="button"
+                                            class="remove-selected"
+                                            ng-if="canEditData()"
+                                            ng-click="selectArmored(null)">
+                                        &times;
+                                    </button>
+                                    {{modals.armored.selected|ArmoredFormatter}}
+                                </p>
                             </div>
                         </td>
                     </tr>
@@ -46,7 +58,8 @@
                         <td>
                             <select ng-if="canEditData()" ng-model="additional.currency_code"
                                     ng-init="additional.currency_code = additional.currency_code || currencies[0].code"
-                                    ng-options="currency.code as currency.code for currency in currencies"></select>
+                                    ng-options="currency.code as currency.code for currency in currencies"
+                                    ng-change="currencyChanged()"></select>
                             <p ng-if=" !canEditData()">{{additional.currency_code}}</p>
                         </td>
                     </tr>
@@ -56,6 +69,7 @@
                             <input name="conversion" ng-if="canEditData()" type="number" ng-model="additional.conversion"
                                    required
                                    ng-change="updateVatAndTotal()"
+                                   ng-disabled="additional.currency_code == 'USD'"
                                    ng-min="0.01"
                                    class="input-tag">
                             <p ng-if="!canEditData()">{{additional.conversion}}</p>
@@ -83,6 +97,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <div ng-include src="'assets/partials/modalarmored.html'"></div>
                 <div ng-include src="'assets/partials/save.html'"></div>
             </form>
         </div>

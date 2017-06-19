@@ -7,6 +7,8 @@ App.controller('AdditionalController', ['$rootScope', '$scope', '$location', '$r
             setSection();
             loadCurrencies();
             loadData();
+            initModals();
+            $scope.armoredModalSearch();
         };
 
         $scope.isNew = function () {
@@ -20,6 +22,7 @@ App.controller('AdditionalController', ['$rootScope', '$scope', '$location', '$r
         $scope.save = function () {
             if ($scope.form.$valid) {
                 $scope.isSaving = true;
+                $scope.additional.armored_id = $scope.modals.armored.selected.id;
                 Additional.save($scope.additional, onSaveOk, onSaveError);
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
@@ -28,6 +31,41 @@ App.controller('AdditionalController', ['$rootScope', '$scope', '$location', '$r
                     });
                 });
             }
+        };
+
+        $scope.selectArmored = function (armored) {
+            $scope.modals.armored.selected = armored;
+            $scope.hideArmoredModal();
+        };
+
+        $scope.armoredModalSearch = function () {
+            var armored = $scope.modals.armored || {};
+            Armored.search(armored.code, armored.brand, function (response) {
+                $scope.modals.armored.items = response;
+            });
+        };
+
+        $scope.showArmoredModal = function () {
+            $scope.modals.armored.visible = true;
+        };
+
+        $scope.hideArmoredModal = function () {
+            $scope.modals.armored.visible = false;
+        };
+
+        $scope.currencyChanged = function () {
+            if ($scope.additional.currency_code === 'USD') {
+                $scope.additional.conversion = 1;
+            }
+        };
+
+        var initModals = function () {
+            $scope.modals = {
+                "armored": {
+                    "visible": false,
+                    "selected": null
+                }
+            };
         };
 
         var loadData = function () {
@@ -41,6 +79,9 @@ App.controller('AdditionalController', ['$rootScope', '$scope', '$location', '$r
                 Additional.get($routeParams.additional_id, function (response) {
                     response.date = new Date(response.date);
                     $scope.additional = response;
+                    Armored.get(response.armored_id, function (armoredResponse) {
+                        $scope.modals.armored.selected = armoredResponse;
+                    });
                 });
             }
         };

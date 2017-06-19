@@ -54,8 +54,8 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         $scope.currencyChanged = function () {
-            if ($scope.bill.currency_code == 'USD') {
-                $scope.bill.conversio
+            if ($scope.bill.currency_code === 'USD') {
+                $scope.bill.conversion = 1;
             }
         };
 
