@@ -9,7 +9,6 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="col-xs-1">Id cobranza</th>
                     <th class="col-xs-1">Total</th>
                     <th class="col-xs-1">Fecha</th>
                     <th class="col-xs-1"></th>
@@ -17,7 +16,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="collection in collections | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
-                    <td ng-click="view(collection.id)">{{collection.id}}</td>
                     <td ng-click="view(collection.id)">{{collection.total_amount}}</td>
                     <td ng-click="view(collection.id)">{{collection.date|date:'dd-MM-yyyy'}}</td>
                     <td>

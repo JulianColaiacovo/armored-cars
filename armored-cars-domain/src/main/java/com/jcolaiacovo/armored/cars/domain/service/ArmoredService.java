@@ -5,7 +5,9 @@ import com.jcolaiacovo.armored.cars.domain.dao.ArmoredDao;
 import com.jcolaiacovo.armored.cars.domain.model.Armored;
 import com.jcolaiacovo.armored.cars.domain.parser.armored.ArmoredExcelParser;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,11 +54,11 @@ public class ArmoredService extends AbstractDaoService<Armored> {
 
     public void loadExcel(MultipartFile excel) {
         try {
-            Workbook workbook = new HSSFWorkbook(excel.getInputStream());
+            Workbook workbook = WorkbookFactory.create(excel.getInputStream());
             List<Armored> armoreds = this.armoredExcelParser.parse(workbook);
             List<Armored> bindArmoreds = this.bind(armoreds);
             this.armoredDao.saveAll(bindArmoreds);
-        } catch (IOException e) {
+        } catch (InvalidFormatException | IOException e) {
             throw new RuntimeException("Invalid excel", e);
         }
     }
