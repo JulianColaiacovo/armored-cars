@@ -29,7 +29,6 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
                 $scope.isSaving = true;
                 $scope.client.document = $scope.client.document.replace(/\./g, '').replace(/-/g, '');
                 Client.save($scope.client, onSaveOk, onSaveError);
-                $scope.isSaving = false;
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
                     angular.forEach(controls, function (control) {
@@ -67,13 +66,13 @@ App.controller('ClientController', ['$rootScope', '$scope', '$location', '$route
         };
 
         var onSaveOk = function (response) {
+            $scope.isSaving = false;
             $location.path('/clients/view/' + response.id);
         };
 
         var onSaveError = function (response) {
-            if (response.status != 200) {
-                $rootScope.globalError = 'Error saving client';
-            }
+            $scope.isSaving = false;
+            $rootScope.globalError = 'Error saving client';
         };
 
         var loadDocumentTypes = function () {
