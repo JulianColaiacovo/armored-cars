@@ -6,6 +6,7 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             $rootScope.section = "CLIENT-LIST";
             $scope.page_size = 15;
             $scope.current_page = 1;
+            $scope.changeSortCriteria("-id");
             $scope.uploadFileTexts = {
                 title: "Cargar excel de clientes"
             };
@@ -16,6 +17,19 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             Client.getAll(function (response) {
                 $scope.clients = response;
             });
+        };
+
+        $scope.changeSortCriteria = function (criteria) {
+            var regex = new RegExp('(-){0,1}' + criteria);
+            if (regex.test($scope.client_sort_criteria)) {
+                if ($scope.client_sort_criteria.startsWith('-')) {
+                    $scope.client_sort_criteria = criteria;
+                } else {
+                    $scope.client_sort_criteria = '-' + criteria;
+                }
+            } else {
+                $scope.client_sort_criteria = criteria;
+            }
         };
 
         $scope.initialize();

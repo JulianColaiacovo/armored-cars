@@ -11,7 +11,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="col-xs-1">Nombre</th>
+                    <th class="col-xs-1" ng-click="changeSortCriteria('name')">Nombre</th>
                     <th class="col-xs-1">Tipo de documento</th>
                     <th class="col-xs-1">Número de documento</th>
                     <th class="col-xs-1">E-mail</th>
@@ -20,7 +20,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="client in clients | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
+                <tr ng-repeat="client in clients | orderBy:client_sort_criteria | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
                     <td ng-click="view(client.id)">{{client.name}}</td>
                     <td ng-click="view(client.id)">{{client.document_type}}</td>
                     <td ng-click="view(client.id)">{{client.document}}</td>
