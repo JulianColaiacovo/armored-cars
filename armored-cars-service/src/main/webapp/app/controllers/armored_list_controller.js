@@ -48,16 +48,17 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
             //Take the first selected file
             fd.append("file", $scope.selectedFile);
 
+            $scope.isUploadingFile = true;
             $http.post("/" + $rootScope.appContext + "/armoreds/excel", fd, {
                 withCredentials: true,
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity
             }).success(function (data, status, headers, config) {
+                $scope.isUploadingFile = false;
                 $location.path("armoreds/")
             }).error(function (response) {
-                if (response.status != 200) {
-                    $rootScope.globalError = 'Error al cargar el excel de blindajes';
-                }
+                $scope.isUploadingFile = false;
+                $rootScope.globalError = 'Error al cargar el excel de blindajes';
             });
 
         };
@@ -67,9 +68,7 @@ App.controller('ArmoredListController', ['$rootScope', '$scope', '$location', '$
         };
 
         var onDeleteError = function (response) {
-            if (response.status != 200) {
-                $rootScope.globalError = 'Error al borrar el blindaje';
-            }
+            $rootScope.globalError = 'Error al borrar el blindaje';
         };
 
     }]);

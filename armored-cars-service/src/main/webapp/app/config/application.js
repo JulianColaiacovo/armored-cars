@@ -14,7 +14,8 @@ window.App = angular
             'datetimepicker',
             'angular-md5',
             'ui.mask',
-            'ui.validate'
+            'ui.validate',
+            'ngFileUpload'
         ]
     );
 

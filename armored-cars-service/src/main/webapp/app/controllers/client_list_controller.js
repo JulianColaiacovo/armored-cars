@@ -62,16 +62,18 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
             //Take the first selected file
             fd.append("file", $scope.selectedFile);
 
+            $scope.isUploadingFile = true;
+
             $http.post("/" + $rootScope.appContext + "/clients/excel", fd, {
                 withCredentials: true,
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity
             }).success(function (data, status, headers, config) {
                 $location.path("clients/")
+                $scope.isUploadingFile = false;
             }).error(function (response) {
-                if (response.status != 200) {
-                    $rootScope.globalError = 'Error al cargar el excel de clientes';
-                }
+                $scope.isUploadingFile = false;
+                $rootScope.globalError = 'Error al cargar el excel de clientes';
             });
 
         };
@@ -81,9 +83,7 @@ App.controller('ClientListController', ['$rootScope', '$scope', '$location', '$h
         };
 
         var onDeleteError = function (response) {
-            if (response.status != 200) {
-                $rootScope.globalError = 'Error deleting client';
-            }
+            $rootScope.globalError = 'Error deleting client';
         };
 
     }]);

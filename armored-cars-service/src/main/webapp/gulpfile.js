@@ -25,7 +25,9 @@ gulp.task('components', function () {
         'components/moment/min/moment.min.js',
         'components/angular-md5/angular-md5.min.js',
         'components/angular-ui-validate/dist/validate.min.js',
-        'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+        'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        'components/ng-file-upload-shim/ng-file-upload-shim.js',
+        'components/ng-file-upload/ng-file-upload.js'
     ])
         .pipe(concat('components.js'))
         .pipe(gulp.dest('dist/'));
