@@ -1,7 +1,8 @@
-App.filter("ClientFormatter", function () {
+App.filter("ClientFormatter", function ($filter) {
     return function (client) {
         if (client) {
-            return client.name + ' ' + client.document_type + '-' + client.document;
+            var document = $filter('DocumentFormatter')(client.document, client.document_type);
+            return client.name + ' ' + client.document_type + ' ' + document;
         }
         return "";
     }

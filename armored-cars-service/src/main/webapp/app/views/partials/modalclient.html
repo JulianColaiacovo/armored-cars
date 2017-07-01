@@ -24,7 +24,7 @@
                 <tr ng-repeat="client in modals.client.items | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
                     <td ng-click="selectClient(client)">{{client.name}}</td>
                     <td ng-click="selectClient(client)">{{client.document_type}}</td>
-                    <td ng-click="selectClient(client)">{{client.document}}</td>
+                    <td ng-click="selectClient(client)">{{client.document|DocumentFormatter:client.document_type}}</td>
                     <td ng-click="selectClient(client)">{{client.email}}</td>
                     <td ng-click="selectClient(client)">{{client.phone}}</td>
                 </tr>

@@ -41,7 +41,7 @@
                         <td>
                             <input name="document" ng-if="canEditData()" type="text" ng-model="client.document"
                                    ng-pattern="getDocumentNumberPattern()" required class="input-tag">
-                            <p ng-if="!canEditData()">{{client.document}}</p>
+                            <p ng-if="!canEditData()">{{client.document|DocumentFormatter:client.document_type}}</p>
                             <div ng-show="form.document.$dirty" ng-messages="form.document.$error"
                                  style="color:maroon" role="alert">
                                 <div ng-message="required">El campo es requerido</div>
