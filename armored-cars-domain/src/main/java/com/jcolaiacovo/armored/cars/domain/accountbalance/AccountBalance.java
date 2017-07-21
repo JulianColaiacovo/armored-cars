@@ -16,7 +16,7 @@ public class AccountBalance {
 
     public BigDecimal getBalance() {
         return this.accountMovements.stream()
-                .map(accountMovement -> accountMovement.getCredit().subtract(accountMovement.getDebit()))
+                .map(accountMovement -> accountMovement.getDebit().subtract(accountMovement.getCredit()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
