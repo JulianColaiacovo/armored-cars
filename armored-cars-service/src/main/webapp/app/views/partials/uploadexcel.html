@@ -1,7 +1,7 @@
 <div>
     <span><strong>{{uploadFileTexts.title}}</strong></span>
     <input type="file" id="file" ngf-select ngf-change="selectFile($files)" ng-model="picFile" name="file"
-           accept="application/vnd.ms-excel" ng-disabled="isUploadingFile"/>
+           accept="application/vnd.ms-excel" ng-disabled="isUploadingFile" class="select-file"/>
     <button name="file_remove" type="button"
             class="remove-selected"
             ng-show="selectedFile"

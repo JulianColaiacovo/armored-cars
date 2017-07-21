@@ -352,3 +352,7 @@ div.inline {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.select-file {
+    width: 100%;
+}
