@@ -23,9 +23,9 @@
                     <td ng-click="view(bill.id)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
                     <td ng-click="view(bill.id)">{{bill.financial_advance|BooleanFormatter}}</td>
                     <td>
-                        <a ng-click="edit(bill.id)">Editar</a>
+                        <a ng-click="edit(bill)">Editar</a>
                         &nbsp;|&nbsp;
-                        <a ng-click="delete(bill.id)">Eliminar</a>
+                        <a ng-click="delete(bill)">Eliminar</a>
                     </td>
                 </tr>
                 </tbody>
