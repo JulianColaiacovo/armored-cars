@@ -17,12 +17,12 @@ App.controller('BillListController', ['$rootScope', '$scope', '$location', '$rou
 
         $scope.initialize();
 
-        $scope.view = function (id) {
-            $location.path("bills/view/" + id);
+        $scope.view = function (bill) {
+            $location.path("bills/view/" + bill.id);
         };
 
-        $scope.edit = function (id) {
-            $location.path("bills/edit/" + id);
+        $scope.edit = function (bill) {
+            $location.path("bills/edit/" + bill.id);
         };
 
         $scope.delete = function (bill) {

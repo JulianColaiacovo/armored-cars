@@ -13,6 +13,8 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th class="col-xs-1">Fecha</th>
+                    <th class="col-xs-1">Cliente</th>
                     <th class="col-xs-1">Tipo de factura</th>
                     <th class="col-xs-1">N&uacute;mero de factura</th>
                     <th class="col-xs-1">Total</th>
@@ -21,6 +23,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="bill in modals.bill.items | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
+                    <td ng-click="selectBill(bill)">{{bill.date|date:'dd-MM-yyyy'}}</td>
+                    <td ng-click="selectBill(bill)">{{bill.bill_to.name}}</td>
                     <td ng-click="selectBill(bill)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
                     <td ng-click="selectBill(bill)">{{bill.number|BillNumberFormatter}}</td>
                     <td ng-click="selectBill(bill)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>

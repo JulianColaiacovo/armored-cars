@@ -9,6 +9,8 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th class="col-xs-1">Fecha</th>
+                    <th class="col-xs-1">Cliente</th>
                     <th class="col-xs-1">Tipo de factura</th>
                     <th class="col-xs-1">N&uacute;mero de factura</th>
                     <th class="col-xs-1">Total</th>
@@ -18,10 +20,12 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="bill in bills | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
-                    <td ng-click="view(bill.id)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
-                    <td ng-click="view(bill.id)">{{bill.number|BillNumberFormatter}}</td>
-                    <td ng-click="view(bill.id)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
-                    <td ng-click="view(bill.id)">{{bill.financial_advance|BooleanFormatter}}</td>
+                    <td ng-click="view(bill)">{{bill.date|date:'dd-MM-yyyy'}}</td>
+                    <td ng-click="view(bill)">{{bill.bill_to.name}}</td>
+                    <td ng-click="view(bill)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
+                    <td ng-click="view(bill)">{{bill.number|BillNumberFormatter}}</td>
+                    <td ng-click="view(bill)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
+                    <td ng-click="view(bill)">{{bill.financial_advance|BooleanFormatter}}</td>
                     <td>
                         <a ng-click="edit(bill)">Editar</a>
                         &nbsp;|&nbsp;

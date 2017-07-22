@@ -23,7 +23,7 @@ public class BillDTO {
     private BigDecimal totalAmount;
     private Integer applyBillId;
     private String description;
-    private int billToId;
+    private ClientDTO billTo;
     private boolean financialAdvance;
 
     public int getId() {
@@ -138,14 +138,6 @@ public class BillDTO {
         this.description = description;
     }
 
-    public int getBillToId() {
-        return billToId;
-    }
-
-    public void setBillToId(int billToId) {
-        this.billToId = billToId;
-    }
-
     public boolean getFinancialAdvance() {
         return financialAdvance;
     }
@@ -154,4 +146,11 @@ public class BillDTO {
         this.financialAdvance = financialAdvance;
     }
 
+    public ClientDTO getBillTo() {
+        return billTo;
+    }
+
+    public void setBillTo(ClientDTO billTo) {
+        this.billTo = billTo;
+    }
 }

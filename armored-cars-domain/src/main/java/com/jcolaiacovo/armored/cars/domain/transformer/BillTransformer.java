@@ -18,20 +18,20 @@ import java.util.Optional;
 @Component
 public class BillTransformer extends AbstractApiTransformer<Bill, BillDTO> {
 
-    private ArmoredService armoredService;
-    private BillService billService;
-    private ClientService clientService;
-    private CurrencyService currencyService;
+    private final ArmoredService armoredService;
+    private final BillService billService;
+    private final ClientTransformer clientTransformer;
+    private final CurrencyService currencyService;
 
     @Autowired
     public BillTransformer(ArmoredService armoredService,
                            CurrencyService currencyService,
                            BillService billService,
-                           ClientService clientService) {
+                           ClientTransformer clientTransformer) {
         this.armoredService = armoredService;
         this.currencyService = currencyService;
         this.billService = billService;
-        this.clientService = clientService;
+        this.clientTransformer = clientTransformer;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BillTransformer extends AbstractApiTransformer<Bill, BillDTO> {
             bill.setApplyBill(this.billService.getById(billDTO.getApplyBillId()));
         }
         bill.setArmored(this.armoredService.getById(billDTO.getArmoredId()));
-        bill.setBillTo(this.clientService.getById(billDTO.getBillToId()));
+        bill.setBillTo(this.clientTransformer.transform(billDTO.getBillTo()));
         bill.setBillTypeCode(BillTypeCode.valueOf(billDTO.getBillTypeCode()));
         bill.setConversion(billDTO.getConversion());
         bill.setCurrency(this.currencyService.getByCode(billDTO.getCurrencyCode()));
@@ -68,7 +68,7 @@ public class BillTransformer extends AbstractApiTransformer<Bill, BillDTO> {
         billDTO.setAliquot(bill.getAliquot());
         billDTO.setApplyBillId(Optional.ofNullable(bill.getApplyBill()).map(Bill::getId).orElse(0));
         billDTO.setArmoredId(bill.getArmored().getId());
-        billDTO.setBillToId(bill.getBillTo().getId());
+        billDTO.setBillTo(this.clientTransformer.transformToDTO(bill.getBillTo()));
         billDTO.setBillTypeCode(bill.getBillTypeCode().name());
         billDTO.setConversion(bill.getConversion());
         billDTO.setCurrencyCode(bill.getCurrency().getCode());
