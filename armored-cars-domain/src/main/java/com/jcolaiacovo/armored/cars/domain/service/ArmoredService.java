@@ -48,8 +48,8 @@ public class ArmoredService extends AbstractDaoService<Armored> {
         return this.armoredDao.findByCode(code);
     }
 
-    public List<Armored> search(String code, String brand) {
-        return this.armoredDao.search(code, brand);
+    public List<Armored> search(String code, String brand, String clientName) {
+        return this.armoredDao.search(code, brand, clientName);
     }
 
     public void loadExcel(MultipartFile excel) {

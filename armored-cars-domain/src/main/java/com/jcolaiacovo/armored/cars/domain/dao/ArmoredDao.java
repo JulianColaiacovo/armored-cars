@@ -37,13 +37,18 @@ public class ArmoredDao extends AbstractDao<Armored> {
         return Optional.ofNullable(armored);
     }
 
-    public List<Armored> search(String code, String brand) {
+    public List<Armored> search(String code, String brand, String clientName) {
         String likeCode = Optional.ofNullable(code).map(s -> '%' + s + '%').orElse("%");
         String likeBrand = Optional.ofNullable(brand).map(s -> '%' + s + '%').orElse("%");
+        String likeClientName = Optional.ofNullable(clientName).map(s -> '%' + s + '%').orElse("%");
         return (List<Armored>) this.getSessionFactory().getCurrentSession()
-                .createQuery("select distinct armored from Armored as armored where armored.code like :code and armored.car.brand like :brand")
+                .createQuery("select distinct armored from Armored as armored " +
+                        " where armored.code like :code " +
+                        "       and armored.car.brand like :brand" +
+                        "       and armored.billingAndReference.billToClient.name like :clientName")
                 .setString("code", likeCode)
                 .setString("brand", likeBrand)
+                .setString("clientName", likeClientName)
                 .list();
     }
 

@@ -21,10 +21,11 @@ App.factory('Armored', ['$resource', '$rootScope', function ($resource, $rootSco
         });
     };
 
-    armoredOp.search = function (code, brand, callback) {
+    armoredOp.search = function (code, brand, clientName, callback) {
         $resource(urlBase + '/search', {
             code: code,
-            brand: brand
+            brand: brand,
+            clientName: clientName
         }, {}).query(function (response) {
             callback(response);
         });

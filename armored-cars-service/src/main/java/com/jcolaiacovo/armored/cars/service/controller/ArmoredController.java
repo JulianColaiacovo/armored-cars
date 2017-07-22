@@ -40,8 +40,10 @@ public class ArmoredController {
     }
 
     @GetMapping("/search")
-    public List<ArmoredDTO> search(@RequestParam(required = false) String code, @RequestParam(required = false) String brand) {
-        List<Armored> armoreds = this.armoredService.search(code, brand);
+    public List<ArmoredDTO> search(@RequestParam(required = false) String code,
+                                   @RequestParam(required = false) String brand,
+                                   @RequestParam(required = false) String clientName) {
+        List<Armored> armoreds = this.armoredService.search(code, brand, clientName);
         return this.armoredTransformer.transformToDTOAll(armoreds);
     }
 
