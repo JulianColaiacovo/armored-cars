@@ -8,7 +8,7 @@ public class BillingAndReferenceDTO {
     private int id;
     private String owner;
     private String contactPerson;
-    private int billToClientId;
+    private ClientDTO billToClient;
 
     public int getId() {
         return id;
@@ -34,12 +34,12 @@ public class BillingAndReferenceDTO {
         this.contactPerson = contactPerson;
     }
 
-    public int getBillToClientId() {
-        return billToClientId;
+    public ClientDTO getBillToClient() {
+        return billToClient;
     }
 
-    public void setBillToClientId(int billToClientId) {
-        this.billToClientId = billToClientId;
+    public void setBillToClient(ClientDTO billToClient) {
+        this.billToClient = billToClient;
     }
 
 }

@@ -11,16 +11,22 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="col-xs-3">C&oacute;digo</th>
-                    <th class="col-xs-3">Marca</th>
-                    <th class="col-xs-3">Titular (RENAR)</th>
-                    <th class="col-xs-3"></th>
+                    <th class="col-xs-1">C&oacute;digo</th>
+                    <th class="col-xs-2">Marca</th>
+                    <th class="col-xs-2">Dominio</th>
+                    <th class="col-xs-2">Chassis</th>
+                    <th class="col-xs-2">Cliente</th>
+                    <th class="col-xs-2">Titular (RENAR)</th>
+                    <th class="col-xs-2"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="armored in armoreds | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
                     <td ng-click="view(armored.id)">{{armored.code}}</td>
                     <td ng-click="view(armored.id)">{{armored.car.brand}}</td>
+                    <td ng-click="view(armored.id)">{{armored.car.domain}}</td>
+                    <td ng-click="view(armored.id)">{{armored.car.chassis_number}}</td>
+                    <td ng-click="view(armored.id)">{{armored.billing_and_reference.bill_to_client.name}}</td>
                     <td ng-click="view(armored.id)">{{armored.billing_and_reference.owner}}</td>
                     <td>
                         <a ng-click="edit(armored.id)">Editar</a>

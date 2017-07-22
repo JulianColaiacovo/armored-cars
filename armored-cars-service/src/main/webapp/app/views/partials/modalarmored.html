@@ -15,7 +15,9 @@
                 <tr>
                     <th class="col-xs-1">C&oacute;digo</th>
                     <th class="col-xs-1">Marca</th>
-                    <th class="col-xs-1">Modelo</th>
+                    <th class="col-xs-1">Dominio</th>
+                    <th class="col-xs-1">Chassis</th>
+                    <th class="col-xs-1">Cliente</th>
                     <th class="col-xs-1">Titular RENAR</th>
                 </tr>
                 </thead>
@@ -23,7 +25,9 @@
                 <tr ng-repeat="armored in modals.armored.items | startFrom: (current_page - 1) * page_size | limitTo: page_size ">
                     <td ng-click="selectArmored(armored)">{{armored.code}}</td>
                     <td ng-click="selectArmored(armored)">{{armored.car.brand}}</td>
-                    <td ng-click="selectArmored(armored)">{{armored.car.model}}</td>
+                    <td ng-click="selectArmored(armored)">{{armored.car.domain}}</td>
+                    <td ng-click="selectArmored(armored)">{{armored.car.chassis_number}}</td>
+                    <td ng-click="selectArmored(armored)">{{armored.billing_and_reference.bill_to_client.name}}</td>
                     <td ng-click="selectArmored(armored)">{{armored.billing_and_reference.owner}}</td>
                 </tr>
                 </tbody>

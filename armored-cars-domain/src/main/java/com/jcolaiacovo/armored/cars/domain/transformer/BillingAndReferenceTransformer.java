@@ -2,7 +2,6 @@ package com.jcolaiacovo.armored.cars.domain.transformer;
 
 import com.jcolaiacovo.armored.cars.api.model.BillingAndReferenceDTO;
 import com.jcolaiacovo.armored.cars.domain.model.BillingAndReference;
-import com.jcolaiacovo.armored.cars.domain.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BillingAndReferenceTransformer extends AbstractApiTransformer<BillingAndReference, BillingAndReferenceDTO> {
 
-    private ClientService clientService;
+    private final ClientTransformer clientTransformer;
 
     @Autowired
-    public BillingAndReferenceTransformer(ClientService clientService) {
-        this.clientService = clientService;
+    public BillingAndReferenceTransformer(ClientTransformer clientTransformer) {
+        this.clientTransformer = clientTransformer;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class BillingAndReferenceTransformer extends AbstractApiTransformer<Billi
         BillingAndReference billingAndReference = new BillingAndReference();
 
         billingAndReference.setId(billingAndReferenceDTO.getId());
-        billingAndReference.setBillToClient(this.clientService.getById(billingAndReferenceDTO.getBillToClientId()));
+        billingAndReference.setBillToClient(this.clientTransformer.transform(billingAndReferenceDTO.getBillToClient()));
         billingAndReference.setContactPerson(billingAndReferenceDTO.getContactPerson());
         billingAndReference.setOwner(billingAndReferenceDTO.getOwner());
 
@@ -37,7 +36,7 @@ public class BillingAndReferenceTransformer extends AbstractApiTransformer<Billi
 
         billingAndReferenceDTO.setId(billingAndReference.getId());
         billingAndReferenceDTO.setOwner(billingAndReference.getOwner());
-        billingAndReferenceDTO.setBillToClientId(billingAndReference.getBillToClient().getId());
+        billingAndReferenceDTO.setBillToClient(this.clientTransformer.transformToDTO(billingAndReference.getBillToClient()));
         billingAndReferenceDTO.setContactPerson(billingAndReference.getContactPerson());
 
         return billingAndReferenceDTO;
