@@ -41,7 +41,6 @@ public class CollectionTransformer extends AbstractApiTransformer<Collection, Co
         if (Optional.ofNullable(collectionDTO.getBillId()).filter(integer -> integer > 0).isPresent()) {
             collection.setBill(this.billService.getById(collectionDTO.getBillId()));
         }
-        collection.setClient(this.clientService.getById(collectionDTO.getClientId()));
 
         return collection;
     }
@@ -63,7 +62,6 @@ public class CollectionTransformer extends AbstractApiTransformer<Collection, Co
         if (billId.isPresent()) {
             collectionDTO.setBillId(billId.get());
         }
-        collectionDTO.setClientId(collection.getClient().getId());
 
         return collectionDTO;
     }

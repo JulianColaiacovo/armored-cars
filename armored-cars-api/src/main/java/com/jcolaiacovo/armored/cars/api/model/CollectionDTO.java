@@ -19,7 +19,6 @@ public class CollectionDTO {
     private BigDecimal totalAmount;
     private DateTime date;
     private BigDecimal description;
-    private int clientId;
 
     public int getId() {
         return id;
@@ -99,14 +98,6 @@ public class CollectionDTO {
 
     public void setDescription(BigDecimal description) {
         this.description = description;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
 }

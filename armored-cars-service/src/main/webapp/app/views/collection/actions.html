@@ -46,28 +46,10 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="col-xs-6">Cliente a cobrar</td>
-                        <td class="col-xs-6">
-                            <button name="select_client" type="button"
-                                    ng-if="modals.client.selected == null"
-                                    ng-click="showClientModal()"
-                                    class="input-tag">
-                                Seleccionar cliente
-                            </button>
-                            <div ng-if="modals.client.selected == null" style="color:maroon">
-                                El campo es requerido
-                            </div>
-                            <div ng-if="modals.client.selected">
-                                <p>
-                                    <button name="domain" type="button"
-                                            ng-if="canEditData()"
-                                            ng-click="modals.client.selected=null">
-                                        &times;
-                                    </button>
-                                    {{modals.client.selected|ClientFormatter}}
-                                </p>
-                            </div>
+                    <tr ng-if="modals.bill.selected.bill_to">
+                        <td>Cliente</td>
+                        <td>
+                            <p>{{modals.bill.selected.bill_to|ClientFormatter}}</p>
                         </td>
                     </tr>
                     <tr ng-if="modals.bill.selected">
@@ -149,7 +131,6 @@
                     </tbody>
                 </table>
                 <div ng-include src="'assets/partials/modalbill.html'"></div>
-                <div ng-include src="'assets/partials/modalclient.html'"></div>
                 <div ng-include src="'assets/partials/save.html'"></div>
             </form>
         </div>

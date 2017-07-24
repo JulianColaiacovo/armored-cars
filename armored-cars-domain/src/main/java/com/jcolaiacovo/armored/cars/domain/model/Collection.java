@@ -51,10 +51,6 @@ public class Collection {
     @Column(name = "DESCRIPTION")
     private BigDecimal description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CLIENT_ID", nullable = false)
-    private Client client;
-
     public int getId() {
         return id;
     }
@@ -125,14 +121,6 @@ public class Collection {
 
     public void setDescription(BigDecimal description) {
         this.description = description;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public BigDecimal getTotalAmount() {

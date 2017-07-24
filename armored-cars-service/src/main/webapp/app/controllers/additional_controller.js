@@ -40,7 +40,7 @@ App.controller('AdditionalController', ['$rootScope', '$scope', '$location', '$r
 
         $scope.armoredModalSearch = function () {
             var armored = $scope.modals.armored || {};
-            Armored.search(armored.code, armored.brand, function (response) {
+            Armored.search(armored.code, armored.brand, armored.client_name, function (response) {
                 $scope.modals.armored.items = response;
             });
         };

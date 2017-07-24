@@ -26,8 +26,9 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         $scope.save = function () {
             if ($scope.form.$valid) {
                 $scope.isSaving = true;
-                $scope.collection.bill_id = $scope.modals.bill.selected.id;
-                $scope.collection.client_id = $scope.modals.client.selected.id;
+                if ($scope.modals.bill.selected) {
+                    $scope.collection.bill_id = $scope.modals.bill.selected.id;
+                }
                 Collection.save($scope.collection, onSaveOk, onSaveError);
             } else {
                 angular.forEach($scope.form.$error, function (controls, errorName) {
@@ -36,26 +37,6 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                     });
                 });
             }
-        };
-
-        $scope.showClientModal = function () {
-            $scope.modals.client.visible = true;
-        };
-
-        $scope.hideClientModal = function () {
-            $scope.modals.client.visible = false;
-        };
-
-        $scope.clientModalSearch = function () {
-            var client = $scope.modals.client;
-            Client.search(client.name, client.document, function (response) {
-                $scope.modals.client.items = response;
-            });
-        };
-
-        $scope.selectClient = function (client) {
-            $scope.modals.client.selected = client;
-            $scope.hideClientModal();
         };
 
         $scope.showBillModal = function () {
@@ -88,10 +69,6 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
 
         var initModals = function () {
             $scope.modals = {
-                "client": {
-                    "visible": false,
-                    "selected": null
-                },
                 "bill": {
                     "visible": false,
                     "selected": null
@@ -102,6 +79,7 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         var loadData = function () {
             if ($scope.isNew()) {
                 $scope.collection = {
+                    "date": new Date(),
                     "base_amount": 0,
                     "gain_amount": 0,
                     "vat_amount": 0,
@@ -115,13 +93,10 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                     $scope.collection = collectionResponse;
                     if (collectionResponse.bill_id) {
                         Bill.get(collectionResponse.bill_id, function (billResponse) {
-                            billResponse.date = new Date(billResponse.date);
-                            $scope.modals.bill.selected = billResponse;
+                            billResponse.date = new Date(billResponse.date)
+                            $scope.selectBill(billResponse);
                         });
                     }
-                    Client.get(collectionResponse.client_id, function (clientResponse) {
-                        $scope.modals.client.selected = clientResponse;
-                    });
                 });
             }
         };

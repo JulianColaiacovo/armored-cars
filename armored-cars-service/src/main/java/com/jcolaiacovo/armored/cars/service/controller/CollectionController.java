@@ -20,7 +20,8 @@ public class CollectionController {
     private final CollectionTransformer collectionTransformer;
 
     @Autowired
-    public CollectionController(CollectionService collectionService, CollectionTransformer collectionTransformer) {
+    public CollectionController(CollectionService collectionService,
+                                CollectionTransformer collectionTransformer) {
         this.collectionService = collectionService;
         this.collectionTransformer = collectionTransformer;
     }
