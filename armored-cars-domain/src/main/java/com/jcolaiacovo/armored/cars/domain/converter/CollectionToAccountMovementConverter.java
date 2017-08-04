@@ -13,9 +13,10 @@ import java.math.BigDecimal;
 public class CollectionToAccountMovementConverter extends AbstractConverter<Collection, AccountMovement> {
 
     @Override
-    public AccountMovement convert(Collection value) {
-        BigDecimal usdAmount = value.getTotalAmount().divide(value.getBill().getConversion(), BigDecimal.ROUND_CEILING);
-        return new AccountMovement(BigDecimal.ZERO, usdAmount, null, value.getId(), value.getDate());
+    public AccountMovement convert(Collection collection) {
+        BigDecimal usdAmount = collection.getTotalAmount().divide(collection.getBill().getConversion(), BigDecimal.ROUND_CEILING);
+        return new AccountMovement(collection.getBill().getCurrency().getCode(), BigDecimal.ZERO, usdAmount, null,
+                collection.getId(), collection.getDate());
     }
 
 }

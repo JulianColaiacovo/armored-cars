@@ -13,13 +13,14 @@ public class AccountMovementTransformer extends AbstractApiTransformer<AccountMo
 
     @Override
     public AccountMovement transform(AccountMovementDTO value) {
-        return new AccountMovement(value.getDebit(), value.getCredit(), value.getBillId(), value.getCollectionId(), value.getDateTime());
+        return new AccountMovement(value.getCurrencyCode(), value.getDebit(), value.getCredit(), value.getBillId(), value.getCollectionId(), value.getDateTime());
     }
 
     @Override
     public AccountMovementDTO transformToDTO(AccountMovement value) {
         AccountMovementDTO accountMovementDTO = new AccountMovementDTO();
 
+        accountMovementDTO.setCurrencyCode("USD");
         accountMovementDTO.setDebit(value.getDebit());
         accountMovementDTO.setCredit(value.getCredit());
         accountMovementDTO.setBillId(value.getBillId());

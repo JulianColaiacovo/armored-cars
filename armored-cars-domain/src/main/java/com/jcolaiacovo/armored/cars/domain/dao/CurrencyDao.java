@@ -33,13 +33,13 @@ public class CurrencyDao extends AbstractDao<Currency> {
     }
 
     public List<Currency> getEnabledCurrencies() {
-        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY where CODE in ('ARS', 'USD');")
+        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY where CODE in ('ARS');")
                 .addEntity(Currency.class)
                 .list();
     }
 
     public List<Currency> getDisablesCurrencies() {
-        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY where CODE not in ('ARS', 'USD');")
+        return this.getSessionFactory().getCurrentSession().createSQLQuery("select * from CURRENCY where CODE not in ('ARS');")
                 .addEntity(Currency.class)
                 .list();
     }

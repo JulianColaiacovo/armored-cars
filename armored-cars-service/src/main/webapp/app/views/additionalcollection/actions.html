@@ -53,7 +53,7 @@
                             <input name="amount" ng-if="canEditData()" type="number"
                                    ng-model="additionalcollection.amount"
                                    class="input-tag">
-                            <p ng-if="!canEditData()">{{additionalcollection.amount}}</p>
+                            <p ng-if="!canEditData()">{{additionalcollection.amount|AmountFormatter:additionalcollection.currency_code}}</p>
                         </td>
                     </tr>
                     <tr>

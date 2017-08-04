@@ -12,6 +12,7 @@ public class AdditionalCollectionDTO {
     private int id;
     private DateTime date;
     private int additionalId;
+    private String currencyCode;
     private BigDecimal amount;
     private String description;
 
@@ -37,6 +38,14 @@ public class AdditionalCollectionDTO {
 
     public void setAdditionalId(int additionalId) {
         this.additionalId = additionalId;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public BigDecimal getAmount() {

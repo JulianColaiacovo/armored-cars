@@ -55,17 +55,17 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th class="col-xs-1">Fecha</th>
                     <th class="col-xs-1">Debe</th>
                     <th class="col-xs-1">Haber</th>
-                    <th class="col-xs-1">Fecha</th>
                     <th class="col-xs-1"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="account_movement in account_balance.account_movements">
-                    <td>{{account_movement.debit}}</td>
-                    <td>{{account_movement.credit}}</td>
                     <td>{{account_movement.date_time|date:'dd-MM-yyyy'}}</td>
+                    <td>{{account_movement.debit|AmountFormatter:account_movement.currency_code}}</td>
+                    <td>{{account_movement.credit|AmountFormatter:account_movement.currency_code}}</td>
                     <td>
                         <div class="inline" ng-show="account_movement.bill_id">
                             <a ng-href="#/bills/view/{{account_movement.bill_id}}">

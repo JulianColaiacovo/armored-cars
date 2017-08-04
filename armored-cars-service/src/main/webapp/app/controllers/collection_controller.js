@@ -48,7 +48,7 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         };
 
         $scope.billModalSearch = function () {
-            Bill.search($scope.modals.bill.bill_type_code, function (response) {
+            Bill.search($scope.modals.bill.bill_type_code, $scope.modals.bill.client_name, function (response) {
                 $scope.modals.bill.items = response;
             });
         };
