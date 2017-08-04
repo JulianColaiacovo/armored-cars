@@ -37,13 +37,14 @@ public class UncollectedBillTransformer extends AbstractApiTransformer<Bill, Unc
 
         uncollectedBillDTO.setBill(this.billTransformer.transformToDTO(bill));
 
-        BigDecimal billCollectedAmount = this.billService.getCollectedAmount(bill.getId());
-        BigDecimal collectionCollectedAmount = this.collectionService.getCollectedAmountByBillId(bill.getId());
-        BigDecimal collectedAmount = billCollectedAmount.add(collectionCollectedAmount);
+        BigDecimal creditNoteAmount = this.billService.getCreditNoteAmount(bill.getId());
+        BigDecimal collectedAmount = this.collectionService.getCollectedAmountByBillId(bill.getId());
+        BigDecimal totalCollectedAmount = creditNoteAmount.add(collectedAmount);
 
         uncollectedBillDTO.setTotalAmount(bill.getTotalAmount());
+        uncollectedBillDTO.setCreditNoteAmount(creditNoteAmount);
         uncollectedBillDTO.setCollectedAmount(collectedAmount);
-        uncollectedBillDTO.setAmountToCollect(bill.getTotalAmount().subtract(collectedAmount));
+        uncollectedBillDTO.setAmountToCollect(bill.getTotalAmount().subtract(totalCollectedAmount));
 
         return uncollectedBillDTO;
     }

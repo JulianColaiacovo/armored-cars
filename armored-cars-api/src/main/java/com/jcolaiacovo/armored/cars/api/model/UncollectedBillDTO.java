@@ -9,6 +9,7 @@ public class UncollectedBillDTO {
 
     private BillDTO bill;
     private BigDecimal totalAmount;
+    private BigDecimal creditNoteAmount;
     private BigDecimal collectedAmount;
     private BigDecimal amountToCollect;
 
@@ -36,6 +37,14 @@ public class UncollectedBillDTO {
         this.collectedAmount = collectedAmount;
     }
 
+    public BigDecimal getCreditNoteAmount() {
+        return creditNoteAmount;
+    }
+
+    public void setCreditNoteAmount(BigDecimal creditNoteAmount) {
+        this.creditNoteAmount = creditNoteAmount;
+    }
+
     public BigDecimal getAmountToCollect() {
         return amountToCollect;
     }
@@ -43,5 +52,4 @@ public class UncollectedBillDTO {
     public void setAmountToCollect(BigDecimal amountToCollect) {
         this.amountToCollect = amountToCollect;
     }
-
 }

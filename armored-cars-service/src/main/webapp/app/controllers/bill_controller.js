@@ -39,7 +39,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             if ($scope.form.$valid && $scope.modals.armored.selected) {
                 $scope.isSaving = true;
                 $scope.bill.armored_id = $scope.modals.armored.selected.id;
-                $scope.bill.bill_to_id = $scope.client.id;
+                $scope.bill.bill_to = $scope.client;
                 $scope.bill.apply_bill_id = getBillSelectedId();
                 var billNumber = $scope.formattedData.billNumber.replace("-", "");
                 $scope.bill.number = Number(billNumber);

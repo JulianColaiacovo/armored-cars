@@ -14,6 +14,7 @@
                     <th class="col-xs-1">Tipo</th>
                     <th class="col-xs-1">N&uacute;mero</th>
                     <th class="col-xs-1">Total</th>
+                    <th class="col-xs-1">NC</th>
                     <th class="col-xs-1">Cobrado</th>
                     <th class="col-xs-1">Restante</th>
                 </tr>
@@ -23,6 +24,7 @@
                     <td>{{uncollected_bill.bill.bill_type_code|BillTypeCodeFormatter}}</td>
                     <td>{{uncollected_bill.bill.number|BillNumberFormatter}}</td>
                     <td>{{uncollected_bill.total_amount}}</td>
+                    <td>{{uncollected_bill.credit_note_amount}}</td>
                     <td>{{uncollected_bill.collected_amount}}</td>
                     <td>{{uncollected_bill.amount_to_collect}}</td>
                 </tr>

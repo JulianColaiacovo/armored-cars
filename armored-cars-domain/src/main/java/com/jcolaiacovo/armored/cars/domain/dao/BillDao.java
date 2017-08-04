@@ -59,7 +59,7 @@ public class BillDao extends AbstractDao<Bill> {
                 .list();
     }
 
-    public BigDecimal getCollectedAmount(int billId) {
+    public BigDecimal getCreditNoteAmount(int billId) {
         List<BigDecimal> collections = this.getSessionFactory().getCurrentSession()
                 .createQuery("select bill.totalAmount from Bill as bill where bill.applyBill.id = :billId")
                 .setInteger("billId", billId)

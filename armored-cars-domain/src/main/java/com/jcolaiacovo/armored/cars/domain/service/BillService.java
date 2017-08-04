@@ -50,8 +50,8 @@ public class BillService extends AbstractDaoService<Bill> {
                 .collect(Collectors.toList());
     }
 
-    public BigDecimal getCollectedAmount(int billId) {
-        return this.billDao.getCollectedAmount(billId);
+    public BigDecimal getCreditNoteAmount(int billId) {
+        return this.billDao.getCreditNoteAmount(billId);
     }
 
     public List<Bill> getBillsByApplyBillId(int billId) {
