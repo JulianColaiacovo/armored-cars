@@ -109,7 +109,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
         };
 
         $scope.billModalSearch = function () {
-            Bill.search($scope.modals.bill.bill_type_code, function (response) {
+            Bill.search($scope.modals.bill.bill_type_code, $scope.modals.bill.client_name, function (response) {
                 $scope.modals.bill.items = response;
             });
         };
@@ -208,6 +208,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                 };
                 setDefaultBillNumber();
                 $scope.updateVatAndTotal();
+                $scope.updateModalBillsToApply();
             } else {
                 Bill.get($routeParams.bill_id, function (response) {
                     response.date = new Date(response.date);
@@ -216,6 +217,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                     loadBillClient($scope.bill.bill_to_id);
                     loadArmored($scope.bill.armored_id);
                     loadApplyBill($scope.bill.apply_bill_id);
+                    $scope.updateModalBillsToApply();
                 });
             }
         };

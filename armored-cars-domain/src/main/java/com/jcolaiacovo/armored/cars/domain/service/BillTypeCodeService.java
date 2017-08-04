@@ -1,12 +1,15 @@
 package com.jcolaiacovo.armored.cars.domain.service;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.jcolaiacovo.armored.cars.domain.model.BillCode;
 import com.jcolaiacovo.armored.cars.domain.model.BillType;
 import com.jcolaiacovo.armored.cars.domain.model.BillTypeCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.collections.Lists;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +38,7 @@ public class BillTypeCodeService {
 
     public List<BillTypeCode> getPossibleBillTypeToApply(BillTypeCode billTypeCode) {
         if (BillType.CREDIT_NOTE.equals(billTypeCode.getBillType())) {
-            return this.getAllByBillType(BillType.BILL);
+            return this.getByBillTypes(Sets.newHashSet(BillType.BILL, BillType.DEBIT_NOTE), billTypeCode.getBillCode());
         }
         return Lists.newArrayList();
     }
@@ -43,6 +46,13 @@ public class BillTypeCodeService {
     private List<BillTypeCode> getAllByBillType(BillType billType) {
         return this.getBillTypeCodes(true).stream()
                 .filter(billTypeCode -> billType.equals(billTypeCode.getBillType()))
+                .collect(Collectors.toList());
+    }
+
+    private List<BillTypeCode> getByBillTypes(Set<BillType> billTypes, BillCode billCode) {
+        return this.getBillTypeCodes(true).stream()
+                .filter(billTypeCode -> billTypes.contains(billTypeCode.getBillType()))
+                .filter(billTypeCode -> billCode.equals(billTypeCode.getBillCode()))
                 .collect(Collectors.toList());
     }
 

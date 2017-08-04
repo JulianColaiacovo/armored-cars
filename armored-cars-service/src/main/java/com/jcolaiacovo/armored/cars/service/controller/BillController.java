@@ -39,8 +39,9 @@ public class BillController {
     }
 
     @GetMapping(value = "search")
-    public List<BillDTO> search(@RequestParam BillTypeCode billTypeCode) {
-        List<Bill> bills = this.billService.search(billTypeCode);
+    public List<BillDTO> search(@RequestParam BillTypeCode billTypeCode,
+                                @RequestParam(required = false) String clientName) {
+        List<Bill> bills = this.billService.search(billTypeCode, clientName);
         return this.billTransformer.transformToDTOAll(bills);
     }
 

@@ -7,6 +7,8 @@
             <select ng-model="modals.bill.bill_type_code"
                     ng-options="bill_type_code.id as bill_type_code.id|BillTypeCodeFormatter for bill_type_code in modals.bill.bill_type_codes">
             </select>
+            <label class="modal-label">Cliente:&nbsp;</label>
+            <input type="text" ng-model="modals.bill.client_name"/>
             <button type="button" ng-click="billModalSearch()" class="modal-search">Buscar</button>
         </div>
         <div class="modal-body">

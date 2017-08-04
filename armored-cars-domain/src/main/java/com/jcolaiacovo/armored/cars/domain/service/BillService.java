@@ -40,8 +40,8 @@ public class BillService extends AbstractDaoService<Bill> {
         return this.billDao.getByClientId(clientId);
     }
 
-    public List<Bill> search(BillTypeCode billTypeCode) {
-        return this.billDao.search(billTypeCode);
+    public List<Bill> search(BillTypeCode billTypeCode, String clientName) {
+        return this.billDao.search(billTypeCode, clientName);
     }
 
     public List<Bill> getUncollectedBills() {

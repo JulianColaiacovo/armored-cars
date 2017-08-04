@@ -37,9 +37,12 @@ App.factory('Bill', ['$resource', '$rootScope', '$http', function ($resource, $r
         $resource(urlBase + '/' + clientId, {}, {}).delete({}, body, callback, onError);
     };
 
-    billOp.search = function (billTypeCode, callback) {
+    billOp.search = function (billTypeCode, clientName, callback) {
         $http.get(urlBase + '/search', {
-            params: { billTypeCode: billTypeCode }
+            params: {
+                billTypeCode: billTypeCode,
+                clientName: clientName
+            }
         }).then(function(response) {
             callback(response.data)
         }, {});
