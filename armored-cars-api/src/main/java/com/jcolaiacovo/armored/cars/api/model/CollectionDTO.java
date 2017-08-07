@@ -11,6 +11,7 @@ public class CollectionDTO {
 
     private int id;
     private Integer billId;
+    private String currencyCode;
     private BigDecimal baseAmount;
     private BigDecimal iibbAmount;
     private BigDecimal sussAmount;
@@ -34,6 +35,14 @@ public class CollectionDTO {
 
     public void setBillId(Integer billId) {
         this.billId = billId;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public BigDecimal getBaseAmount() {
@@ -99,5 +108,4 @@ public class CollectionDTO {
     public void setDescription(BigDecimal description) {
         this.description = description;
     }
-
 }

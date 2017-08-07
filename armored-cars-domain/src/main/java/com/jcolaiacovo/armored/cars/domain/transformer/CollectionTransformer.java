@@ -4,7 +4,6 @@ import com.jcolaiacovo.armored.cars.api.model.CollectionDTO;
 import com.jcolaiacovo.armored.cars.domain.model.Bill;
 import com.jcolaiacovo.armored.cars.domain.model.Collection;
 import com.jcolaiacovo.armored.cars.domain.service.BillService;
-import com.jcolaiacovo.armored.cars.domain.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +16,10 @@ import java.util.Optional;
 public class CollectionTransformer extends AbstractApiTransformer<Collection, CollectionDTO> {
 
     private final BillService billService;
-    private final ClientService clientService;
 
     @Autowired
-    public CollectionTransformer(BillService billService, ClientService clientService) {
+    public CollectionTransformer(BillService billService) {
         this.billService = billService;
-        this.clientService = clientService;
     }
 
     @Override
@@ -61,6 +58,7 @@ public class CollectionTransformer extends AbstractApiTransformer<Collection, Co
         Optional<Integer> billId = Optional.ofNullable(collection.getBill()).map(Bill::getId);
         if (billId.isPresent()) {
             collectionDTO.setBillId(billId.get());
+            collectionDTO.setCurrencyCode(collection.getBill().getCurrency().getCode());
         }
 
         return collectionDTO;

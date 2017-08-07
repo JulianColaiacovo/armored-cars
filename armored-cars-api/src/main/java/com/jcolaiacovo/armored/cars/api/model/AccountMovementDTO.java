@@ -9,12 +9,21 @@ import java.math.BigDecimal;
  */
 public class AccountMovementDTO {
 
+    private String currencyCode;
     private BigDecimal debit;
     private BigDecimal credit;
     private Integer billId;
     private Integer collectionId;
     private DateTime dateTime;
 
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+    
     public BigDecimal getDebit() {
         return debit;
     }
@@ -54,4 +63,5 @@ public class AccountMovementDTO {
     public void setCollectionId(Integer collectionId) {
         this.collectionId = collectionId;
     }
+
 }

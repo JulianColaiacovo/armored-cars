@@ -41,6 +41,7 @@ public class AdditionalCollectionTransformer extends AbstractApiTransformer<Addi
         additionalCollectionDTO.setId(additionalCollection.getId());
         additionalCollectionDTO.setDate(additionalCollection.getDate());
         additionalCollectionDTO.setAdditionalId(additionalCollection.getAdditional().getId());
+        additionalCollectionDTO.setCurrencyCode(additionalCollection.getAdditional().getCurrency().getCode());
         additionalCollectionDTO.setAmount(additionalCollection.getAmount());
         additionalCollectionDTO.setDescription(additionalCollection.getDescription());
 

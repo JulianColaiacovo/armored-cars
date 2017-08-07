@@ -25,7 +25,7 @@
                     <td ng-click="view(bill)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
                     <td ng-click="view(bill)">{{bill.number|BillNumberFormatter}}</td>
                     <td ng-click="view(bill)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
-                    <td ng-click="view(bill)">{{bill.financial_advance|BooleanFormatter}}</td>
+                    <td ng-click="view(bill)">{{bill.financial_advance|FinancialAdvanceFormatter:bill.bill_type_code}}</td>
                     <td>
                         <a ng-click="edit(bill)">Editar</a>
                         &nbsp;|&nbsp;

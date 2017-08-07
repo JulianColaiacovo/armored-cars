@@ -22,12 +22,14 @@ public class BillToAccountMovementConverter extends AbstractConverter<Bill, Acco
     }
 
     @Override
-    public AccountMovement convert(Bill value) {
-        BigDecimal usdAmount = value.getTotalAmount().divide(value.getConversion(), BigDecimal.ROUND_CEILING);
-        if (this.billHelper.isCreditNote(value)) {
-            return new AccountMovement(BigDecimal.ZERO, usdAmount, value.getId(), null, value.getDate());
+    public AccountMovement convert(Bill bill) {
+        BigDecimal usdAmount = bill.getTotalAmount().divide(bill.getConversion(), BigDecimal.ROUND_CEILING);
+        if (this.billHelper.isCreditNote(bill)) {
+            return new AccountMovement(bill.getCurrency().getCode(), BigDecimal.ZERO, usdAmount, bill.getId(),
+                    null, bill.getDate());
         } else {
-            return new AccountMovement(usdAmount, BigDecimal.ZERO, value.getId(), null, value.getDate());
+            return new AccountMovement(bill.getCurrency().getCode(), usdAmount, BigDecimal.ZERO, bill.getId(),
+                    null, bill.getDate());
         }
     }
 

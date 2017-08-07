@@ -48,7 +48,7 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
         };
 
         $scope.billModalSearch = function () {
-            Bill.search($scope.modals.bill.bill_type_code, function (response) {
+            Bill.search($scope.modals.bill.bill_type_code, $scope.modals.bill.client_name, function (response) {
                 $scope.modals.bill.items = response;
             });
         };
@@ -87,6 +87,7 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                     "iibb_amount": 0,
                     "total_amount": 0
                 };
+                $scope.billModalSearch();
             } else {
                 Collection.get($routeParams.collection_id, function (collectionResponse) {
                     collectionResponse.date = new Date(collectionResponse.date);

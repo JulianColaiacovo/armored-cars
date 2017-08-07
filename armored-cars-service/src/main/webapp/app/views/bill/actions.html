@@ -137,7 +137,7 @@
                                    ng-change="updateVatAndTotal()"
                                    ng-model="bill.untaxed_amount"
                                    class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.untaxed_amount}}</p>
+                            <p ng-if="!canEditData()">{{bill.untaxed_amount|AmountFormatter:bill.currency_code}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -148,7 +148,7 @@
                                    ng-model="bill.taxed_amount"
                                    ng-min="0.01"
                                    class="input-tag">
-                            <p ng-if="!canEditData()">{{bill.taxed_amount}}</p>
+                            <p ng-if="!canEditData()">{{bill.taxed_amount|AmountFormatter:bill.currency_code}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -163,16 +163,16 @@
                     <tr>
                         <td>I.V.A.</td>
                         <td>
-                            <p>{{bill.vat_amount}}</p>
+                            <p>{{bill.vat_amount|AmountFormatter:bill.currency_code}}</p>
                         </td>
                     </tr>
                     <tr>
                         <td>Total</td>
                         <td>
-                            <p>{{bill.total_amount}}</p>
+                            <p>{{bill.total_amount|AmountFormatter:bill.currency_code}}</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="isBill()">
                         <td>Anticipo financiero</td>
                         <td>
                             <input type="checkbox" ng-disabled="!canEditData()" ng-model="bill.financial_advance">

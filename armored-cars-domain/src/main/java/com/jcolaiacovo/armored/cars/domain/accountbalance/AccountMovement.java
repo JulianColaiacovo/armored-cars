@@ -9,22 +9,29 @@ import java.math.BigDecimal;
  */
 public class AccountMovement {
 
+    private String currencyCode;
     private BigDecimal debit;
     private BigDecimal credit;
     private Integer billId;
     private Integer collectionId;
     private DateTime dateTime;
 
-    public AccountMovement(BigDecimal debit,
+    public AccountMovement(String currencyCode,
+                           BigDecimal debit,
                            BigDecimal credit,
                            Integer billId,
                            Integer collectionId,
                            DateTime dateTime) {
+        this.currencyCode = currencyCode;
         this.debit = debit;
         this.credit = credit;
         this.billId = billId;
         this.collectionId = collectionId;
         this.dateTime = dateTime;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
     public BigDecimal getDebit() {

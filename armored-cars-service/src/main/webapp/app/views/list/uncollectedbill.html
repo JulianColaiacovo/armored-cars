@@ -11,6 +11,8 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th class="col-xs-1">Fecha</th>
+                    <th class="col-xs-2">Cliente</th>
                     <th class="col-xs-1">Tipo</th>
                     <th class="col-xs-1">N&uacute;mero</th>
                     <th class="col-xs-1">Total</th>
@@ -21,12 +23,14 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="uncollected_bill in uncollected_bills">
+                    <td>{{uncollected_bill.bill.date|date:'dd-MM-yyyy'}}</td>
+                    <td>{{uncollected_bill.bill.bill_to|ClientFormatter}}</td>
                     <td>{{uncollected_bill.bill.bill_type_code|BillTypeCodeFormatter}}</td>
                     <td>{{uncollected_bill.bill.number|BillNumberFormatter}}</td>
-                    <td>{{uncollected_bill.total_amount}}</td>
-                    <td>{{uncollected_bill.credit_note_amount}}</td>
-                    <td>{{uncollected_bill.collected_amount}}</td>
-                    <td>{{uncollected_bill.amount_to_collect}}</td>
+                    <td>{{uncollected_bill.total_amount|AmountFormatter:uncollected_bill.bill.currency_code}}</td>
+                    <td>{{uncollected_bill.credit_note_amount|AmountFormatter:uncollected_bill.bill.currency_code}}</td>
+                    <td>{{uncollected_bill.collected_amount|AmountFormatter:uncollected_bill.bill.currency_code}}</td>
+                    <td>{{uncollected_bill.amount_to_collect|AmountFormatter:uncollected_bill.bill.currency_code}}</td>
                 </tr>
                 </tbody>
             </table>

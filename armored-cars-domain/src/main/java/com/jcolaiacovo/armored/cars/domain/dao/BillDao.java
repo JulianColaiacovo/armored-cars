@@ -40,13 +40,14 @@ public class BillDao extends AbstractDao<Bill> {
     }
 
     public List<Bill> search(BillTypeCode billTypeCode, String clientName) {
+        String likeBillTypeCode = Optional.ofNullable(billTypeCode).map(BillTypeCode::name).orElse("%");
         String likeClientName = Optional.ofNullable(clientName).map(s -> '%' + s + '%').orElse("%");
         return this.getSessionFactory().getCurrentSession()
                 .createQuery("select distinct bill from Bill as bill " +
-                        " where bill.billTypeCode = :billTypeCode " +
+                        " where bill.billTypeCode like :billTypeCode " +
                         "       and bill.billTo.name like :clientName" +
                         " order by bill.number desc")
-                .setString("billTypeCode", billTypeCode.name())
+                .setString("billTypeCode", likeBillTypeCode)
                 .setString("clientName", likeClientName)
                 .list();
     }
