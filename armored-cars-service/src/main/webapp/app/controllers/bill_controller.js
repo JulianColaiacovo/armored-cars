@@ -76,6 +76,10 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
             return $scope.bill.bill_type_code.startsWith('CREDIT_NOTE_');
         };
 
+        $scope.isBill = function () {
+            return $scope.bill.bill_type_code.startsWith('BILL_');
+        };
+
         $scope.selectArmored = function (armored) {
             $scope.modals.armored.selected = armored;
             $scope.hideArmoredModal();

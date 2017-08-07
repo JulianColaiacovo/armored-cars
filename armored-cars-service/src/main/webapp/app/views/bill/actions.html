@@ -172,7 +172,7 @@
                             <p>{{bill.total_amount|AmountFormatter:bill.currency_code}}</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="isBill()">
                         <td>Anticipo financiero</td>
                         <td>
                             <input type="checkbox" ng-disabled="!canEditData()" ng-model="bill.financial_advance">
