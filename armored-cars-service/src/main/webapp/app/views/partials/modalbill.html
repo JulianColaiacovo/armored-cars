@@ -30,7 +30,7 @@
                     <td ng-click="selectBill(bill)">{{bill.bill_type_code|BillTypeCodeFormatter}}</td>
                     <td ng-click="selectBill(bill)">{{bill.number|BillNumberFormatter}}</td>
                     <td ng-click="selectBill(bill)">{{bill.total_amount|AmountFormatter:bill.currency_code}}</td>
-                    <td ng-click="selectBill(bill)">{{bill.financial_advance|BooleanFormatter}}</td>
+                    <td ng-click="selectBill(bill)">{{bill.financial_advance|FinancialAdvanceFormatter:bill.bill_type_code}}</td>
                 </tr>
                 </tbody>
             </table>

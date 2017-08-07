@@ -213,6 +213,7 @@ App.controller('BillController', ['$rootScope', '$scope', '$filter', '$location'
                 setDefaultBillNumber();
                 $scope.updateVatAndTotal();
                 $scope.updateModalBillsToApply();
+                $scope.billModalSearch();
             } else {
                 Bill.get($routeParams.bill_id, function (response) {
                     response.date = new Date(response.date);

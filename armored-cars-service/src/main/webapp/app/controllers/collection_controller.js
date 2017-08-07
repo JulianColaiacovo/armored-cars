@@ -87,6 +87,7 @@ App.controller('CollectionController', ['$rootScope', '$scope', '$location', '$r
                     "iibb_amount": 0,
                     "total_amount": 0
                 };
+                $scope.billModalSearch();
             } else {
                 Collection.get($routeParams.collection_id, function (collectionResponse) {
                     collectionResponse.date = new Date(collectionResponse.date);
