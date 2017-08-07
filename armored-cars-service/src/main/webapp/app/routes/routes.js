@@ -99,7 +99,8 @@ App.config(['$routeProvider', function ($routeProvider) {
     }).when(ACCOUNT_BALANCE_PATH, {
         templateUrl: 'assets/list/accountbalance.html',
         controller: 'AccountBalanceController',
-        resolve: { app: accountingPermission }
+        resolve: { app: accountingPermission },
+        reloadOnSearch: false
     }).when(UNCOLLECTED_BILLS_PATH, {
         templateUrl: 'assets/list/uncollectedbill.html',
         controller: 'UncollectedBillController',
